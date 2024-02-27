@@ -1,0 +1,46 @@
+﻿<Window x:Class="Wpf_Inventory_.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Wpf_Inventory_"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded">
+    <Window.Resources>
+
+    </Window.Resources>
+    <TabControl>
+        <TabItem Header="Устройства">
+            <Grid x:Name="DeviceGrid" Background="#FFE5E5E5">
+                <DataGrid x:Name="DeviceDataGrid"  AutoGenerateColumns="False" IsReadOnly="True" Margin="0,0,0,46" SelectionChanged="DeviceDataGrid_SelectionChanged" MouseDoubleClick="DeviceDataGrid_MouseDoubleClick">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn x:Name="IDColum" Header="ID" Binding="{Binding Device_ID}" Width="auto"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Инвентарный номер" Binding="{Binding InventoryNumber}" Width="auto"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Тип" Binding="{Binding DeviceType.Type}" Width="auto"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Название" Binding="{Binding DeviceName}" Width="auto"></DataGridTextColumn>
+                        <DataGridTextColumn Header="IP" Binding="{Binding IP_Adress}" Width="auto"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Дата приема" Binding="{Binding DateOfCommissioning}" Width="*"></DataGridTextColumn>
+                        <DataGridCheckBoxColumn Header="Списано" Binding="{Binding Exeption}" Width="60"></DataGridCheckBoxColumn>
+
+                    </DataGrid.Columns>
+                </DataGrid>
+                <Button x:Name="DeviceSyncButton" Content="Синхронизировать" HorizontalAlignment="Left" Margin="663,0,0,11" VerticalAlignment="Bottom" Height="30" Width="100"/>
+                <Button x:Name="DeviceAddButton" Content="Добавить" HorizontalAlignment="Left" Margin="10,0,0,11" VerticalAlignment="Bottom" Height="30" Width="100"/>
+            </Grid>
+        </TabItem>
+        <TabItem Header="Рабочие места">
+            <Grid Background="#FFE5E5E5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="47*"/>
+                    <ColumnDefinition Width="747*"/>
+                </Grid.ColumnDefinitions>
+                <DataGrid x:Name="WorkplaceDataGrid" Margin="0,0,0,72" Grid.ColumnSpan="2">
+                    <DataGridTextColumn Header="ID" Binding="{Binding Device_Workplace_ID}" Width="25"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Инвентарный номер" Binding="{Binding Note}" Width="*"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Название" Binding="{Binding DeviceName}" Width="*"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Дата приема" Binding="{Binding DateOfCommissioning}" Width="*"></DataGridTextColumn>
+                </DataGrid>
+            </Grid>
+        </TabItem>
+    </TabControl>
+</Window>

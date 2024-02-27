@@ -1,0 +1,68 @@
+﻿
+        /// <summary>
+        /// Непомню зачем оно но делает список всякого 
+        /// </summary>
+        /// <param name="InventoryRegDB"></param>
+        private void MakinLists(InventoryRegistryDataBaseEntities3 InventoryRegDB)
+        {
+
+
+            List<Device> List = new List<Device>();
+            foreach (Device device in InventoryRegDB.Device.ToList())
+            {
+                Block block = new Block();
+                Department department = new Department();
+                Device _Device = new Device();
+                DeviceParts parts = new DeviceParts();
+                Device_Workplace device_Workplace = new Device_Workplace();
+                DeviceType device_type = new DeviceType();
+                Model model = new Model();
+                Office office = new Office();
+                Workplace workplace = new Workplace();
+            }
+
+            List<Device> DevicesList = new List<Device>();
+            foreach (Device device in InventoryRegDB.Device.ToList())
+            {
+                Device _Device = new Device();
+            }
+
+            //var column = new DeviceDataGridColum 
+            //DeviceDataGrid.Columns.Add(new DataGridColumn());
+
+            //this.DeviceDataGrid.Columns.Add(new DataGridColumn(_De);
+
+
+
+        }
+
+
+        
+            //DevBlockComboBox.ItemsSource =_invDbo.Block.ToList();
+            //DevDepComboBox.ItemsSource = _invDbo.Department.ToList();
+            //DevOfficeComboBox.ItemsSource = _invDbo.Office.ToList();
+
+            //DevTypeComboBox.ItemsSource = new DeviceType[]
+            //{ 
+            //    //Type = _invDbo.DeviceType.ToString() 
+            //    //this.DevTypeComboBox = _invDbo.DeviceType.ToList(),
+
+            //};
+
+            //ShowData(_invDbo);
+
+        /// <summary>
+        /// Сеттеры для подпоба элементов с таблицы
+        /// </summary>
+        //public DataRowView SelectedItem
+        //{
+        //    get { return (DataRowView)GetValue(SelectedItemProperty); }
+        //    set { SetValue(SelectedItemProperty, value); }
+        //}
+
+        /// <summary>
+        /// Переопределяем selectedItem
+        /// </summary>
+        //public static readonly DependencyProperty SelectedItemProperty =
+            //DependencyProperty.Register("SelectedItem", typeof(DataRowView), typeof(MainWindow), new PropertyMetadata(null));
+

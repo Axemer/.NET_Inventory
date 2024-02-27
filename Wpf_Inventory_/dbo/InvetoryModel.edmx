@@ -1,0 +1,620 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище InventoryRegistryDataBaseModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Block">
+          <Key>
+            <PropertyRef Name="Block_ID" />
+          </Key>
+          <Property Name="Block_ID" Type="int" Nullable="false" />
+          <Property Name="Block" Type="nvarchar" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="Department_ID" />
+          </Key>
+          <Property Name="Department_ID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Device">
+          <Key>
+            <PropertyRef Name="Device_ID" />
+          </Key>
+          <Property Name="Device_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DeviceType_ID" Type="int" />
+          <Property Name="IP_Adress" Type="nvarchar" MaxLength="15" />
+          <Property Name="Department_ID" Type="int" />
+          <Property Name="DeviceName" Type="nvarchar(max)" />
+          <Property Name="DateOfCommissioning" Type="date" />
+          <Property Name="SerialNumber" Type="nvarchar" MaxLength="16" />
+          <Property Name="InventoryNumber" Type="nvarchar" MaxLength="16" />
+          <Property Name="Model_ID" Type="int" />
+          <Property Name="Office_ID" Type="int" />
+          <Property Name="Exception" Type="bit" />
+          <Property Name="Note" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Device_Workplace">
+          <Key>
+            <PropertyRef Name="Device_Workplace_ID" />
+          </Key>
+          <Property Name="Device_Workplace_ID" Type="int" Nullable="false" />
+          <Property Name="Workplace_ID" Type="int" Nullable="false" />
+          <Property Name="Device_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DeviceParts">
+          <Key>
+            <PropertyRef Name="DeviceParts_ID" />
+          </Key>
+          <Property Name="DeviceParts_ID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="DeviceParts_Device">
+          <Key>
+            <PropertyRef Name="Device_ID" />
+            <PropertyRef Name="DeviceParts_ID" />
+          </Key>
+          <Property Name="Device_ID" Type="int" Nullable="false" />
+          <Property Name="DeviceParts_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DeviceType">
+          <Key>
+            <PropertyRef Name="DeviceType_ID" />
+          </Key>
+          <Property Name="DeviceType_ID" Type="int" Nullable="false" />
+          <Property Name="Type" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Model">
+          <Key>
+            <PropertyRef Name="Model_ID" />
+          </Key>
+          <Property Name="Model_ID" Type="int" Nullable="false" />
+          <Property Name="Model" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Office">
+          <Key>
+            <PropertyRef Name="Office_ID" />
+          </Key>
+          <Property Name="Office_ID" Type="int" Nullable="false" />
+          <Property Name="OfficeNum" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="Phone" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Office_Block">
+          <Key>
+            <PropertyRef Name="Office_ID" />
+            <PropertyRef Name="Block_ID" />
+          </Key>
+          <Property Name="Office_ID" Type="int" Nullable="false" />
+          <Property Name="Block_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Workplace">
+          <Key>
+            <PropertyRef Name="Workplace_ID" />
+          </Key>
+          <Property Name="Workplace_ID" Type="int" Nullable="false" />
+          <Property Name="Workplace_Note" Type="nvarchar(max)" />
+        </EntityType>
+        <Association Name="FK_Device_To_Department">
+          <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+          <End Role="Device" Type="Self.Device" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="Department_ID" />
+            </Principal>
+            <Dependent Role="Device">
+              <PropertyRef Name="Department_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Device_To_DiviceType">
+          <End Role="DeviceType" Type="Self.DeviceType" Multiplicity="0..1" />
+          <End Role="Device" Type="Self.Device" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeviceType">
+              <PropertyRef Name="DeviceType_ID" />
+            </Principal>
+            <Dependent Role="Device">
+              <PropertyRef Name="DeviceType_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Device_To_Model">
+          <End Role="Model" Type="Self.Model" Multiplicity="0..1" />
+          <End Role="Device" Type="Self.Device" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Model">
+              <PropertyRef Name="Model_ID" />
+            </Principal>
+            <Dependent Role="Device">
+              <PropertyRef Name="Model_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Device_To_Office">
+          <End Role="Office" Type="Self.Office" Multiplicity="0..1" />
+          <End Role="Device" Type="Self.Device" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Office">
+              <PropertyRef Name="Office_ID" />
+            </Principal>
+            <Dependent Role="Device">
+              <PropertyRef Name="Office_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Device_Workplace_To_Device">
+          <End Role="Device" Type="Self.Device" Multiplicity="1" />
+          <End Role="Device_Workplace" Type="Self.Device_Workplace" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Device">
+              <PropertyRef Name="Device_ID" />
+            </Principal>
+            <Dependent Role="Device_Workplace">
+              <PropertyRef Name="Device_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Device_Workplace_To_Workplace">
+          <End Role="Workplace" Type="Self.Workplace" Multiplicity="1" />
+          <End Role="Device_Workplace" Type="Self.Device_Workplace" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Workplace">
+              <PropertyRef Name="Workplace_ID" />
+            </Principal>
+            <Dependent Role="Device_Workplace">
+              <PropertyRef Name="Workplace_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DeviceParts_Device_To_Device">
+          <End Role="Device" Type="Self.Device" Multiplicity="1" />
+          <End Role="DeviceParts_Device" Type="Self.DeviceParts_Device" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Device">
+              <PropertyRef Name="Device_ID" />
+            </Principal>
+            <Dependent Role="DeviceParts_Device">
+              <PropertyRef Name="Device_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DeviceParts_Device_To_DeviceParts">
+          <End Role="DeviceParts" Type="Self.DeviceParts" Multiplicity="1" />
+          <End Role="DeviceParts_Device" Type="Self.DeviceParts_Device" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeviceParts">
+              <PropertyRef Name="DeviceParts_ID" />
+            </Principal>
+            <Dependent Role="DeviceParts_Device">
+              <PropertyRef Name="DeviceParts_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Office_Block_To_Block">
+          <End Role="Block" Type="Self.Block" Multiplicity="1" />
+          <End Role="Office_Block" Type="Self.Office_Block" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Block">
+              <PropertyRef Name="Block_ID" />
+            </Principal>
+            <Dependent Role="Office_Block">
+              <PropertyRef Name="Block_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Office_Block_To_Office">
+          <End Role="Office" Type="Self.Office" Multiplicity="1" />
+          <End Role="Office_Block" Type="Self.Office_Block" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Office">
+              <PropertyRef Name="Office_ID" />
+            </Principal>
+            <Dependent Role="Office_Block">
+              <PropertyRef Name="Office_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище InventoryRegistryDataBaseModelContainer">
+          <EntitySet Name="Block" EntityType="Self.Block" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Device" EntityType="Self.Device" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Device_Workplace" EntityType="Self.Device_Workplace" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DeviceParts" EntityType="Self.DeviceParts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DeviceParts_Device" EntityType="Self.DeviceParts_Device" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DeviceType" EntityType="Self.DeviceType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Model" EntityType="Self.Model" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Office" EntityType="Self.Office" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Office_Block" EntityType="Self.Office_Block" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Workplace" EntityType="Self.Workplace" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Device_To_Department" Association="Self.FK_Device_To_Department">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="Device" EntitySet="Device" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Device_To_DiviceType" Association="Self.FK_Device_To_DiviceType">
+            <End Role="DeviceType" EntitySet="DeviceType" />
+            <End Role="Device" EntitySet="Device" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Device_To_Model" Association="Self.FK_Device_To_Model">
+            <End Role="Model" EntitySet="Model" />
+            <End Role="Device" EntitySet="Device" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Device_To_Office" Association="Self.FK_Device_To_Office">
+            <End Role="Office" EntitySet="Office" />
+            <End Role="Device" EntitySet="Device" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Device_Workplace_To_Device" Association="Self.FK_Device_Workplace_To_Device">
+            <End Role="Device" EntitySet="Device" />
+            <End Role="Device_Workplace" EntitySet="Device_Workplace" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Device_Workplace_To_Workplace" Association="Self.FK_Device_Workplace_To_Workplace">
+            <End Role="Workplace" EntitySet="Workplace" />
+            <End Role="Device_Workplace" EntitySet="Device_Workplace" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DeviceParts_Device_To_Device" Association="Self.FK_DeviceParts_Device_To_Device">
+            <End Role="Device" EntitySet="Device" />
+            <End Role="DeviceParts_Device" EntitySet="DeviceParts_Device" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DeviceParts_Device_To_DeviceParts" Association="Self.FK_DeviceParts_Device_To_DeviceParts">
+            <End Role="DeviceParts" EntitySet="DeviceParts" />
+            <End Role="DeviceParts_Device" EntitySet="DeviceParts_Device" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Office_Block_To_Block" Association="Self.FK_Office_Block_To_Block">
+            <End Role="Block" EntitySet="Block" />
+            <End Role="Office_Block" EntitySet="Office_Block" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Office_Block_To_Office" Association="Self.FK_Office_Block_To_Office">
+            <End Role="Office" EntitySet="Office" />
+            <End Role="Office_Block" EntitySet="Office_Block" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="InventoryRegistryDataBaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Block">
+          <Key>
+            <PropertyRef Name="Block_ID" />
+          </Key>
+          <Property Name="Block_ID" Type="Int32" Nullable="false" />
+          <Property Name="Block1" Type="String" MaxLength="1" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Office" Relationship="Self.Office_Block" FromRole="Block" ToRole="Office" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="Department_ID" />
+          </Key>
+          <Property Name="Department_ID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Device" Relationship="Self.FK_Device_To_Department" FromRole="Department" ToRole="Device" />
+        </EntityType>
+        <EntityType Name="Device">
+          <Key>
+            <PropertyRef Name="Device_ID" />
+          </Key>
+          <Property Name="Device_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DeviceType_ID" Type="Int32" />
+          <Property Name="IP_Adress" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Department_ID" Type="Int32" />
+          <Property Name="DeviceName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DateOfCommissioning" Type="DateTime" Precision="0" />
+          <Property Name="SerialNumber" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+          <Property Name="InventoryNumber" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+          <Property Name="Model_ID" Type="Int32" />
+          <Property Name="Office_ID" Type="Int32" />
+          <Property Name="Exception" Type="Boolean" />
+          <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Department" Relationship="Self.FK_Device_To_Department" FromRole="Device" ToRole="Department" />
+          <NavigationProperty Name="DeviceType" Relationship="Self.FK_Device_To_DiviceType" FromRole="Device" ToRole="DeviceType" />
+          <NavigationProperty Name="Model" Relationship="Self.FK_Device_To_Model" FromRole="Device" ToRole="Model" />
+          <NavigationProperty Name="Office" Relationship="Self.FK_Device_To_Office" FromRole="Device" ToRole="Office" />
+          <NavigationProperty Name="Device_Workplace" Relationship="Self.FK_Device_Workplace_To_Device" FromRole="Device" ToRole="Device_Workplace" />
+          <NavigationProperty Name="DeviceParts" Relationship="Self.DeviceParts_Device" FromRole="Device" ToRole="DeviceParts" />
+        </EntityType>
+        <EntityType Name="Device_Workplace">
+          <Key>
+            <PropertyRef Name="Device_Workplace_ID" />
+          </Key>
+          <Property Name="Device_Workplace_ID" Type="Int32" Nullable="false" />
+          <Property Name="Workplace_ID" Type="Int32" Nullable="false" />
+          <Property Name="Device_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Device" Relationship="Self.FK_Device_Workplace_To_Device" FromRole="Device_Workplace" ToRole="Device" />
+          <NavigationProperty Name="Workplace" Relationship="Self.FK_Device_Workplace_To_Workplace" FromRole="Device_Workplace" ToRole="Workplace" />
+        </EntityType>
+        <EntityType Name="DeviceParts">
+          <Key>
+            <PropertyRef Name="DeviceParts_ID" />
+          </Key>
+          <Property Name="DeviceParts_ID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Device" Relationship="Self.DeviceParts_Device" FromRole="DeviceParts" ToRole="Device" />
+        </EntityType>
+        <EntityType Name="DeviceType">
+          <Key>
+            <PropertyRef Name="DeviceType_ID" />
+          </Key>
+          <Property Name="DeviceType_ID" Type="Int32" Nullable="false" />
+          <Property Name="Type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Device" Relationship="Self.FK_Device_To_DiviceType" FromRole="DeviceType" ToRole="Device" />
+        </EntityType>
+        <EntityType Name="Model">
+          <Key>
+            <PropertyRef Name="Model_ID" />
+          </Key>
+          <Property Name="Model_ID" Type="Int32" Nullable="false" />
+          <Property Name="Model1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Device" Relationship="Self.FK_Device_To_Model" FromRole="Model" ToRole="Device" />
+        </EntityType>
+        <EntityType Name="Office">
+          <Key>
+            <PropertyRef Name="Office_ID" />
+          </Key>
+          <Property Name="Office_ID" Type="Int32" Nullable="false" />
+          <Property Name="OfficeNum" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Device" Relationship="Self.FK_Device_To_Office" FromRole="Office" ToRole="Device" />
+          <NavigationProperty Name="Block" Relationship="Self.Office_Block" FromRole="Office" ToRole="Block" />
+        </EntityType>
+        <EntityType Name="Workplace">
+          <Key>
+            <PropertyRef Name="Workplace_ID" />
+          </Key>
+          <Property Name="Workplace_ID" Type="Int32" Nullable="false" />
+          <Property Name="Workplace_Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Device_Workplace" Relationship="Self.FK_Device_Workplace_To_Workplace" FromRole="Workplace" ToRole="Device_Workplace" />
+        </EntityType>
+        <Association Name="FK_Device_To_Department">
+          <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+          <End Role="Device" Type="Self.Device" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="Department_ID" />
+            </Principal>
+            <Dependent Role="Device">
+              <PropertyRef Name="Department_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Device_To_DiviceType">
+          <End Role="DeviceType" Type="Self.DeviceType" Multiplicity="0..1" />
+          <End Role="Device" Type="Self.Device" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeviceType">
+              <PropertyRef Name="DeviceType_ID" />
+            </Principal>
+            <Dependent Role="Device">
+              <PropertyRef Name="DeviceType_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Device_To_Model">
+          <End Role="Model" Type="Self.Model" Multiplicity="0..1" />
+          <End Role="Device" Type="Self.Device" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Model">
+              <PropertyRef Name="Model_ID" />
+            </Principal>
+            <Dependent Role="Device">
+              <PropertyRef Name="Model_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Device_To_Office">
+          <End Role="Office" Type="Self.Office" Multiplicity="0..1" />
+          <End Role="Device" Type="Self.Device" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Office">
+              <PropertyRef Name="Office_ID" />
+            </Principal>
+            <Dependent Role="Device">
+              <PropertyRef Name="Office_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Device_Workplace_To_Device">
+          <End Role="Device" Type="Self.Device" Multiplicity="1" />
+          <End Role="Device_Workplace" Type="Self.Device_Workplace" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Device">
+              <PropertyRef Name="Device_ID" />
+            </Principal>
+            <Dependent Role="Device_Workplace">
+              <PropertyRef Name="Device_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Device_Workplace_To_Workplace">
+          <End Role="Workplace" Type="Self.Workplace" Multiplicity="1" />
+          <End Role="Device_Workplace" Type="Self.Device_Workplace" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Workplace">
+              <PropertyRef Name="Workplace_ID" />
+            </Principal>
+            <Dependent Role="Device_Workplace">
+              <PropertyRef Name="Workplace_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DeviceParts_Device">
+          <End Role="Device" Type="Self.Device" Multiplicity="*" />
+          <End Role="DeviceParts" Type="Self.DeviceParts" Multiplicity="*" />
+        </Association>
+        <Association Name="Office_Block">
+          <End Role="Block" Type="Self.Block" Multiplicity="*" />
+          <End Role="Office" Type="Self.Office" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="InventoryRegistryDataBaseEntities3" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Block" EntityType="Self.Block" />
+          <EntitySet Name="Department" EntityType="Self.Department" />
+          <EntitySet Name="Device" EntityType="Self.Device" />
+          <EntitySet Name="Device_Workplace" EntityType="Self.Device_Workplace" />
+          <EntitySet Name="DeviceParts" EntityType="Self.DeviceParts" />
+          <EntitySet Name="DeviceType" EntityType="Self.DeviceType" />
+          <EntitySet Name="Model" EntityType="Self.Model" />
+          <EntitySet Name="Office" EntityType="Self.Office" />
+          <EntitySet Name="Workplace" EntityType="Self.Workplace" />
+          <AssociationSet Name="FK_Device_To_Department" Association="Self.FK_Device_To_Department">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="Device" EntitySet="Device" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Device_To_DiviceType" Association="Self.FK_Device_To_DiviceType">
+            <End Role="DeviceType" EntitySet="DeviceType" />
+            <End Role="Device" EntitySet="Device" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Device_To_Model" Association="Self.FK_Device_To_Model">
+            <End Role="Model" EntitySet="Model" />
+            <End Role="Device" EntitySet="Device" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Device_To_Office" Association="Self.FK_Device_To_Office">
+            <End Role="Office" EntitySet="Office" />
+            <End Role="Device" EntitySet="Device" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Device_Workplace_To_Device" Association="Self.FK_Device_Workplace_To_Device">
+            <End Role="Device" EntitySet="Device" />
+            <End Role="Device_Workplace" EntitySet="Device_Workplace" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Device_Workplace_To_Workplace" Association="Self.FK_Device_Workplace_To_Workplace">
+            <End Role="Workplace" EntitySet="Workplace" />
+            <End Role="Device_Workplace" EntitySet="Device_Workplace" />
+          </AssociationSet>
+          <AssociationSet Name="DeviceParts_Device" Association="Self.DeviceParts_Device">
+            <End Role="Device" EntitySet="Device" />
+            <End Role="DeviceParts" EntitySet="DeviceParts" />
+          </AssociationSet>
+          <AssociationSet Name="Office_Block" Association="Self.Office_Block">
+            <End Role="Block" EntitySet="Block" />
+            <End Role="Office" EntitySet="Office" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище InventoryRegistryDataBaseModelContainer" CdmEntityContainer="InventoryRegistryDataBaseEntities3">
+          <EntitySetMapping Name="Block">
+            <EntityTypeMapping TypeName="InventoryRegistryDataBaseModel.Block">
+              <MappingFragment StoreEntitySet="Block">
+                <ScalarProperty Name="Block_ID" ColumnName="Block_ID" />
+                <ScalarProperty Name="Block1" ColumnName="Block" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Department">
+            <EntityTypeMapping TypeName="InventoryRegistryDataBaseModel.Department">
+              <MappingFragment StoreEntitySet="Department">
+                <ScalarProperty Name="Department_ID" ColumnName="Department_ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Device">
+            <EntityTypeMapping TypeName="InventoryRegistryDataBaseModel.Device">
+              <MappingFragment StoreEntitySet="Device">
+                <ScalarProperty Name="Device_ID" ColumnName="Device_ID" />
+                <ScalarProperty Name="DeviceType_ID" ColumnName="DeviceType_ID" />
+                <ScalarProperty Name="IP_Adress" ColumnName="IP_Adress" />
+                <ScalarProperty Name="Department_ID" ColumnName="Department_ID" />
+                <ScalarProperty Name="DeviceName" ColumnName="DeviceName" />
+                <ScalarProperty Name="DateOfCommissioning" ColumnName="DateOfCommissioning" />
+                <ScalarProperty Name="SerialNumber" ColumnName="SerialNumber" />
+                <ScalarProperty Name="InventoryNumber" ColumnName="InventoryNumber" />
+                <ScalarProperty Name="Model_ID" ColumnName="Model_ID" />
+                <ScalarProperty Name="Office_ID" ColumnName="Office_ID" />
+                <ScalarProperty Name="Exception" ColumnName="Exception" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Device_Workplace">
+            <EntityTypeMapping TypeName="InventoryRegistryDataBaseModel.Device_Workplace">
+              <MappingFragment StoreEntitySet="Device_Workplace">
+                <ScalarProperty Name="Device_Workplace_ID" ColumnName="Device_Workplace_ID" />
+                <ScalarProperty Name="Workplace_ID" ColumnName="Workplace_ID" />
+                <ScalarProperty Name="Device_ID" ColumnName="Device_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DeviceParts">
+            <EntityTypeMapping TypeName="InventoryRegistryDataBaseModel.DeviceParts">
+              <MappingFragment StoreEntitySet="DeviceParts">
+                <ScalarProperty Name="DeviceParts_ID" ColumnName="DeviceParts_ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DeviceType">
+            <EntityTypeMapping TypeName="InventoryRegistryDataBaseModel.DeviceType">
+              <MappingFragment StoreEntitySet="DeviceType">
+                <ScalarProperty Name="DeviceType_ID" ColumnName="DeviceType_ID" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Model">
+            <EntityTypeMapping TypeName="InventoryRegistryDataBaseModel.Model">
+              <MappingFragment StoreEntitySet="Model">
+                <ScalarProperty Name="Model_ID" ColumnName="Model_ID" />
+                <ScalarProperty Name="Model1" ColumnName="Model" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Office">
+            <EntityTypeMapping TypeName="InventoryRegistryDataBaseModel.Office">
+              <MappingFragment StoreEntitySet="Office">
+                <ScalarProperty Name="Office_ID" ColumnName="Office_ID" />
+                <ScalarProperty Name="OfficeNum" ColumnName="OfficeNum" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Workplace">
+            <EntityTypeMapping TypeName="InventoryRegistryDataBaseModel.Workplace">
+              <MappingFragment StoreEntitySet="Workplace">
+                <ScalarProperty Name="Workplace_ID" ColumnName="Workplace_ID" />
+                <ScalarProperty Name="Workplace_Note" ColumnName="Workplace_Note" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="DeviceParts_Device" TypeName="InventoryRegistryDataBaseModel.DeviceParts_Device" StoreEntitySet="DeviceParts_Device">
+            <EndProperty Name="Device">
+              <ScalarProperty Name="Device_ID" ColumnName="Device_ID" />
+            </EndProperty>
+            <EndProperty Name="DeviceParts">
+              <ScalarProperty Name="DeviceParts_ID" ColumnName="DeviceParts_ID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Office_Block" TypeName="InventoryRegistryDataBaseModel.Office_Block" StoreEntitySet="Office_Block">
+            <EndProperty Name="Block">
+              <ScalarProperty Name="Block_ID" ColumnName="Block_ID" />
+            </EndProperty>
+            <EndProperty Name="Office">
+              <ScalarProperty Name="Office_ID" ColumnName="Office_ID" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
