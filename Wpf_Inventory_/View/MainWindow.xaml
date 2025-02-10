@@ -26,6 +26,7 @@
                 </DataGrid>
                 <Button x:Name="DeviceSyncButton" Content="Синхронизировать" HorizontalAlignment="Left" Margin="663,0,0,11" VerticalAlignment="Bottom" Height="30" Width="100"/>
                 <Button x:Name="DeviceAddButton" Content="Добавить" HorizontalAlignment="Left" Margin="10,0,0,11" VerticalAlignment="Bottom" Height="30" Width="100"/>
+                <Button x:Name="DeviceExportButton" Content="Экспорт" HorizontalAlignment="Left" Margin="596,376,0,0" VerticalAlignment="Top" Click="DeviceExportButton_Click"/>
             </Grid>
         </TabItem>
         <TabItem Header="Рабочие места">

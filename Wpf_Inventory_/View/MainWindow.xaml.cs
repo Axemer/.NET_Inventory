@@ -50,8 +50,6 @@ namespace Wpf_Inventory_
             //DeviceDataGrid.SelectedIndex
             //OpenDataWindow();
         }
-
-       
         
         private void DeviceDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -67,6 +65,17 @@ namespace Wpf_Inventory_
                 dataViewerWindow.Show();
                 dataViewerWindow.ShowData(SelctedDevice, _dbo);
             }
+        }
+
+        /// <summary>
+        /// Пулим с базы данных после чего делаем эксель таблицу 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DeviceExportButton_Click(object sender, RoutedEventArgs e)
+        {
+            ExcelExporter exporter = new ExcelExporter();
+            exporter.ExportTableToExcel();
         }
     }
 }
