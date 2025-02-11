@@ -28,12 +28,22 @@ namespace Wpf_Inventory_
 
         public MainWindow()
         {
+            // LoginCheck(); // ФИЧА ДОДЕЛАНА ВРОДЕ. УБЕРАТЬ ПРИ РЕЛИЗЕ ИЛИ ТЕСТЕ НА ПРАКТИКЕ
             InitializeComponent();
         }
 
         public void Window_Loaded(object sender, RoutedEventArgs e)
         {
             DeviceDataGridInit(_dbo);
+        }
+
+        private void LoginCheck()
+        {
+            LoginWindow loginWindow = new LoginWindow();
+            if (loginWindow.ShowDialog() != true)
+            {
+                Application.Current.Shutdown(); // Если вход не успешен — закрываем приложение
+            }
         }
 
         /// <summary>

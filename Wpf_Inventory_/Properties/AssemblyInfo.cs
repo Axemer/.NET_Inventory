@@ -8,9 +8,9 @@ using System.Windows;
 // набор атрибутов. Измените значения этих атрибутов, чтобы изменить сведения,
 // связанные со сборкой.
 [assembly: AssemblyTitle("Wpf_Inventory_")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Хрень для учета данных инвентаризации")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Рофлер 6000")]
 [assembly: AssemblyProduct("Wpf_Inventory_")]
 [assembly: AssemblyCopyright("Copyright ©  2024")]
 [assembly: AssemblyTrademark("")]

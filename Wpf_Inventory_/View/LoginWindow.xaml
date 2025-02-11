@@ -1,0 +1,17 @@
+﻿<Window x:Class="Wpf_Inventory_.View.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:Wpf_Inventory_.View"
+        Title="Вход в систему" WindowStartupLocation="CenterScreen"
+        Height="200" Width="350">
+    <Grid>
+        <TextBlock Text="Логин:" VerticalAlignment="Top" Margin="10,10,0,0"/>
+        <TextBox x:Name="UsernameBox" Margin="10,31,10,0" Height="24" VerticalAlignment="Top"/>
+
+        <TextBlock Text="Пароль:" VerticalAlignment="Top" Margin="10,60,0,0"/>
+        <PasswordBox x:Name="PasswordBox" Margin="10,81,10,0" Height="24" VerticalAlignment="Top"/>
+
+        <Button Content="Войти" Click="LoginButton_Click" Margin="10,0,10,12" Height="30" VerticalAlignment="Bottom"/>
+    </Grid>
+</Window>
+
