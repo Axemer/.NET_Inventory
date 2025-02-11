@@ -168,6 +168,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Classes\ActiveDirectoryAuth.cs" />
+    <Compile Include="Classes\DatabasePinger.cs" />
     <Compile Include="Classes\ExelExporter.cs" />
     <Compile Include="dbo\Block.cs">
       <DependentUpon>InvetoryModel.tt</DependentUpon>
@@ -274,6 +275,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Task.txt" />
     <Resource Include="Classes\Хлам.txt" />
     <Content Include="dbo\InventoryRegistryDataBase.mdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

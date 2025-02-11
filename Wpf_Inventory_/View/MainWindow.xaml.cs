@@ -87,5 +87,12 @@ namespace Wpf_Inventory_
             ExcelExporter exporter = new ExcelExporter();
             exporter.ExportTableToExcel();
         }
+
+        private void PingButton_Click(object sender, RoutedEventArgs e)
+        {
+            string connectionString = "Data Source=SERVER_NAME;Initial Catalog=DB_NAME;Integrated Security=True;";
+            DatabasePinger dbPinger = new DatabasePinger(connectionString);
+            dbPinger.PingDatabase();
+        }
     }
 }

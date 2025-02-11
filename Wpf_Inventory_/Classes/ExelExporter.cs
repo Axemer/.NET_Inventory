@@ -11,7 +11,7 @@ public class ExcelExporter
     public void ExportTableToExcel()
     {
         var db = DB_Connection.GetDataBase();
-        var inventoryData = db.Device.ToList(); // Замените на вашу таблицу
+        var inventoryData = db.Device.ToList(); 
 
         if (inventoryData == null || inventoryData.Count == 0)
         {
@@ -31,7 +31,7 @@ public class ExcelExporter
             SaveToExcelFile(inventoryData, saveFileDialog.FileName);
         }
 
-        if (!inventoryData.Any()) // Проверяем, есть ли данные
+        if (!inventoryData.Any()) 
         {
             MessageBox.Show("Таблица пуста или не существует.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
             return;
@@ -40,7 +40,7 @@ public class ExcelExporter
 
     private void SaveToExcelFile(dynamic data, string filePath)
     {
-        ExcelPackage.LicenseContext = LicenseContext.NonCommercial; // Добавлено для устранения ошибки
+        ExcelPackage.LicenseContext = LicenseContext.NonCommercial; // без этого щитпоста не работает. прога вроде в инет не стучится для проверки так что плевать, наверное?
 
         using (ExcelPackage package = new ExcelPackage())
         {
