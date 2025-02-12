@@ -24,6 +24,9 @@ namespace Wpf_Inventory_
     /// </summary>
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// Переменная с всем перечнем данных в базе данных.
+        /// </summary>
         public InventoryRegistryDataBaseEntities3 _dbo = DB_Connection.GetDataBase();
 
         public MainWindow()
@@ -37,6 +40,9 @@ namespace Wpf_Inventory_
             DeviceDataGridInit(_dbo);
         }
 
+        /// <summary>
+        /// Метод внедрения проверки на логин.
+        /// </summary>
         private void LoginCheck()
         {
             LoginWindow loginWindow = new LoginWindow();
@@ -47,7 +53,7 @@ namespace Wpf_Inventory_
         }
 
         /// <summary>
-        /// Забываем список данным из бд
+        /// Забываем список данным из бд.
         /// </summary>
         /// <param name="InventoryRegDB"> Данные из БД сюда надо </param>
         private void DeviceDataGridInit(InventoryRegistryDataBaseEntities3 InventoryRegDB)
@@ -61,6 +67,11 @@ namespace Wpf_Inventory_
             //OpenDataWindow();
         }
         
+        /// <summary>
+        /// Отрывает окно с подробностями о выбраном элементе БД.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DeviceDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             var SelctedDevice = DeviceDataGrid.SelectedItem;
@@ -78,7 +89,7 @@ namespace Wpf_Inventory_
         }
 
         /// <summary>
-        /// Пулим с базы данных после чего делаем эксель таблицу 
+        /// Пулим с базы данных после чего делаем эксель таблицу. 
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -88,6 +99,11 @@ namespace Wpf_Inventory_
             exporter.ExportTableToExcel();
         }
 
+        /// <summary>
+        /// Пинг базы данных.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void PingButton_Click(object sender, RoutedEventArgs e)
         {
             string connectionString = "Data Source=SERVER_NAME;Initial Catalog=DB_NAME;Integrated Security=True;";
