@@ -183,6 +183,8 @@
     <Compile Include="Classes\DatabasePinger.cs" />
     <Compile Include="Classes\ExelExporter.cs" />
     <Compile Include="Classes\LocalDatabase.cs" />
+    <Compile Include="Classes\SyncScheduler.cs" />
+    <Compile Include="Classes\SyncService.cs" />
     <Compile Include="dbo\Block.cs">
       <DependentUpon>InvetoryModel.tt</DependentUpon>
     </Compile>

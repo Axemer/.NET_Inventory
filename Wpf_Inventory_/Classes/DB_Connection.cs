@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Wpf_Inventory_.dbo;
+﻿using Wpf_Inventory_.dbo;
 
 namespace Wpf_Inventory_.Classes
 {

@@ -1,9 +1,5 @@
 ﻿using System.Data.SQLite;
 using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Wpf_Inventory_.Classes
 {
@@ -16,7 +12,7 @@ namespace Wpf_Inventory_.Classes
             if (!File.Exists(DbPath))
             {
                 SQLiteConnection.CreateFile(DbPath);
-                
+
                 using (var connection = new SQLiteConnection($"Data Source={DbPath};Version=3;"))
                 {
                     connection.Open();

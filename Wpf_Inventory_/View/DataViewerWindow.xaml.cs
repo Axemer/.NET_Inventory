@@ -1,19 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-//using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using Wpf_Inventory_.dbo;
 using Wpf_Inventory_.Classes;
-using System.Data.Entity;
+//using System.Windows.Documents;
+using Wpf_Inventory_.dbo;
 
 namespace Wpf_Inventory_.View
 {
@@ -50,7 +40,7 @@ namespace Wpf_Inventory_.View
             foreach (Office office in DBO.Office.ToList())
                 DevOfficeComboBox.Items.Add(office.OfficeNum);
 
-           
+
             // тут я начинаю из object выскивать сначала имена переменных потом уже сами переменные
             // Волшебная 6 
             //
@@ -62,7 +52,7 @@ namespace Wpf_Inventory_.View
 
             foreach (var prop in aasd)
             {
-                object PV =  SelectedDevice.GetType().GetProperty(prop).GetValue(SelectedDevice, null);
+                object PV = SelectedDevice.GetType().GetProperty(prop).GetValue(SelectedDevice, null);
 
                 obj.Add(PV);
 
@@ -72,7 +62,7 @@ namespace Wpf_Inventory_.View
             DevIDTextBox.Text = obj[6].ToString();
 
             var DevInf = SelectedDevice.GetType().GetProperty(DevIDTextBox.Text);
-            
+
 
 
         }

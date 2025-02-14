@@ -1,9 +1,8 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using OfficeOpenXml;
 using System.IO;
 using System.Linq;
 using System.Windows;
-using Microsoft.Win32;
-using OfficeOpenXml;
 using Wpf_Inventory_.Classes;
 
 public class ExcelExporter
@@ -11,7 +10,7 @@ public class ExcelExporter
     public void ExportTableToExcel()
     {
         var db = DB_Connection.GetDataBase();
-        var inventoryData = db.Device.ToList(); 
+        var inventoryData = db.ToString().ToList();
 
         if (inventoryData == null || inventoryData.Count == 0)
         {
@@ -31,7 +30,7 @@ public class ExcelExporter
             SaveToExcelFile(inventoryData, saveFileDialog.FileName);
         }
 
-        if (!inventoryData.Any()) 
+        if (!inventoryData.Any())
         {
             MessageBox.Show("Таблица пуста или не существует.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
             return;
