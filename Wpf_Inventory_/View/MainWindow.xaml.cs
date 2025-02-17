@@ -53,8 +53,7 @@ namespace Wpf_Inventory_
 
         private void DeviceDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //DeviceDataGrid.SelectedIndex
-            //OpenDataWindow();
+
         }
 
         /// <summary>
@@ -64,14 +63,11 @@ namespace Wpf_Inventory_
         /// <param name="e"></param>
         private void DeviceDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var SelctedDevice = DeviceDataGrid.SelectedItem;
-
-
-
+            var SelctedDevice = this.DeviceDataGrid.SelectedItem;
 
             if (SelctedDevice != null)
             {
-                //OpenDataWindow();
+                
                 DataViewerWindow dataViewerWindow = new DataViewerWindow();
                 dataViewerWindow.Show();
                 dataViewerWindow.ShowData(SelctedDevice, _dbo);
@@ -98,7 +94,17 @@ namespace Wpf_Inventory_
         {
             string connectionString = "Data Source=SERVER_NAME;Initial Catalog=DB_NAME;Integrated Security=True;";
             DatabasePinger dbPinger = new DatabasePinger(connectionString);
-            dbPinger.PingDatabase();
+            dbPinger.PingServer();
+        }
+
+        private void DeviceAddButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void DeviceSyncButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

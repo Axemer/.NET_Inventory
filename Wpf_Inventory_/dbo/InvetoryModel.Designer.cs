@@ -1,4 +1,4 @@
-﻿// Создание кода T4 для модели "D:\Coding\Wpf_Inventory_\Wpf_Inventory_\dbo\InvetoryModel.edmx" включено. 
+﻿// Создание кода T4 для модели "C:\Users\Alexa\source\repos\Axemer\.NET_Inventory\Wpf_Inventory_\dbo\InvetoryModel.edmx" включено. 
 // Чтобы включить формирование кода прежних версий, измените значение свойства "Стратегия создания кода" конструктора
 // на "Legacy ObjectContext". Это свойство доступно в окне "Свойства", если модель
 // открыта в конструкторе.

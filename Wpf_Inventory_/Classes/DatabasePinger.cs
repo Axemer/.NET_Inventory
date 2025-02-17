@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data.SqlClient;
 using System.Diagnostics;
+using System.Net.NetworkInformation;
 using System.Windows;
 
 namespace Wpf_Inventory_.Classes
@@ -14,6 +15,9 @@ namespace Wpf_Inventory_.Classes
             _connectionString = connectionString;
         }
 
+        /// <summary>
+        /// Проверяет подкоючение к базе данных с временем ответа
+        /// </summary>
         public void PingDatabase()
         {
             Stopwatch stopwatch = new Stopwatch();
@@ -33,6 +37,41 @@ namespace Wpf_Inventory_.Classes
             {
                 stopwatch.Stop();
                 MessageBox.Show($"Ошибка подключения к базе данных.\nВремя попытки: {stopwatch.ElapsedMilliseconds} мс\nОшибка: {ex.Message}",
+                    "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        /// <summary>
+        /// Проверяет подкоючение к серверу с временем ответа
+        /// </summary>
+        public void PingServer()
+        {
+            try
+            {
+                using (Ping ping = new Ping())
+                {
+                    Stopwatch stopwatch = new Stopwatch();
+                    stopwatch.Start();
+
+                    PingReply reply = ping.Send(_connectionString);
+
+                    stopwatch.Stop();
+
+                    if (reply.Status == IPStatus.Success)
+                    {
+                        MessageBox.Show($"Сервер доступен.\nВремя отклика: {reply.RoundtripTime} мс",
+                            "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Ошибка пинга.\nСтатус: {reply.Status}",
+                            "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при выполнении пинга.\nОшибка: {ex.Message}",
                     "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }

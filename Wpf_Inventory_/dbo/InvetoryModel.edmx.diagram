@@ -4,19 +4,31 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="16ecc1a94ab34ceca4208045259da993" Name="Diagram1">
+      <Diagram DiagramId="16ecc1a94ab34ceca4208045259da993" Name="Diagram1" ZoomLevel="127">
         <EntityTypeShape EntityType="InventoryRegistryDataBaseModel.Block" Width="1.5" PointX="0.75" PointY="2.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="InventoryRegistryDataBaseModel.Department" Width="1.5" PointX="3" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="InventoryRegistryDataBaseModel.Department" Width="1.5" PointX="8" PointY="5.75" IsExpanded="true" />
         <EntityTypeShape EntityType="InventoryRegistryDataBaseModel.Device" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="InventoryRegistryDataBaseModel.Device_Workplace" Width="1.5" PointX="7.5" PointY="2.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="InventoryRegistryDataBaseModel.DeviceParts" Width="1.5" PointX="7.5" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="InventoryRegistryDataBaseModel.DeviceParts" Width="1.5" PointX="8.25" PointY="8.375" IsExpanded="true" />
         <EntityTypeShape EntityType="InventoryRegistryDataBaseModel.DeviceType" Width="1.5" PointX="3" PointY="8" IsExpanded="true" />
-        <EntityTypeShape EntityType="InventoryRegistryDataBaseModel.Model" Width="1.5" PointX="3" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="InventoryRegistryDataBaseModel.Model" Width="1.5" PointX="2.875" PointY="5.75" IsExpanded="true" />
         <EntityTypeShape EntityType="InventoryRegistryDataBaseModel.Office" Width="1.5" PointX="3" PointY="2.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="InventoryRegistryDataBaseModel.Workplace" Width="1.5" PointX="5.25" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="InventoryRegistryDataBaseModel.Workplace" Width="1.5" PointX="10.25" PointY="2.875" IsExpanded="true" />
         <AssociationConnector Association="InventoryRegistryDataBaseModel.FK_Device_To_Department" ManuallyRouted="false" />
-        <AssociationConnector Association="InventoryRegistryDataBaseModel.FK_Device_To_DiviceType" ManuallyRouted="false" />
-        <AssociationConnector Association="InventoryRegistryDataBaseModel.FK_Device_To_Model" ManuallyRouted="false" />
+        <AssociationConnector Association="InventoryRegistryDataBaseModel.FK_Device_To_DiviceType" ManuallyRouted="true" >
+          <ConnectorPoint PointX="4.5" PointY="8.797841796875" />
+          <ConnectorPoint PointX="5.7812473342245818" PointY="8.797841796875" />
+          <ConnectorPoint PointX="5.7812473342245818" PointY="5.8414957167968744" />
+          <ConnectorPoint PointX="5.7811487356674549" PointY="5.8414957167968744" />
+          <ConnectorPoint PointX="5.7811487356674549" PointY="5.480205078125" />
+        </AssociationConnector>
+        <AssociationConnector Association="InventoryRegistryDataBaseModel.FK_Device_To_Model" ManuallyRouted="true" >
+          <ConnectorPoint PointX="4.375" PointY="6.1489208984375" />
+          <ConnectorPoint PointX="5.4869128757867429" PointY="6.1489208984375" />
+          <ConnectorPoint PointX="5.4869128757867429" PointY="5.7008812988281248" />
+          <ConnectorPoint PointX="5.4798896761414646" PointY="5.7008812988281248" />
+          <ConnectorPoint PointX="5.4798896761414646" PointY="5.480205078125" />
+        </AssociationConnector>
         <AssociationConnector Association="InventoryRegistryDataBaseModel.FK_Device_To_Office" ManuallyRouted="false" />
         <AssociationConnector Association="InventoryRegistryDataBaseModel.FK_Device_Workplace_To_Device" ManuallyRouted="false" />
         <AssociationConnector Association="InventoryRegistryDataBaseModel.FK_Device_Workplace_To_Workplace" ManuallyRouted="false" />
