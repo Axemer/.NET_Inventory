@@ -21,8 +21,6 @@ namespace Wpf_Inventory_.View
             InitializeComponent();
 
 
-
-
         }
 
         public void ShowData(object SelectedDevice, InventoryRegistryDataBaseEntities3 DBO)
