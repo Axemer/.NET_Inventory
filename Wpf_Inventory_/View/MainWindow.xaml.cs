@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 //using System.Windows.Documents; // конфликт
@@ -41,6 +42,36 @@ namespace Wpf_Inventory_
                 Application.Current.Shutdown(); // Если вход не успешен — закрываем приложение
             }
         }
+
+        /// <summary>
+        ///  Добавляет новое устройство с базовыми значениями
+        /// </summary>
+        public void AddNewDevice()
+        {
+            // Создаём новый объект Device
+            Device newDevice = new Device
+            {
+                DeviceName = "Новое устройство",
+                SerialNumber = "0",
+                InventoryNumber = "0",
+                Model = null,
+                Note = "",
+                DateOfCommissioning = DateTime.Now,
+                DeviceType_ID = 1, // Установить позже
+                Office_ID = 1, // Установить позже
+                Department_ID = 1 // Установить позже
+            };
+
+            // Добавляем в базу данных
+            _dbo.Device.Add(newDevice);
+            _dbo.SaveChanges(); // Сохраняем в базе, чтобы появился ID
+
+            // Открываем окно редактирования нового устройства
+            DataViewerWindow dataViewerWindow = new DataViewerWindow();
+            dataViewerWindow.Show();
+            dataViewerWindow.ShowData(newDevice, _dbo);
+        }
+
 
         /// <summary>
         /// Забываем список данным из бд.
@@ -99,7 +130,7 @@ namespace Wpf_Inventory_
 
         private void DeviceAddButton_Click(object sender, RoutedEventArgs e)
         {
-
+            AddNewDevice();
         }
 
         private void DeviceSyncButton_Click(object sender, RoutedEventArgs e)

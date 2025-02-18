@@ -231,11 +231,6 @@
     <Compile Include="dbo\Workplace.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="InventoryRegistryDataBaseDataSet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>InventoryRegistryDataBaseDataSet.xsd</DependentUpon>
-    </Compile>
     <Compile Include="View\DataViewerWindow.xaml.cs">
       <DependentUpon>DataViewerWindow.xaml</DependentUpon>
     </Compile>
@@ -287,17 +282,6 @@
     </EntityDeploy>
     <None Include="dbo\Model.edmx.diagram">
       <DependentUpon>Model.edmx</DependentUpon>
-    </None>
-    <None Include="InventoryRegistryDataBaseDataSet.xsc">
-      <DependentUpon>InventoryRegistryDataBaseDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="InventoryRegistryDataBaseDataSet.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>InventoryRegistryDataBaseDataSet.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="InventoryRegistryDataBaseDataSet.xss">
-      <DependentUpon>InventoryRegistryDataBaseDataSet.xsd</DependentUpon>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

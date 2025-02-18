@@ -22,12 +22,12 @@
         <TextBox x:Name="DevSerialTextBox" HorizontalAlignment="Left" Margin="115,250,0,0" TextWrapping="Wrap" Text="{}" VerticalAlignment="Top" Width="200" Height="20"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,282,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Height="20" FontSize="14" TextAlignment="Right"><Run Language="ru-ru" Text="Отдел :"/></TextBlock>
         <ComboBox x:Name="DevDepComboBox" SelectedItem="{}" ItemsSource="{Binding Department.Name}" HorizontalAlignment="Left" Margin="115,282,0,0"  Text="Нет данных" VerticalAlignment="Top" Width="200" Height="20"/>
-        <Button x:Name="DevSaveButton" Content="Сохранить" HorizontalAlignment="Left" Margin="358,327,0,0" VerticalAlignment="Top" Width="129"/>
-        <TextBox HorizontalAlignment="Left" Margin="358,57,0,0" TextWrapping="Wrap" Text="{}" VerticalAlignment="Top" Width="238" Height="160"/>
-        <TextBlock HorizontalAlignment="Left" Margin="358,32,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="72" Height="20" Text="Заметка :" FontSize="14" TextAlignment="Right"/>
+        <Button x:Name="DevSaveButton" Content="Сохранить" HorizontalAlignment="Left" Margin="358,327,0,0" VerticalAlignment="Top" Width="129" Click="DevSaveButton_Click"/>
+        <TextBox x:Name="DevNoteTextBox" HorizontalAlignment="Left" Margin="358,57,0,0" TextWrapping="Wrap" Text="{}" VerticalAlignment="Top" Width="238" Height="160"/>
+        <TextBlock x:Name="DevNoteTextBlock" HorizontalAlignment="Left" Margin="358,32,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="72" Height="20" Text="Заметка :" FontSize="14" TextAlignment="Right"/>
         <DatePicker x:Name="DevDateDatePicker" SelectedDate=""  HorizontalAlignment="Left" Margin="115,218,0,0" VerticalAlignment="Top" Width="200" Height="23"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,314,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Height="20" FontSize="14" TextAlignment="Right"><Run Language="ru-ru" Text="Блок :"/></TextBlock>
-        <ComboBox x:Name="DevBlockComboBox" SelectedItem="{}" ItemsSource="{Binding Block.Block1}" HorizontalAlignment="Left" Margin="115,314,0,0"  Text="Нет данных" VerticalAlignment="Top" Width="200" Height="20"/>
+        <ComboBox x:Name="DevBlockComboBox" SelectedItem="{Binding DBO.Block.Block1}"  HorizontalAlignment="Left" Margin="115,314,0,0"  Text="Нет данных" VerticalAlignment="Top" Width="200" Height="20"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,347,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Height="20" FontSize="14" TextAlignment="Right"><Run Language="ru-ru" Text="Офис"/><Run Text=" :"/></TextBlock>
         <ComboBox x:Name="DevOfficeComboBox" SelectedItem="{}" ItemsSource="{Binding Office.OfficeNum}" HorizontalAlignment="Left" Margin="115,347,0,0" Text="Нет данных" VerticalAlignment="Top" Width="200" Height="20"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,121,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Height="20" FontSize="14" TextAlignment="Right"><Run Text=" "/><Run Language="ru-ru" Text="Модель :"/></TextBlock>

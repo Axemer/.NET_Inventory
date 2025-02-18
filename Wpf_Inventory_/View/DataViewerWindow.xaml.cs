@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
@@ -23,6 +24,46 @@ namespace Wpf_Inventory_.View
 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="SelectedDevice"></param>
+        /// <param name="DBO"></param>
+        private void SaveDeviceChanges(Device SelectedDevice, InventoryRegistryDataBaseEntities3 DBO)
+        {
+            if (SelectedDevice == null || DBO == null)
+                return;
+
+            // Обновляем данные устройства
+            SelectedDevice.DeviceName = DevNameTextBox.Text;
+            SelectedDevice.SerialNumber = DevSerialTextBox.Text;
+            SelectedDevice.InventoryNumber = DevInvNumTextBox.Text;
+            //SelectedDevice.Model = DevModelTextBox.Text;
+            SelectedDevice.Note = DevNoteTextBox.Text;
+            SelectedDevice.DateOfCommissioning = DevDateDatePicker.SelectedDate ?? DateTime.Now;
+
+            // Обновляем связи с другими таблицами
+            //SelectedDevice.DeviceType = DBO.DeviceType.FirstOrDefault(d => d.Type == DevTypeComboBox.SelectedItem?.ToString());
+            //SelectedDevice.Department = DBO.Department.FirstOrDefault(d => d.Name == DevDepComboBox.SelectedItem?.ToString());
+            //SelectedDevice.Office = DBO.Office.FirstOrDefault(o => o.OfficeNum == DevOfficeComboBox.SelectedItem?.ToString());
+
+            // Блок через Office
+            if (SelectedDevice.Office != null)
+            {
+                //SelectedDevice.Office.Block = DBO.Block.Where(b => b.Block1 == DevBlockComboBox.SelectedItem?.ToString()).ToList();
+            }
+
+            // Сохраняем изменения
+            DBO.SaveChanges();
+            MessageBox.Show("Данные сохранены!", "Сохранение", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="SelectedDevice"></param>
+        /// <param name="DBO"></param>
         public void ShowData(object SelectedDevice, InventoryRegistryDataBaseEntities3 DBO)
         {
            
@@ -75,6 +116,8 @@ namespace Wpf_Inventory_.View
             DevInvNumTextBox.Text = device.InventoryNumber;
             DevModelTextBox.Text = device.Model.ToString();
             DevIPTextBox.Text = device.IP_Adress;
+            DevNoteTextBox.Text = device.Note;
+            DevDateDatePicker.SelectedDate = device.DateOfCommissioning;
             
 
             // Устанавливаем выбранные элементы в ComboBox
@@ -82,8 +125,14 @@ namespace Wpf_Inventory_.View
             DevBlockComboBox.SelectedItem = device.Office.Block;
             DevDepComboBox.SelectedItem = device.Department?.Name;
             DevOfficeComboBox.SelectedItem = device.Office?.OfficeNum;
-            DevBlockComboBox.SelectedItem = device.Office.Office_ID;
+            
+            
+        }
+
+        private void DevSaveButton_Click(object sender, RoutedEventArgs e)
+        {
 
         }
     }
 }
+
