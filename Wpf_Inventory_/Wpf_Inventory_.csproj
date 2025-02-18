@@ -62,11 +62,11 @@
     <Reference Include="EPPlus, Version=7.6.0.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
       <HintPath>..\packages\EPPlus.7.6.0\lib\net462\EPPlus.dll</HintPath>
     </Reference>
-    <Reference Include="EPPlus.Interfaces, Version=7.5.0.0, Culture=neutral, PublicKeyToken=a694d7f3b0907a61, processorArchitecture=MSIL">
-      <HintPath>..\packages\EPPlus.Interfaces.7.5.0\lib\net462\EPPlus.Interfaces.dll</HintPath>
+    <Reference Include="EPPlus.Interfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=a694d7f3b0907a61, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.Interfaces.8.0.0\lib\net462\EPPlus.Interfaces.dll</HintPath>
     </Reference>
-    <Reference Include="EPPlus.System.Drawing, Version=7.5.0.0, Culture=neutral, PublicKeyToken=2308d35469c9bac0, processorArchitecture=MSIL">
-      <HintPath>..\packages\EPPlus.System.Drawing.7.5.0\lib\net462\EPPlus.System.Drawing.dll</HintPath>
+    <Reference Include="EPPlus.System.Drawing, Version=8.0.0.0, Culture=neutral, PublicKeyToken=2308d35469c9bac0, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.System.Drawing.8.0.0\lib\net462\EPPlus.System.Drawing.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Bcl.Cryptography, Version=9.0.0.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.Cryptography.9.0.2\lib\net462\Microsoft.Bcl.Cryptography.dll</HintPath>
@@ -185,38 +185,56 @@
     <Compile Include="Classes\LocalDatabase.cs" />
     <Compile Include="Classes\SyncScheduler.cs" />
     <Compile Include="Classes\SyncService.cs" />
-    <Compile Include="dbo\Block.cs">
-      <DependentUpon>InvetoryModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Classes\DB_Connection.cs" />
+    <Compile Include="dbo\Block.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="dbo\Department.cs">
-      <DependentUpon>InvetoryModel.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="dbo\Device.cs">
-      <DependentUpon>InvetoryModel.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="dbo\DeviceParts.cs">
-      <DependentUpon>InvetoryModel.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="dbo\DeviceParts_Device.cs">
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="dbo\DeviceType.cs">
-      <DependentUpon>InvetoryModel.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="dbo\Device_Workplace.cs">
-      <DependentUpon>InvetoryModel.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="dbo\InvetoryModel.cs">
+    <Compile Include="dbo\Model.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>InvetoryModel.tt</DependentUpon>
+      <DependentUpon>Model.Context.tt</DependentUpon>
     </Compile>
     <Compile Include="dbo\Model.cs">
-      <DependentUpon>InvetoryModel.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="dbo\Model.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="dbo\Model1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="dbo\Office.cs">
-      <DependentUpon>InvetoryModel.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="dbo\Workplace.cs">
-      <DependentUpon>InvetoryModel.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="InventoryRegistryDataBaseDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InventoryRegistryDataBaseDataSet.xsd</DependentUpon>
     </Compile>
     <Compile Include="View\DataViewerWindow.xaml.cs">
       <DependentUpon>DataViewerWindow.xaml</DependentUpon>
@@ -232,16 +250,6 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="dbo\InvetoryModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>InvetoryModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="dbo\InvetoryModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>InvetoryModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="View\LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
@@ -273,12 +281,23 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EntityDeploy Include="dbo\InvetoryModel.edmx">
+    <EntityDeploy Include="dbo\Model.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>InvetoryModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>Model.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="dbo\InvetoryModel.edmx.diagram">
-      <DependentUpon>InvetoryModel.edmx</DependentUpon>
+    <None Include="dbo\Model.edmx.diagram">
+      <DependentUpon>Model.edmx</DependentUpon>
+    </None>
+    <None Include="InventoryRegistryDataBaseDataSet.xsc">
+      <DependentUpon>InventoryRegistryDataBaseDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="InventoryRegistryDataBaseDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>InventoryRegistryDataBaseDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="InventoryRegistryDataBaseDataSet.xss">
+      <DependentUpon>InventoryRegistryDataBaseDataSet.xsd</DependentUpon>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -290,6 +309,16 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="dbo\Model.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Model.Context.cs</LastGenOutput>
+      <DependentUpon>Model.edmx</DependentUpon>
+    </Content>
+    <Content Include="dbo\Model.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model.edmx</DependentUpon>
+      <LastGenOutput>Model1.cs</LastGenOutput>
+    </Content>
     <Resource Include="Task.txt" />
     <Resource Include="Classes\Хлам.txt" />
     <Content Include="dbo\InventoryRegistryDataBase.mdf">
@@ -298,16 +327,6 @@
     <Content Include="dbo\InventoryRegistryDataBase_log.ldf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DependentUpon>InventoryRegistryDataBase.mdf</DependentUpon>
-    </Content>
-    <Content Include="dbo\InvetoryModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>InvetoryModel.edmx</DependentUpon>
-      <LastGenOutput>InvetoryModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="dbo\InvetoryModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>InvetoryModel.edmx</DependentUpon>
-      <LastGenOutput>InvetoryModel.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>

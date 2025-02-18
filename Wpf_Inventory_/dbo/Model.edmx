@@ -144,18 +144,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Device_Workplace_To_Device">
-          <End Role="Device" Type="Self.Device" Multiplicity="1" />
-          <End Role="Device_Workplace" Type="Self.Device_Workplace" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Device">
-              <PropertyRef Name="Device_ID" />
-            </Principal>
-            <Dependent Role="Device_Workplace">
-              <PropertyRef Name="Device_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Device_Workplace_To_Workplace">
           <End Role="Workplace" Type="Self.Workplace" Multiplicity="1" />
           <End Role="Device_Workplace" Type="Self.Device_Workplace" Multiplicity="*" />
@@ -165,18 +153,6 @@
             </Principal>
             <Dependent Role="Device_Workplace">
               <PropertyRef Name="Workplace_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DeviceParts_Device_To_Device">
-          <End Role="Device" Type="Self.Device" Multiplicity="1" />
-          <End Role="DeviceParts_Device" Type="Self.DeviceParts_Device" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Device">
-              <PropertyRef Name="Device_ID" />
-            </Principal>
-            <Dependent Role="DeviceParts_Device">
-              <PropertyRef Name="Device_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -244,17 +220,9 @@
             <End Role="Office" EntitySet="Office" />
             <End Role="Device" EntitySet="Device" />
           </AssociationSet>
-          <AssociationSet Name="FK_Device_Workplace_To_Device" Association="Self.FK_Device_Workplace_To_Device">
-            <End Role="Device" EntitySet="Device" />
-            <End Role="Device_Workplace" EntitySet="Device_Workplace" />
-          </AssociationSet>
           <AssociationSet Name="FK_Device_Workplace_To_Workplace" Association="Self.FK_Device_Workplace_To_Workplace">
             <End Role="Workplace" EntitySet="Workplace" />
             <End Role="Device_Workplace" EntitySet="Device_Workplace" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DeviceParts_Device_To_Device" Association="Self.FK_DeviceParts_Device_To_Device">
-            <End Role="Device" EntitySet="Device" />
-            <End Role="DeviceParts_Device" EntitySet="DeviceParts_Device" />
           </AssociationSet>
           <AssociationSet Name="FK_DeviceParts_Device_To_DeviceParts" Association="Self.FK_DeviceParts_Device_To_DeviceParts">
             <End Role="DeviceParts" EntitySet="DeviceParts" />
@@ -310,8 +278,6 @@
           <NavigationProperty Name="DeviceType" Relationship="Self.FK_Device_To_DiviceType" FromRole="Device" ToRole="DeviceType" />
           <NavigationProperty Name="Model" Relationship="Self.FK_Device_To_Model" FromRole="Device" ToRole="Model" />
           <NavigationProperty Name="Office" Relationship="Self.FK_Device_To_Office" FromRole="Device" ToRole="Office" />
-          <NavigationProperty Name="Device_Workplace" Relationship="Self.FK_Device_Workplace_To_Device" FromRole="Device" ToRole="Device_Workplace" />
-          <NavigationProperty Name="DeviceParts" Relationship="Self.DeviceParts_Device" FromRole="Device" ToRole="DeviceParts" />
         </EntityType>
         <EntityType Name="Device_Workplace">
           <Key>
@@ -320,7 +286,6 @@
           <Property Name="Device_Workplace_ID" Type="Int32" Nullable="false" />
           <Property Name="Workplace_ID" Type="Int32" Nullable="false" />
           <Property Name="Device_ID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Device" Relationship="Self.FK_Device_Workplace_To_Device" FromRole="Device_Workplace" ToRole="Device" />
           <NavigationProperty Name="Workplace" Relationship="Self.FK_Device_Workplace_To_Workplace" FromRole="Device_Workplace" ToRole="Workplace" />
         </EntityType>
         <EntityType Name="DeviceParts">
@@ -329,7 +294,16 @@
           </Key>
           <Property Name="DeviceParts_ID" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Device" Relationship="Self.DeviceParts_Device" FromRole="DeviceParts" ToRole="Device" />
+          <NavigationProperty Name="DeviceParts_Device" Relationship="Self.FK_DeviceParts_Device_To_DeviceParts" FromRole="DeviceParts" ToRole="DeviceParts_Device" />
+        </EntityType>
+        <EntityType Name="DeviceParts_Device">
+          <Key>
+            <PropertyRef Name="Device_ID" />
+            <PropertyRef Name="DeviceParts_ID" />
+          </Key>
+          <Property Name="Device_ID" Type="Int32" Nullable="false" />
+          <Property Name="DeviceParts_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="DeviceParts" Relationship="Self.FK_DeviceParts_Device_To_DeviceParts" FromRole="DeviceParts_Device" ToRole="DeviceParts" />
         </EntityType>
         <EntityType Name="DeviceType">
           <Key>
@@ -413,18 +387,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Device_Workplace_To_Device">
-          <End Role="Device" Type="Self.Device" Multiplicity="1" />
-          <End Role="Device_Workplace" Type="Self.Device_Workplace" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Device">
-              <PropertyRef Name="Device_ID" />
-            </Principal>
-            <Dependent Role="Device_Workplace">
-              <PropertyRef Name="Device_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Device_Workplace_To_Workplace">
           <End Role="Workplace" Type="Self.Workplace" Multiplicity="1" />
           <End Role="Device_Workplace" Type="Self.Device_Workplace" Multiplicity="*" />
@@ -437,9 +399,17 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="DeviceParts_Device">
-          <End Role="Device" Type="Self.Device" Multiplicity="*" />
-          <End Role="DeviceParts" Type="Self.DeviceParts" Multiplicity="*" />
+        <Association Name="FK_DeviceParts_Device_To_DeviceParts">
+          <End Role="DeviceParts" Type="Self.DeviceParts" Multiplicity="1" />
+          <End Role="DeviceParts_Device" Type="Self.DeviceParts_Device" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeviceParts">
+              <PropertyRef Name="DeviceParts_ID" />
+            </Principal>
+            <Dependent Role="DeviceParts_Device">
+              <PropertyRef Name="DeviceParts_ID" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         <Association Name="Office_Block">
           <End Role="Block" Type="Self.Block" Multiplicity="*" />
@@ -451,6 +421,7 @@
           <EntitySet Name="Device" EntityType="Self.Device" />
           <EntitySet Name="Device_Workplace" EntityType="Self.Device_Workplace" />
           <EntitySet Name="DeviceParts" EntityType="Self.DeviceParts" />
+          <EntitySet Name="DeviceParts_Device" EntityType="Self.DeviceParts_Device" />
           <EntitySet Name="DeviceType" EntityType="Self.DeviceType" />
           <EntitySet Name="Model" EntityType="Self.Model" />
           <EntitySet Name="Office" EntityType="Self.Office" />
@@ -471,17 +442,13 @@
             <End Role="Office" EntitySet="Office" />
             <End Role="Device" EntitySet="Device" />
           </AssociationSet>
-          <AssociationSet Name="FK_Device_Workplace_To_Device" Association="Self.FK_Device_Workplace_To_Device">
-            <End Role="Device" EntitySet="Device" />
-            <End Role="Device_Workplace" EntitySet="Device_Workplace" />
-          </AssociationSet>
           <AssociationSet Name="FK_Device_Workplace_To_Workplace" Association="Self.FK_Device_Workplace_To_Workplace">
             <End Role="Workplace" EntitySet="Workplace" />
             <End Role="Device_Workplace" EntitySet="Device_Workplace" />
           </AssociationSet>
-          <AssociationSet Name="DeviceParts_Device" Association="Self.DeviceParts_Device">
-            <End Role="Device" EntitySet="Device" />
+          <AssociationSet Name="FK_DeviceParts_Device_To_DeviceParts" Association="Self.FK_DeviceParts_Device_To_DeviceParts">
             <End Role="DeviceParts" EntitySet="DeviceParts" />
+            <End Role="DeviceParts_Device" EntitySet="DeviceParts_Device" />
           </AssociationSet>
           <AssociationSet Name="Office_Block" Association="Self.Office_Block">
             <End Role="Block" EntitySet="Block" />
@@ -545,6 +512,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="DeviceParts_Device">
+            <EntityTypeMapping TypeName="InventoryRegistryDataBaseModel.DeviceParts_Device">
+              <MappingFragment StoreEntitySet="DeviceParts_Device">
+                <ScalarProperty Name="Device_ID" ColumnName="Device_ID" />
+                <ScalarProperty Name="DeviceParts_ID" ColumnName="DeviceParts_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="DeviceType">
             <EntityTypeMapping TypeName="InventoryRegistryDataBaseModel.DeviceType">
               <MappingFragment StoreEntitySet="DeviceType">
@@ -578,14 +553,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="DeviceParts_Device" TypeName="InventoryRegistryDataBaseModel.DeviceParts_Device" StoreEntitySet="DeviceParts_Device">
-            <EndProperty Name="Device">
-              <ScalarProperty Name="Device_ID" ColumnName="Device_ID" />
-            </EndProperty>
-            <EndProperty Name="DeviceParts">
-              <ScalarProperty Name="DeviceParts_ID" ColumnName="DeviceParts_ID" />
-            </EndProperty>
-          </AssociationSetMapping>
           <AssociationSetMapping Name="Office_Block" TypeName="InventoryRegistryDataBaseModel.Office_Block" StoreEntitySet="Office_Block">
             <EndProperty Name="Block">
               <ScalarProperty Name="Block_ID" ColumnName="Block_ID" />

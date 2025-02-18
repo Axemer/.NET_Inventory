@@ -12,18 +12,11 @@ namespace Wpf_Inventory_.dbo
     using System;
     using System.Collections.Generic;
     
-    public partial class DeviceParts
+    public partial class DeviceParts_Device
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public DeviceParts()
-        {
-            this.DeviceParts_Device = new HashSet<DeviceParts_Device>();
-        }
-    
+        public int Device_ID { get; set; }
         public int DeviceParts_ID { get; set; }
-        public string Name { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DeviceParts_Device> DeviceParts_Device { get; set; }
+        public virtual DeviceParts DeviceParts { get; set; }
     }
 }

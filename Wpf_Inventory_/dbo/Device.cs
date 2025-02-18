@@ -14,13 +14,6 @@ namespace Wpf_Inventory_.dbo
     
     public partial class Device
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Device()
-        {
-            this.Device_Workplace = new HashSet<Device_Workplace>();
-            this.DeviceParts = new HashSet<DeviceParts>();
-        }
-    
         public int Device_ID { get; set; }
         public Nullable<int> DeviceType_ID { get; set; }
         public string IP_Adress { get; set; }
@@ -38,9 +31,5 @@ namespace Wpf_Inventory_.dbo
         public virtual DeviceType DeviceType { get; set; }
         public virtual Model Model { get; set; }
         public virtual Office Office { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Device_Workplace> Device_Workplace { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DeviceParts> DeviceParts { get; set; }
     }
 }
