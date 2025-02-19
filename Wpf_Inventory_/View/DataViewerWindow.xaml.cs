@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
 using Wpf_Inventory_.Classes;
-//using System.Windows.Documents;
 using Wpf_Inventory_.dbo;
+using System.Data.Entity;
 
 namespace Wpf_Inventory_.View
 {
@@ -21,7 +20,7 @@ namespace Wpf_Inventory_.View
         {
             InitializeComponent();
 
-
+            
         }
 
         /// <summary>
@@ -66,7 +65,8 @@ namespace Wpf_Inventory_.View
         /// <param name="DBO"></param>
         public void ShowData(object SelectedDevice, InventoryRegistryDataBaseEntities3 DBO)
         {
-           
+            DBO.Configuration.ProxyCreationEnabled = false;
+
             if (SelectedDevice == null || DBO == null) return;
 
 
@@ -91,8 +91,13 @@ namespace Wpf_Inventory_.View
 
             if (DevBlockComboBox.Items.Count == 0)
             {
-                foreach (Block block in DBO.Block.ToList())
-                    DevBlockComboBox.Items.Add(block.Block1);
+                //foreach (Block block in DBO.Block.ToList())
+                //    DevBlockComboBox.Items.Add(block.Block1);
+                DevBlockComboBox.ItemsSource = DBO.Block.ToList();
+
+                DevBlockComboBox.DisplayMemberPath = "Block1";
+                DevBlockComboBox.SelectedValuePath = "Block_ID";
+
             }
 
             if (DevDepComboBox.Items.Count == 0)
@@ -107,31 +112,28 @@ namespace Wpf_Inventory_.View
                     DevOfficeComboBox.Items.Add(office.OfficeNum);
             }
 
-            //this.DataContext = SelectedDevice;
-
             // Заполняем текстовые поля данными устройства
             DevIDTextBox.Text = device.Device_ID.ToString();
             DevNameTextBox.Text = device.DeviceName.ToString();
             DevSerialTextBox.Text = device.SerialNumber;
             DevInvNumTextBox.Text = device.InventoryNumber;
-            DevModelTextBox.Text = device.Model.ToString();
+            DevModelTextBox.Text = device?.Model.Model1;
             DevIPTextBox.Text = device.IP_Adress;
             DevNoteTextBox.Text = device.Note;
             DevDateDatePicker.SelectedDate = device.DateOfCommissioning;
-            
+
 
             // Устанавливаем выбранные элементы в ComboBox
             DevTypeComboBox.SelectedItem = device.DeviceType?.Type;
-            DevBlockComboBox.SelectedItem = device.Office.Block;
+            DevBlockComboBox.SelectedItem = device.Office?.Block;
             DevDepComboBox.SelectedItem = device.Department?.Name;
             DevOfficeComboBox.SelectedItem = device.Office?.OfficeNum;
-            
-            
+
         }
 
         private void DevSaveButton_Click(object sender, RoutedEventArgs e)
         {
-
+            
         }
     }
 }
