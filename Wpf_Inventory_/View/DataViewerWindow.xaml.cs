@@ -13,8 +13,9 @@ namespace Wpf_Inventory_.View
     /// </summary>
     public partial class DataViewerWindow : Window
     {
-        private Device _currentDevice = new Device();
+        private object _currentDevice = new Device();
         private InventoryRegistryDataBaseEntities3 _invDbo = DB_Connection.GetDataBase();
+         
 
         public DataViewerWindow()
         {
@@ -59,7 +60,7 @@ namespace Wpf_Inventory_.View
 
 
         /// <summary>
-        /// 
+        /// Показывает все данне устройства в окне.
         /// </summary>
         /// <param name="SelectedDevice"></param>
         /// <param name="DBO"></param>
@@ -68,7 +69,7 @@ namespace Wpf_Inventory_.View
             DBO.Configuration.ProxyCreationEnabled = false;
 
             if (SelectedDevice == null || DBO == null) return;
-
+            _currentDevice = SelectedDevice;
 
             // Получаем ID устройства из объекта SelectedDevice (если у него есть свойство Device_ID)
             PropertyInfo idProperty = SelectedDevice.GetType().GetProperty("Device_ID");
@@ -91,13 +92,8 @@ namespace Wpf_Inventory_.View
 
             if (DevBlockComboBox.Items.Count == 0)
             {
-                //foreach (Block block in DBO.Block.ToList())
-                //    DevBlockComboBox.Items.Add(block.Block1);
-                DevBlockComboBox.ItemsSource = DBO.Block.ToList();
-
-                DevBlockComboBox.DisplayMemberPath = "Block1";
-                DevBlockComboBox.SelectedValuePath = "Block_ID";
-
+                foreach (Block block in DBO.Block.ToList())
+                    DevBlockComboBox.Items.Add(block.Block1);
             }
 
             if (DevDepComboBox.Items.Count == 0)
@@ -128,12 +124,14 @@ namespace Wpf_Inventory_.View
             DevBlockComboBox.SelectedItem = device.Office?.Block;
             DevDepComboBox.SelectedItem = device.Department?.Name;
             DevOfficeComboBox.SelectedItem = device.Office?.OfficeNum;
+            
 
         }
 
         private void DevSaveButton_Click(object sender, RoutedEventArgs e)
         {
-            
+
+            //SaveDeviceChanges(_currentDevice, _invDbo); // переписать методы не работает коректно
         }
     }
 }
