@@ -29,28 +29,50 @@ namespace Wpf_Inventory_.View
         /// </summary>
         /// <param name="SelectedDevice"></param>
         /// <param name="DBO"></param>
-        private void SaveDeviceChanges(Device SelectedDevice, InventoryRegistryDataBaseEntities3 DBO)
+        private void SaveDeviceChanges(object SelectedDevice, InventoryRegistryDataBaseEntities3 DBO)
         {
-            if (SelectedDevice == null || DBO == null)
-                return;
+            if (SelectedDevice == null || DBO == null) return;
+
+            PropertyInfo idProperty = SelectedDevice.GetType().GetProperty("Device_ID");
+            if (idProperty == null) return;
+
+            int deviceId = (int)idProperty.GetValue(SelectedDevice);
+            Device device = DBO.Device.FirstOrDefault(d => d.Device_ID == deviceId);
+            if (device == null) return;
 
             // Обновляем данные устройства
-            SelectedDevice.DeviceName = DevNameTextBox.Text;
-            SelectedDevice.SerialNumber = DevSerialTextBox.Text;
-            SelectedDevice.InventoryNumber = DevInvNumTextBox.Text;
-            //SelectedDevice.Model = DevModelTextBox.Text;
-            SelectedDevice.Note = DevNoteTextBox.Text;
-            SelectedDevice.DateOfCommissioning = DevDateDatePicker.SelectedDate ?? DateTime.Now;
+            device.DeviceName = DevNameTextBox.Text;
+            device.SerialNumber = DevSerialTextBox.Text;
+            device.InventoryNumber = DevInvNumTextBox.Text;
+            device.Model = DBO.Model.FirstOrDefault(m => m.Model1 == DevModelTextBox.Text);
+            device.Note = DevNoteTextBox.Text;
+            device.DateOfCommissioning = DevDateDatePicker.SelectedDate ?? DateTime.Now;
 
             // Обновляем связи с другими таблицами
-            //SelectedDevice.DeviceType = DBO.DeviceType.FirstOrDefault(d => d.Type == DevTypeComboBox.SelectedItem?.ToString());
-            //SelectedDevice.Department = DBO.Department.FirstOrDefault(d => d.Name == DevDepComboBox.SelectedItem?.ToString());
-            //SelectedDevice.Office = DBO.Office.FirstOrDefault(o => o.OfficeNum == DevOfficeComboBox.SelectedItem?.ToString());
+            string selectedDeviceType = DevTypeComboBox.SelectedItem?.ToString();
+            if (!string.IsNullOrEmpty(selectedDeviceType))
+                device.DeviceType = DBO.DeviceType.FirstOrDefault(d => d.Type == selectedDeviceType);
 
-            // Блок через Office
-            if (SelectedDevice.Office != null)
+            string selectedDepartment = DevDepComboBox.SelectedItem?.ToString();
+            if (!string.IsNullOrEmpty(selectedDepartment))
+                device.Department = DBO.Department.FirstOrDefault(d => d.Name == selectedDepartment);
+
+            string selectedOffice = DevOfficeComboBox.SelectedItem?.ToString();
+            if (!string.IsNullOrEmpty(selectedOffice))
+                device.Office = DBO.Office.FirstOrDefault(o => o.OfficeNum == selectedOffice);
+
+            if (device.Office != null)
             {
-                //SelectedDevice.Office.Block = DBO.Block.Where(b => b.Block1 == DevBlockComboBox.SelectedItem?.ToString()).ToList();
+                string selectedBlock = DevBlockComboBox.SelectedItem?.ToString();
+                if (!string.IsNullOrEmpty(selectedBlock))
+                {
+                    Block block = DBO.Block.FirstOrDefault(b => b.Block1 == selectedBlock);
+                    if (block != null)
+                    {
+                        device.Office.Block.Clear(); // Удаляем старые связи, если требуется
+                        device.Office.Block.Add(block); // Добавляем новый блок
+                    }
+                }
             }
 
             // Сохраняем изменения
@@ -131,7 +153,7 @@ namespace Wpf_Inventory_.View
         private void DevSaveButton_Click(object sender, RoutedEventArgs e)
         {
 
-            //SaveDeviceChanges(_currentDevice, _invDbo); // переписать методы не работает коректно
+            SaveDeviceChanges(_currentDevice, _invDbo); 
         }
     }
 }
