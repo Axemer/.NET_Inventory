@@ -5,9 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wpf_Inventory_"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded">
+        Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded"
+        xmlns:Classes="clr-namespace:Wpf_Inventory_.Classes">
+        
     <Window.Resources>
-
+        <Classes:NullableBoolToBoolConverter x:Key="NullableBoolConverter"/>
     </Window.Resources>
     <TabControl>
         <TabItem Header="Устройства">
@@ -20,7 +22,7 @@
                         <DataGridTextColumn Header="Название" Binding="{Binding DeviceName}" Width="auto"></DataGridTextColumn>
                         <DataGridTextColumn Header="IP" Binding="{Binding IP_Adress}" Width="auto"></DataGridTextColumn>
                         <DataGridTextColumn Header="Дата приема" Binding="{Binding DateOfCommissioning}" Width="*"></DataGridTextColumn>
-                        <DataGridCheckBoxColumn Header="Списано" Binding="{Binding Exeption}" Width="60"></DataGridCheckBoxColumn>
+                        <DataGridCheckBoxColumn Header="Списано" Binding="{Binding Exception, Converter={StaticResource NullableBoolConverter}}" Width="60"></DataGridCheckBoxColumn>
 
                     </DataGrid.Columns>
                 </DataGrid>
