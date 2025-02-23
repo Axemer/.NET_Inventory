@@ -9,7 +9,7 @@ using System.Data.Entity;
 
 namespace Wpf_Inventory_.View
 {
-    public delegate void DeviceSavedEventHandler(object sender, EventArgs e);
+    
 
     /// <summary>
     /// Логика взаимодействия для DataViewerWindow.xaml
@@ -27,7 +27,7 @@ namespace Wpf_Inventory_.View
             
         }
 
-        public event DeviceSavedEventHandler DeviceSavedEvent;
+        
 
         /// <summary>
         /// 

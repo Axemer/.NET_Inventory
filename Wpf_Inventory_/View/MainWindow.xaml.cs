@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Linq;
+using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 //using System.Windows.Documents; // конфликт
@@ -20,15 +23,15 @@ namespace Wpf_Inventory_
         /// </summary>
         public InventoryRegistryDataBaseEntities3 _dbo = DB_Connection.GetDataBase();
 
-        private DataViewerWindow _dataViewer;
+        public delegate void DeviceSavedEventHandler(object sender, EventArgs e);
+        public event DeviceSavedEventHandler DeviceSavedEvent;
 
         public MainWindow()
         {
-            // LoginCheck(); // ФИЧА ДОДЕЛАНА ВРОДЕ. УБЕРАТЬ ПРИ РЕЛИЗЕ ИЛИ ТЕСТЕ НА ПРАКТИКЕ
+            // LoginCheck(); // ФИЧА ДОДЕЛАНА ВРОДЕ. УБЕРАТЬ ПРИ РЕЛИЗЕ ИЛИ ТЕСТЕ
             InitializeComponent();
 
-            if (_dataViewer != null)
-                _dataViewer.DeviceSavedEvent += OnDeviceSaved;
+     
         }
 
         public void Window_Loaded(object sender, RoutedEventArgs e)
@@ -119,7 +122,9 @@ namespace Wpf_Inventory_
                 DataViewerWindow dataViewerWindow = new DataViewerWindow();
                 dataViewerWindow.Show();
                 dataViewerWindow.ShowData(SelctedDevice, _dbo);
+                
             }
+
         }
 
         /// <summary>
