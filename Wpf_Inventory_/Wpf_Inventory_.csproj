@@ -181,6 +181,7 @@
     </ApplicationDefinition>
     <Compile Include="Classes\ActiveDirectoryAuth.cs" />
     <Compile Include="Classes\DatabasePinger.cs" />
+    <Compile Include="Classes\EventContainer.cs" />
     <Compile Include="Classes\ExelExporter.cs" />
     <Compile Include="Classes\LocalDatabase.cs" />
     <Compile Include="Classes\NullableBoolToBoolConverter.cs" />
