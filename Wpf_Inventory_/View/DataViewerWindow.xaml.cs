@@ -4,10 +4,13 @@ using System.Reflection;
 using System.Windows;
 using Wpf_Inventory_.Classes;
 using Wpf_Inventory_.dbo;
+using Wpf_Inventory_;
 using System.Data.Entity;
 
 namespace Wpf_Inventory_.View
 {
+    public delegate void DeviceSavedEventHandler(object sender, EventArgs e);
+
     /// <summary>
     /// Логика взаимодействия для DataViewerWindow.xaml
     /// </summary>
@@ -23,6 +26,8 @@ namespace Wpf_Inventory_.View
 
             
         }
+
+        public event DeviceSavedEventHandler DeviceSavedEvent;
 
         /// <summary>
         /// 
@@ -44,9 +49,21 @@ namespace Wpf_Inventory_.View
             device.DeviceName = DevNameTextBox.Text;
             device.SerialNumber = DevSerialTextBox.Text;
             device.InventoryNumber = DevInvNumTextBox.Text;
-            device.Model = DBO.Model.FirstOrDefault(m => m.Model1 == DevModelTextBox.Text);
+            device.IP_Adress = DevIPTextBox.Text; 
             device.Note = DevNoteTextBox.Text;
             device.DateOfCommissioning = DevDateDatePicker.SelectedDate ?? DateTime.Now;
+
+            // Обновляем Model_ID ибо на прямую не хочет
+            string selectedModel = DevModelTextBox.Text;
+            if (!string.IsNullOrEmpty(selectedModel))
+            {
+                Model model = DBO.Model.FirstOrDefault(m => m.Model1 == selectedModel);
+                if (model != null)
+                {
+                    device.Model_ID = model.Model_ID; //Сохраняем ID модели
+                    device.Model = model;
+                }
+            }
 
             // Обновляем связи с другими таблицами
             string selectedDeviceType = DevTypeComboBox.SelectedItem?.ToString();
@@ -61,6 +78,7 @@ namespace Wpf_Inventory_.View
             if (!string.IsNullOrEmpty(selectedOffice))
                 device.Office = DBO.Office.FirstOrDefault(o => o.OfficeNum == selectedOffice);
 
+            // Потуги не идееспособные по идее ибо результата нет
             if (device.Office != null)
             {
                 string selectedBlock = DevBlockComboBox.SelectedItem?.ToString();
@@ -78,7 +96,11 @@ namespace Wpf_Inventory_.View
             // Сохраняем изменения
             DBO.SaveChanges();
             MessageBox.Show("Данные сохранены!", "Сохранение", MessageBoxButton.OK, MessageBoxImage.Information);
+
+            // Вызываем событие после сохранения
+            DeviceSavedEvent?.Invoke(this, EventArgs.Empty);
         }
+
 
 
         /// <summary>
@@ -135,7 +157,7 @@ namespace Wpf_Inventory_.View
             DevNameTextBox.Text = device.DeviceName.ToString();
             DevSerialTextBox.Text = device.SerialNumber;
             DevInvNumTextBox.Text = device.InventoryNumber;
-            DevModelTextBox.Text = device?.Model.Model1;
+            DevModelTextBox.Text = device?.Model?.Model1 ?? "Неизвестная модель";
             DevIPTextBox.Text = device.IP_Adress;
             DevNoteTextBox.Text = device.Note;
             DevDateDatePicker.SelectedDate = device.DateOfCommissioning;
@@ -152,7 +174,6 @@ namespace Wpf_Inventory_.View
 
         private void DevSaveButton_Click(object sender, RoutedEventArgs e)
         {
-
             SaveDeviceChanges(_currentDevice, _invDbo); 
         }
     }

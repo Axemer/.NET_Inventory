@@ -20,10 +20,15 @@ namespace Wpf_Inventory_
         /// </summary>
         public InventoryRegistryDataBaseEntities3 _dbo = DB_Connection.GetDataBase();
 
+        private DataViewerWindow _dataViewer;
+
         public MainWindow()
         {
             // LoginCheck(); // ФИЧА ДОДЕЛАНА ВРОДЕ. УБЕРАТЬ ПРИ РЕЛИЗЕ ИЛИ ТЕСТЕ НА ПРАКТИКЕ
             InitializeComponent();
+
+            if (_dataViewer != null)
+                _dataViewer.DeviceSavedEvent += OnDeviceSaved;
         }
 
         public void Window_Loaded(object sender, RoutedEventArgs e)
@@ -72,14 +77,26 @@ namespace Wpf_Inventory_
             dataViewerWindow.ShowData(newDevice, _dbo);
         }
 
-
         /// <summary>
         /// Забываем список данным из бд.
         /// </summary>
         /// <param name="InventoryRegDB"> Данные из БД сюда надо </param>
-        private void DeviceDataGridInit(InventoryRegistryDataBaseEntities3 InventoryRegDB)
+        public void DeviceDataGridInit(InventoryRegistryDataBaseEntities3 InventoryRegDB)
         {
+            DeviceDataGrid.Items.Clear();
             DeviceDataGrid.ItemsSource = InventoryRegDB.Device.ToList();
+        }
+
+        /// <summary>
+        /// Метод слушатель события сохранения 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnDeviceSaved(object sender, EventArgs e)
+        {
+            MessageBox.Show("Событие сохранения сработало!", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
+
+            DeviceDataGridInit(_dbo);
         }
 
         private void DeviceDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
