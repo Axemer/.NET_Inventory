@@ -98,7 +98,7 @@ namespace Wpf_Inventory_.View
             MessageBox.Show("Данные сохранены!", "Сохранение", MessageBoxButton.OK, MessageBoxImage.Information);
 
             // Вызываем событие после сохранения
-            DeviceSavedEvent?.Invoke(this, EventArgs.Empty);
+            //DeviceSavedEvent?.Invoke(this, EventArgs.Empty);
         }
 
 
