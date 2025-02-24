@@ -16,7 +16,7 @@
             <Grid x:Name="DeviceGrid" Background="#FFE5E5E5">
                 <DataGrid x:Name="DeviceDataGrid"  AutoGenerateColumns="False" IsReadOnly="True" Margin="0,0,0,46" SelectionChanged="DeviceDataGrid_SelectionChanged" MouseDoubleClick="DeviceDataGrid_MouseDoubleClick">
                     <DataGrid.Columns>
-                        <DataGridTextColumn x:Name="IDColum" Header="ID" Binding="{Binding Device_ID}" Width="auto"></DataGridTextColumn>
+                        <!--<DataGridTextColumn x:Name="IDColum" Header="ID" Binding="{Binding Device_ID}" Width="auto"></DataGridTextColumn>-->
                         <DataGridTextColumn Header="Инвентарный номер" Binding="{Binding InventoryNumber}" Width="auto"></DataGridTextColumn>
                         <DataGridTextColumn Header="Тип" Binding="{Binding DeviceType.Type}" Width="auto"></DataGridTextColumn>
                         <DataGridTextColumn Header="Название" Binding="{Binding DeviceName}" Width="auto"></DataGridTextColumn>
