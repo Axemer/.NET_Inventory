@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 
 using System.Windows.Input;
+using System.Windows.Media;
 using Wpf_Inventory_.Classes;
 using Wpf_Inventory_.dbo;
 using Wpf_Inventory_.View;
@@ -89,6 +90,24 @@ namespace Wpf_Inventory_
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="isActive"> true green, false Red </param>
+        public void UpdateStatus(bool isActive)
+        {
+            if (isActive)
+            {
+                StatusIndicator.Fill = Brushes.Green;
+                StatusTooltip.Text = "Система работает стабильно";
+            }
+            else
+            {
+                StatusIndicator.Fill = Brushes.Red;
+                StatusTooltip.Text = "Система неактивна";
+            }
+        }
+
+        /// <summary>
         /// Метод слушатель события сохранения 
         /// </summary>
         /// <param name="sender"></param>
@@ -138,15 +157,27 @@ namespace Wpf_Inventory_
         }
 
         /// <summary>
-        /// Пинг базы данных.
+        /// Пинг сервера.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void PingButton_Click(object sender, RoutedEventArgs e)
+        private void PingServerButton_Click(object sender, RoutedEventArgs e)
         {
             string connectionString = "Data Source=SERVER_NAME;Initial Catalog=DB_NAME;Integrated Security=True;";
             DatabasePinger dbPinger = new DatabasePinger(connectionString);
             dbPinger.PingServer();
+        }
+
+        /// <summary>
+        /// Пинг базы данных.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void PingDBButton_Click(object sender, RoutedEventArgs e)
+        {
+            string connectionString = "Data Source=SERVER_NAME;Initial Catalog=DB_NAME;Integrated Security=True;";
+            DatabasePinger dbPinger = new DatabasePinger(connectionString);
+            dbPinger.PingDatabase();
         }
 
         private void DeviceAddButton_Click(object sender, RoutedEventArgs e)
@@ -158,5 +189,27 @@ namespace Wpf_Inventory_
         {
 
         }
+
+        private void DeviceSaveButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void DevicImportButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        /// <summary>
+        /// Закрывает окно
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
+
     }
 }
