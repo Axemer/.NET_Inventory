@@ -5,46 +5,115 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wpf_Inventory_"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded"
+        Title="MainWindow" Height="491" Width="800" Loaded="Window_Loaded"
         xmlns:Classes="clr-namespace:Wpf_Inventory_.Classes">
-        
+
     <Window.Resources>
         <Classes:NullableBoolToBoolConverter x:Key="NullableBoolConverter"/>
     </Window.Resources>
-    <TabControl>
-        <TabItem Header="Устройства">
-            <Grid x:Name="DeviceGrid" Background="#FFE5E5E5">
-                <DataGrid x:Name="DeviceDataGrid"  AutoGenerateColumns="False" IsReadOnly="True" Margin="0,0,0,46" SelectionChanged="DeviceDataGrid_SelectionChanged" MouseDoubleClick="DeviceDataGrid_MouseDoubleClick">
-                    <DataGrid.Columns>
-                        <!--<DataGridTextColumn x:Name="IDColum" Header="ID" Binding="{Binding Device_ID}" Width="auto"></DataGridTextColumn>-->
-                        <DataGridTextColumn Header="Инвентарный номер" Binding="{Binding InventoryNumber}" Width="auto"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Тип" Binding="{Binding DeviceType.Type}" Width="auto"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Название" Binding="{Binding DeviceName}" Width="auto"></DataGridTextColumn>
-                        <DataGridTextColumn Header="IP" Binding="{Binding IP_Adress}" Width="auto"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Дата приема" Binding="{Binding DateOfCommissioning}" Width="*"></DataGridTextColumn>
-                        <DataGridCheckBoxColumn Header="Списано" Binding="{Binding Exception, Converter={StaticResource NullableBoolConverter}}" Width="60"></DataGridCheckBoxColumn>
 
-                    </DataGrid.Columns>
-                </DataGrid>
-                <Button x:Name="DeviceSyncButton" Content="Синхронизировать" HorizontalAlignment="Left" Margin="663,0,0,11" VerticalAlignment="Bottom" Height="30" Width="100" Click="DeviceSyncButton_Click"/>
-                <Button x:Name="DeviceAddButton" Content="Добавить" HorizontalAlignment="Left" Margin="10,0,0,11" VerticalAlignment="Bottom" Height="30" Width="100" Click="DeviceAddButton_Click"/>
-                <Button x:Name="DeviceExportButton" Content="Экспорт" HorizontalAlignment="Right" Margin="0,0,136,10" VerticalAlignment="Bottom" Click="DeviceExportButton_Click" Height="31" Width="62"/>
-                <Button x:Name="PingButton" Content="Пинг" HorizontalAlignment="Right" Margin="0,0,203,10" VerticalAlignment="Bottom" Click="PingButton_Click" Height="31" Width="62"/>
-            </Grid>
-        </TabItem>
-        <TabItem Header="Рабочие места">
-            <Grid Background="#FFE5E5E5">
+    <DockPanel>
+        <Grid>
+
+        </Grid>
+        <Menu DockPanel.Dock="Top" Background="#2D2D30" Foreground="White">
+            <Menu.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <DockPanel LastChildFill="False"/>
+                </ItemsPanelTemplate>
+            </Menu.ItemsPanel>
+
+            <!-- Левые элементы меню -->
+            <MenuItem Header="Файл" DockPanel.Dock="Left">
+                <MenuItem Header="Импорт" Click="DevicImportButton_Click"/>
+                <MenuItem Header="Экспорт" Click="DeviceExportButton_Click"/>
+                <MenuItem Header="Пинг Сервера" Click="PingServerButton_Click"/>
+                <MenuItem Header="Пинг Базы данных" Click="PingDBButton_Click"/>
+                <MenuItem Header="Синхронизировать" Click="DeviceSyncButton_Click"/>
+                <MenuItem Header="Сохранить" Click="DeviceSaveButton_Click"/>
+                <MenuItem Header="Выход" Click="Exit_Click"/>
+            </MenuItem>
+            <MenuItem Header="Редактировать" DockPanel.Dock="Left">
+                <MenuItem Header="Копировать"/>
+                <MenuItem Header="Вставить"/>
+            </MenuItem>
+            <MenuItem Header="Помощь" DockPanel.Dock="Left">
+                <MenuItem Header="О программе"/>
+            </MenuItem>
+
+            <!-- Индикатор активности (в правом верхнем углу) -->
+            <Grid HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,10,0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="47*"/>
-                    <ColumnDefinition Width="747*"/>
+                    <ColumnDefinition Width="16*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="0*"/>
                 </Grid.ColumnDefinitions>
-                <DataGrid x:Name="WorkplaceDataGrid" Margin="0,0,0,72" Grid.ColumnSpan="2">
-                    <DataGridTextColumn Header="ID" Binding="{Binding Device_Workplace_ID}" Width="25"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Инвентарный номер" Binding="{Binding Note}" Width="*"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Название" Binding="{Binding DeviceName}" Width="*"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Дата приема" Binding="{Binding DateOfCommissioning}" Width="*"></DataGridTextColumn>
-                </DataGrid>
+                <Grid.ToolTip>
+                    <TextBlock x:Name="StatusTooltip" Text="Система работает стабильно"/>
+                </Grid.ToolTip>
             </Grid>
-        </TabItem>
-    </TabControl>
+            <Ellipse x:Name="StatusIndicator"
+                     Width="12"
+                     Fill="Green"
+                     Stroke="White"
+                     StrokeThickness="0.1"
+                     HorizontalAlignment="Right" Height="12"/>
+        </Menu>
+
+
+
+
+
+
+
+
+        <!-- Основное содержимое -->
+        <TabControl DockPanel.Dock="Top" Height="415">
+            <TabItem Header="Устройства">
+                <Grid x:Name="DeviceGrid" Background="#FFE5E5E5">
+
+                    <DataGrid x:Name="DeviceDataGrid" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="DeviceDataGrid_SelectionChanged"
+                              MouseDoubleClick="DeviceDataGrid_MouseDoubleClick" Margin="0,0,0,40">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Инвентарный номер" Binding="{Binding InventoryNumber}" Width="auto"/>
+                            <DataGridTextColumn Header="Тип" Binding="{Binding DeviceType.Type}" Width="auto"/>
+                            <DataGridTextColumn Header="Название" Binding="{Binding DeviceName}" Width="auto"/>
+                            <DataGridTextColumn Header="IP" Binding="{Binding IP_Adress}" Width="auto"/>
+                            <DataGridTextColumn Header="Дата приема" Binding="{Binding DateOfCommissioning}" Width="*"/>
+                            <DataGridCheckBoxColumn Header="Списано" Binding="{Binding Exception, Converter={StaticResource NullableBoolConverter}}" Width="60"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <!-- Панель инструментов -->
+                    <ToolBar DockPanel.Dock="Top" Background="White" Foreground="White" Margin="0,352,0,0" Height="35" VerticalAlignment="Top">
+                        <Button Content="Добавить" Click="DeviceAddButton_Click" Padding="1" Margin="5" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                        <Button Content="Удалить" Padding="1" Margin="5"/>
+                        <Button Content="Обновить" Padding="1" Margin="5"/>
+                    </ToolBar>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Рабочие места">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="47*"/>
+                        <ColumnDefinition Width="747*"/>
+                    </Grid.ColumnDefinitions>
+                    <DataGrid x:Name="WorkplaceDataGrid" Margin="0,0,0,72" Grid.ColumnSpan="2">
+                        <DataGridTextColumn Header="ID" Binding="{Binding Device_Workplace_ID}" Width="25"/>
+                        <DataGridTextColumn Header="Инвентарный номер" Binding="{Binding Note}" Width="*"/>
+                        <DataGridTextColumn Header="Название" Binding="{Binding DeviceName}" Width="*"/>
+                        <DataGridTextColumn Header="Дата приема" Binding="{Binding DateOfCommissioning}" Width="*"/>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+        <!-- Нижняя строка состояния -->
+        <StatusBar DockPanel.Dock="Bottom" Background="#2D2D30" Foreground="White" VerticalAlignment="Bottom" Height="20">
+            <StatusBarItem>
+                <TextBlock Text="Готово" Margin="1,0"/>
+            </StatusBarItem>
+            <StatusBarItem HorizontalAlignment="Right">
+            </StatusBarItem>
+        </StatusBar>
+    </DockPanel>
 </Window>
