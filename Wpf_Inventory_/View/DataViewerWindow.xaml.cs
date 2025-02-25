@@ -9,13 +9,16 @@ using System.Data.Entity;
 
 namespace Wpf_Inventory_.View
 {
-    
-
     /// <summary>
     /// Логика взаимодействия для DataViewerWindow.xaml
     /// </summary>
     public partial class DataViewerWindow : Window
     {
+        /// <summary>
+        /// Объявляем событие о нажатии кнопки сохранения
+        /// </summary>
+        public event Action SaveButtonClicked;
+
         private object _currentDevice = new Device();
         private InventoryRegistryDataBaseEntities3 _invDbo = DB_Connection.GetDataBase();
          
@@ -30,7 +33,7 @@ namespace Wpf_Inventory_.View
         
 
         /// <summary>
-        /// 
+        /// Сохраняет все внесенные изменения
         /// </summary>
         /// <param name="SelectedDevice"></param>
         /// <param name="DBO"></param>
@@ -98,7 +101,7 @@ namespace Wpf_Inventory_.View
             MessageBox.Show("Данные сохранены!", "Сохранение", MessageBoxButton.OK, MessageBoxImage.Information);
 
             // Вызываем событие после сохранения
-            //DeviceSavedEvent?.Invoke(this, EventArgs.Empty);
+            
         }
 
 
@@ -153,7 +156,7 @@ namespace Wpf_Inventory_.View
             }
 
             // Заполняем текстовые поля данными устройства
-            DevIDTextBox.Text = device.Device_ID.ToString();
+            //DevIDTextBox.Text = device.Device_ID.ToString();
             DevNameTextBox.Text = device.DeviceName.ToString();
             DevSerialTextBox.Text = device.SerialNumber;
             DevInvNumTextBox.Text = device.InventoryNumber;
@@ -174,7 +177,8 @@ namespace Wpf_Inventory_.View
 
         private void DevSaveButton_Click(object sender, RoutedEventArgs e)
         {
-            SaveDeviceChanges(_currentDevice, _invDbo); 
+            SaveDeviceChanges(_currentDevice, _invDbo);
+            SaveButtonClicked?.Invoke();
         }
     }
 }
