@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-//using System.Windows.Documents; // конфликт
+
 using System.Windows.Input;
 using Wpf_Inventory_.Classes;
 using Wpf_Inventory_.dbo;
@@ -23,8 +23,6 @@ namespace Wpf_Inventory_
         /// </summary>
         public InventoryRegistryDataBaseEntities3 _dbo = DB_Connection.GetDataBase();
 
-        public delegate void DeviceSavedEventHandler(object sender, EventArgs e);
-        public event DeviceSavedEventHandler DeviceSavedEvent;
 
         public MainWindow()
         {
@@ -86,7 +84,7 @@ namespace Wpf_Inventory_
         /// <param name="InventoryRegDB"> Данные из БД сюда надо </param>
         public void DeviceDataGridInit(InventoryRegistryDataBaseEntities3 InventoryRegDB)
         {
-            DeviceDataGrid.Items.Clear();
+            //DeviceDataGrid.Items.Clear();
             DeviceDataGrid.ItemsSource = InventoryRegDB.Device.ToList();
         }
 
@@ -95,7 +93,7 @@ namespace Wpf_Inventory_
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void OnDeviceSaved(object sender, EventArgs e)
+        private void OnDeviceSaved()
         {
             MessageBox.Show("Событие сохранения сработало!", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
 
@@ -120,6 +118,7 @@ namespace Wpf_Inventory_
             {
                 
                 DataViewerWindow dataViewerWindow = new DataViewerWindow();
+                dataViewerWindow.SaveButtonClicked += OnDeviceSaved;
                 dataViewerWindow.Show();
                 dataViewerWindow.ShowData(SelctedDevice, _dbo);
                 
