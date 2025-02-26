@@ -1,6 +1,8 @@
 ﻿using System;
+using System.DirectoryServices.AccountManagement;
 using System.Linq;
 using System.Reflection;
+using System.Security.Principal;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -24,12 +26,20 @@ namespace Wpf_Inventory_
         /// </summary>
         public InventoryRegistryDataBaseEntities3 _dbo = DB_Connection.GetDataBase();
 
+        /// <summary>
+        /// Имя группы Active Directory у которой будет доступ к проложению.
+        /// </summary>
+        private static readonly string _requredGroup = "-Имя_Группы_Системной_администрации_или_типа_того-";
+
 
         public MainWindow()
         {
             // LoginCheck(); // ФИЧА ДОДЕЛАНА ВРОДЕ. УБЕРАТЬ ПРИ РЕЛИЗЕ ИЛИ ТЕСТЕ
-            InitializeComponent();
+            
+            //if (IsUserInGroup(_requredGroup) == true)
+            //    InitializeComponent();
 
+            InitializeComponent();
      
         }
 
@@ -90,7 +100,7 @@ namespace Wpf_Inventory_
         }
 
         /// <summary>
-        /// 
+        /// Позволяет менять цвет индикатора активности
         /// </summary>
         /// <param name="isActive"> true green, false Red </param>
         public void UpdateStatus(bool isActive)
@@ -98,13 +108,45 @@ namespace Wpf_Inventory_
             if (isActive)
             {
                 StatusIndicator.Fill = Brushes.Green;
-                StatusTooltip.Text = "Система работает стабильно";
+                StatusTooltip.Text = "Система в сети";
             }
             else
             {
                 StatusIndicator.Fill = Brushes.Red;
-                StatusTooltip.Text = "Система неактивна";
+                StatusTooltip.Text = "Система вне сети";
             }
+        }
+
+        /// <summary>
+        /// Проверяет членство в группе Active Directory.
+        /// </summary>
+        /// <param name="groupName">Имя группы </param>
+        /// <returns></returns>
+        private static bool IsUserInGroup(string groupName)
+        {
+            try
+            {
+                using (var context = new PrincipalContext(ContextType.Domain))
+                {
+                    using (var user = UserPrincipal.FindByIdentity(context, WindowsIdentity.GetCurrent().Name))
+                    {
+                        if (user == null)
+                            return false;
+
+                        foreach (var group in user.GetGroups())
+                        {
+                            if (group.Name.Equals(groupName, StringComparison.OrdinalIgnoreCase))
+                                return true;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка проверки группы: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                Application.Current.Shutdown(); // Если вход не успешен — закрываем приложение
+            }
+            return false;
         }
 
         /// <summary>
