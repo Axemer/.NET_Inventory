@@ -67,7 +67,6 @@ namespace Wpf_Inventory_.View.Controls
         /// <param name="InventoryRegDB"> Данные из БД сюда надо </param>
         public void DeviceDataGridInit(InventoryRegistryDataBaseEntities3 InventoryRegDB)
         {
-            //DeviceDataGrid.Items.Clear();
             DeviceDataGrid.ItemsSource = InventoryRegDB.Device.ToList();
         }
 
