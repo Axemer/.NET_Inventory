@@ -19,7 +19,19 @@
                 <Button Content="Добавить" Click="DeviceAddButton_Click" Padding="1" Margin="5"/>
                 <Button Content="Удалить" Padding="1" Margin="5"/>
                 <Button Content="Обновить" Padding="1" Margin="5"/>
+                !-- ComboBox для выбора критерия поиска -->
+                <ComboBox x:Name="SearchCriteriaComboBox" Width="90" Background="Cornsilk" Margin="2,0,2,0">
+                    <ComboBoxItem Content="Название"/>
+                    <ComboBoxItem Content="Инвентарный номер"/>
+                    <ComboBoxItem Content="IP"/>
+                    <ComboBoxItem Content="Дата приема"/>
+                </ComboBox>
+                <!-- TextBox для ввода поискового запроса -->
+                <TextBox x:Name="SearchTextBox" Width="170" Background="Cornsilk" Margin="5,0,5,0"  />
+                <!-- Кнопка для запуска поиска -->
+                <Button Content="Поиск" Click="SearchButton_Click" Padding="1" Margin="5" Background="Cornsilk"/>
             </ToolBar>
+            
             <DataGrid x:Name="DeviceDataGrid" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="DeviceDataGrid_SelectionChanged"
  MouseDoubleClick="DeviceDataGrid_MouseDoubleClick" Margin="0,0,0,39">
                 <DataGrid.Columns>
@@ -31,7 +43,7 @@
                     <DataGridCheckBoxColumn Header="Списано" Binding="{Binding Exception, Converter={StaticResource NullableBoolConverter}}" Width="60"/>
                 </DataGrid.Columns>
             </DataGrid>
-            <!-- Панель инструментов -->
+            
         </Grid>
     </Grid>
 </UserControl>

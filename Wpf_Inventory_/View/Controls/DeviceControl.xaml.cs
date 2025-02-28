@@ -1,17 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Wpf_Inventory_.Classes;
 using Wpf_Inventory_.dbo;
 
@@ -27,10 +20,16 @@ namespace Wpf_Inventory_.View.Controls
         /// </summary>
         public InventoryRegistryDataBaseEntities3 _dbo = DB_Connection.GetDataBase();
 
+        /// <summary>
+        /// Представление коллекции для фильтрации данных
+        /// </summary>
+        private ICollectionView _deviceCollectionView;
+
         public DeviceControl()
         {
             InitializeComponent();
-            
+            DeviceDataGridInit(_dbo);
+            _deviceCollectionView = CollectionViewSource.GetDefaultView(DeviceDataGrid.ItemsSource);
         }
 
         /// <summary>
@@ -105,14 +104,48 @@ namespace Wpf_Inventory_.View.Controls
                 dataViewerWindow.SaveButtonClicked += OnDeviceSaved;
                 dataViewerWindow.Show();
                 dataViewerWindow.ShowData(SelctedDevice, _dbo);
-
             }
-
         }
 
         private void DeviceAddButton_Click(object sender, RoutedEventArgs e)
         {
             AddNewDevice();
+        }
+
+        /// <summary>
+        /// Обработчик нажатия кнопки "Поиск"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SearchButton_Click(object sender, RoutedEventArgs e)
+        {
+            string filterText = SearchTextBox.Text.ToLower();
+            string selectedCriteria = (SearchCriteriaComboBox.SelectedItem as ComboBoxItem)?.Content.ToString();
+
+            if (_deviceCollectionView != null)
+            {
+                _deviceCollectionView.Filter = item =>
+                {
+                    var device = item as Device;
+                    if (device == null)
+                        return false;
+
+                    switch (selectedCriteria)
+                    {
+                        case "Название":
+                            return !string.IsNullOrEmpty(device.DeviceName) && device.DeviceName.ToLower().Contains(filterText);
+                        case "Инвентарный номер":
+                            return !string.IsNullOrEmpty(device.InventoryNumber) && device.InventoryNumber.ToLower().Contains(filterText);
+                        case "IP":
+                            return !string.IsNullOrEmpty(device.IP_Adress) && device.IP_Adress.ToLower().Contains(filterText);
+                        case "Дата приема":
+                            return device.DateOfCommissioning.ToString().ToLower().Contains(filterText);
+                        default:
+                            return true;
+                    }
+                };
+                _deviceCollectionView.Refresh();
+            }
         }
     }
 }
