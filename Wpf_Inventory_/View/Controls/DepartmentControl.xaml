@@ -7,6 +7,26 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-            
+        <Grid x:Name="Grid" Background="#FFE5E5E5">
+            <!-- Панель инструментов -->
+            <ToolBar Background="White" Margin="-12,0,-12,0" Foreground="White" Height="34" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Width="NaN">
+                <Button Content="Добавить" Click="AddButton_Click" Padding="1" Margin="5"/>
+                <Button Content="Удалить" Padding="1" Margin="5"/>
+                <Button Content="Обновить" Padding="1" Margin="5"/>
+                ComboBox для выбора кри
+               
+                <!-- TextBox для ввода поискового запроса -->
+                <TextBox x:Name="SearchTextBox" Width="170" Background="Cornsilk" Margin="5,0,5,0"  />
+                <!-- Кнопка для запуска поиска -->
+                <Button Content="Поиск" Click="SearchButton_Click" Padding="1" Margin="5" Background="Cornsilk"/>
+            </ToolBar>
+
+            <DataGrid x:Name="DepartmentDataGrid" AutoGenerateColumns="False" IsReadOnly="True"  Margin="0,0,0,39">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Инвентарный номер" Binding="{Binding Department.Name}" Width="auto"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+        </Grid>
     </Grid>
 </UserControl>
