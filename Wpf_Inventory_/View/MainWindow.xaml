@@ -72,7 +72,23 @@
             <TabItem Header="Рабочие места">
                 <Controls:WorkspaceControl/>
             </TabItem>
-           
+
+            <TabItem Header="Офисы">
+                <Controls:OfficeControl/>
+            </TabItem>
+
+            <TabItem Header="Отделы">
+                <Controls:DepartmentControl/>
+            </TabItem>
+
+            <TabItem Header="Типы">
+                <Controls:DeviceTypeControl/>
+            </TabItem>
+
+            <TabItem Header="Все данные">
+                <Controls:DeviceControl/>
+            </TabItem>
+
         </TabControl>
 
         <!-- Нижняя строка состояния -->

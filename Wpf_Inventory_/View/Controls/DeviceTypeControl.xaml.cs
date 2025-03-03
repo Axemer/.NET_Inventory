@@ -28,7 +28,7 @@ namespace Wpf_Inventory_.View.Controls
         /// <param name="InventoryRegDB"> Данные из БД сюда надо </param>
         private void DataGridInit(InventoryRegistryDataBaseEntities3 InventoryRegDB)
         {
-            TypeDataGrid.ItemsSource = InventoryRegDB.Device.ToList();
+            TypeDataGrid.ItemsSource = InventoryRegDB.DeviceType.ToList();
         }
 
         /// <summary>
