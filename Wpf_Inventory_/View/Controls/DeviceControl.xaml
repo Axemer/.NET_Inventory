@@ -20,16 +20,16 @@
                 <Button Content="Удалить" Padding="1" Margin="5"/>
                 <Button Content="Обновить" Padding="1" Margin="5"/>
                 !-- ComboBox для выбора критерия поиска -->
-                <ComboBox x:Name="SearchCriteriaComboBox" Width="90" Background="Cornsilk" Margin="2,0,2,0">
+                <ComboBox x:Name="SearchCriteriaComboBox" Width="90" Background="WhiteSmoke" Margin="2,0,2,0" BorderThickness="1" BorderBrush="Black">
                     <ComboBoxItem Content="Название"/>
                     <ComboBoxItem Content="Инвентарный номер"/>
                     <ComboBoxItem Content="IP"/>
                     <ComboBoxItem Content="Дата приема"/>
                 </ComboBox>
                 <!-- TextBox для ввода поискового запроса -->
-                <TextBox x:Name="SearchTextBox" Width="170" Background="Cornsilk" Margin="5,0,5,0"  />
+                <TextBox x:Name="SearchTextBox" Width="170" Background="WhiteSmoke" BorderThickness="1" BorderBrush="Black" Margin="5,0,5,0"  />
                 <!-- Кнопка для запуска поиска -->
-                <Button Content="Поиск" Click="SearchButton_Click" Padding="1" Margin="5" Background="Cornsilk"/>
+                <Button Content="Поиск" Click="SearchButton_Click" Padding="1" Margin="5" Background="WhiteSmoke" BorderThickness="1" BorderBrush="Black"/>
             </ToolBar>
             
             <DataGrid x:Name="DeviceDataGrid" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="DeviceDataGrid_SelectionChanged"

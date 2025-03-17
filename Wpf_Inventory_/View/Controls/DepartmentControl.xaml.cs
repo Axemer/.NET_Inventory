@@ -45,7 +45,7 @@ namespace Wpf_Inventory_.View.Controls
         /// Забываем список данным из бд.
         /// </summary>
         /// <param name="InventoryRegDB"> Данные из БД сюда надо </param>
-        public void DeviceDataGridInit(InventoryRegistryDataBaseEntities3 InventoryRegDB)
+        public void DataGridInit(InventoryRegistryDataBaseEntities3 InventoryRegDB)
         {
             DepartmentDataGrid.ItemsSource = InventoryRegDB.Department.ToList();
         }
@@ -53,6 +53,7 @@ namespace Wpf_Inventory_.View.Controls
         public DepartmentControl()
         {
             InitializeComponent();
+            DataGridInit(_dbo);
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
