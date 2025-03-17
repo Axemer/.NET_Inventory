@@ -20,6 +20,7 @@ namespace Wpf_Inventory_.View.Controls
         public DeviceTypeControl()
         {
             InitializeComponent();
+            DataGridInit(_dbo);
         }
 
         /// <summary>

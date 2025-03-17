@@ -60,7 +60,7 @@ namespace Wpf_Inventory_.View
             string selectedModel = DevModelTextBox.Text;
             if (!string.IsNullOrEmpty(selectedModel))
             {
-                Model model = DBO.Model.FirstOrDefault(m => m.Model1 == selectedModel);
+                dbo.Model model = DBO.Model.FirstOrDefault(m => m.Model1 == selectedModel);
                 if (model != null)
                 {
                     device.Model_ID = model.Model_ID; //Сохраняем ID модели

@@ -16,9 +16,9 @@
                 ComboBox для выбора кри
                
                 <!-- TextBox для ввода поискового запроса -->
-                <TextBox x:Name="SearchTextBox" Width="170" Background="Cornsilk" Margin="5,0,5,0"  />
+                <TextBox x:Name="SearchTextBox" Width="170" Background="WhiteSmoke" BorderThickness="1" BorderBrush="Black" Margin="5,0,5,0"  />
                 <!-- Кнопка для запуска поиска -->
-                <Button Content="Поиск" Click="SearchButton_Click" Padding="1" Margin="5" Background="Cornsilk"/>
+                <Button Content="Поиск" Click="SearchButton_Click" Padding="1" Margin="5" Background="WhiteSmoke" BorderThickness="1" BorderBrush="Black"/>
             </ToolBar>
 
             <DataGrid x:Name="DepartmentDataGrid" AutoGenerateColumns="False" IsReadOnly="True"  Margin="0,0,0,39">

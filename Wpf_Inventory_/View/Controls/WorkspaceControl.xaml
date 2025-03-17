@@ -17,12 +17,7 @@
         </ToolBar>
         <DataGrid x:Name="WorkspaceDataGrid" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="WorkspaceDataGrid_SelectionChanged" MouseDoubleClick="WorkspaceDataGrid_MouseDoubleClick" Margin="0,0,0,39">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Инвентарный номер" Binding="{Binding InventoryNumber}" Width="auto"/>
-                <DataGridTextColumn Header="Тип" Binding="{Binding DeviceType.Type}" Width="auto"/>
-                <DataGridTextColumn Header="Название" Binding="{Binding DeviceName}" Width="auto"/>
-                <DataGridTextColumn Header="IP" Binding="{Binding IP_Adress}" Width="auto"/>
-                <DataGridTextColumn Header="Дата приема" Binding="{Binding DateOfCommissioning}" Width="*"/>
-                <DataGridCheckBoxColumn Header="Списано" Width="60"/>
+                <DataGridTextColumn Header="Рабочее место" Binding="{Binding WorkSpaceNote}"/>
             </DataGrid.Columns>
         </DataGrid>
         <!-- Панель инструментов -->
