@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Wpf_Inventory_.Classes;
-using Wpf_Inventory_.dbo;
+using Wpf_Inventory_.Model;
 
 
 namespace Wpf_Inventory_.View.Controls
@@ -16,7 +16,7 @@ namespace Wpf_Inventory_.View.Controls
         /// <summary>
         /// Переменная с всем перечнем данных в базе данных.
         /// </summary>
-        public InventoryRegistryDataBaseEntities3 _dbo = DB_Connection.GetDataBase();
+        public InventoryDataBaseContext _dbo = DB_Connection.GetDataBase();
 
         public WorkspaceControl()
         {
@@ -27,7 +27,7 @@ namespace Wpf_Inventory_.View.Controls
         /// Забываем список данным из бд.
         /// </summary>
         /// <param name="InventoryRegDB"> Данные из БД сюда надо </param>
-        private void DataGridInit(InventoryRegistryDataBaseEntities3 InventoryRegDB)
+        private void DataGridInit(InventoryDataBaseContext InventoryRegDB)
         {
             WorkspaceDataGrid.ItemsSource = InventoryRegDB.Device.ToList();
         }
@@ -40,8 +40,8 @@ namespace Wpf_Inventory_.View.Controls
             // Создаём новый объект Device
             Office newOffice = new Office
             {
-                Block = null, // ???? хз сюда ничего кроме блока и не вставиь 
-                OfficeNum = "1",
+                //Block = null, // ???? хз сюда ничего кроме блока и не вставиь 
+                Officenum = "1",
                 Phone = "+123"
             };
 

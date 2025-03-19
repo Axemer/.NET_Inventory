@@ -7,9 +7,9 @@ using System.Collections.Generic;
 
 namespace Wpf_Inventory_.Model
 {
-    public partial class Devicetype
+    public partial class DeviceType
     {
-        public Devicetype()
+        public DeviceType()
         {
             Device = new HashSet<Device>();
         }

@@ -264,57 +264,12 @@
     <Compile Include="Classes\SyncScheduler.cs" />
     <Compile Include="Classes\SyncService.cs" />
     <Compile Include="Classes\DB_Connection.cs" />
-    <Compile Include="dbo\Block.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="dbo\Department.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="dbo\Device.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="dbo\DeviceParts.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="dbo\DeviceParts_Device.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="dbo\DeviceType.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="dbo\Device_Workplace.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="dbo\Model.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="dbo\Model.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="dbo\Model.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="dbo\Model1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="dbo\Office.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="dbo\Workplace.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\Block.cs" />
     <Compile Include="Model\Department.cs" />
     <Compile Include="Model\Device.cs" />
     <Compile Include="Model\Deviceparts.cs" />
     <Compile Include="Model\DevicepartsDevice.cs" />
-    <Compile Include="Model\Devicetype.cs" />
+    <Compile Include="Model\DeviceType.cs" />
     <Compile Include="Model\DeviceWorkplace.cs" />
     <Compile Include="Model\InventoryDataBaseContext.cs" />
     <Compile Include="Model\Model.cs" />
@@ -401,13 +356,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EntityDeploy Include="dbo\Model.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="dbo\Model.edmx.diagram">
-      <DependentUpon>Model.edmx</DependentUpon>
-    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -419,16 +367,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="dbg\постгри строчки дев.txt" />
-    <Content Include="dbo\Model.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Model.Context.cs</LastGenOutput>
-      <DependentUpon>Model.edmx</DependentUpon>
-    </Content>
-    <Content Include="dbo\Model.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model.edmx</DependentUpon>
-      <LastGenOutput>Model1.cs</LastGenOutput>
-    </Content>
     <Resource Include="dbg\Task.txt" />
     <Resource Include="dbg\Хлам.txt" />
     <Content Include="dbo\InventoryRegistryDataBase.mdf">

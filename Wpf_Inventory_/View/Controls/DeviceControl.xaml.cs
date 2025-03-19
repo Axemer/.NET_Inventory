@@ -6,7 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using Wpf_Inventory_.Classes;
-using Wpf_Inventory_.dbo;
+using Wpf_Inventory_.Model;
 
 namespace Wpf_Inventory_.View.Controls
 {
@@ -18,7 +18,7 @@ namespace Wpf_Inventory_.View.Controls
         /// <summary>
         /// Переменная с всем перечнем данных в базе данных.
         /// </summary>
-        public InventoryRegistryDataBaseEntities3 _dbo = DB_Connection.GetDataBase();
+        public InventoryDataBaseContext _dbo = DB_Connection.GetDataBase();
 
         /// <summary>
         /// Представление коллекции для фильтрации данных
@@ -37,6 +37,7 @@ namespace Wpf_Inventory_.View.Controls
         /// </summary>
         public void AddNewDevice()
         {
+
             // Создаём новый объект Device
             Device newDevice = new Device
             {
@@ -46,9 +47,9 @@ namespace Wpf_Inventory_.View.Controls
                 Model = null,
                 Note = "",
                 DateOfCommissioning = DateTime.Now,
-                DeviceType_ID = 1, // Установить позже
-                Office_ID = 1, // Установить позже
-                Department_ID = 1 // Установить позже
+                DeviceTypeId = 1, // Установить позже
+                OfficeId = 1, // Установить позже
+                DepartmentId = 1 // Установить позже
             };
 
             // Добавляем в базу данных
@@ -65,7 +66,7 @@ namespace Wpf_Inventory_.View.Controls
         /// Забываем список данным из бд.
         /// </summary>
         /// <param name="InventoryRegDB"> Данные из БД сюда надо </param>
-        public void DeviceDataGridInit(InventoryRegistryDataBaseEntities3 InventoryRegDB)
+        public void DeviceDataGridInit(InventoryDataBaseContext InventoryRegDB)
         {
             DeviceDataGrid.ItemsSource = InventoryRegDB.Device.ToList();
         }
@@ -136,7 +137,7 @@ namespace Wpf_Inventory_.View.Controls
                         case "Инвентарный номер":
                             return !string.IsNullOrEmpty(device.InventoryNumber) && device.InventoryNumber.ToLower().Contains(filterText);
                         case "IP":
-                            return !string.IsNullOrEmpty(device.IP_Adress) && device.IP_Adress.ToLower().Contains(filterText);
+                            return !string.IsNullOrEmpty(device.IpAddress) && device.IpAddress.ToLower().Contains(filterText);
                         case "Дата приема":
                             return device.DateOfCommissioning.ToString().ToLower().Contains(filterText);
                         default:
