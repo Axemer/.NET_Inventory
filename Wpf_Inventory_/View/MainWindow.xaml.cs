@@ -1,14 +1,8 @@
 ﻿using System;
 using System.DirectoryServices.AccountManagement;
-using System.Linq;
-using System.Reflection;
 using System.Security.Principal;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-
-using System.Windows.Input;
 using System.Windows.Media;
 using Wpf_Inventory_.Classes;
 using Wpf_Inventory_.View;
@@ -34,12 +28,12 @@ namespace Wpf_Inventory_
         public MainWindow()
         {
             // LoginCheck(); // ФИЧА ДОДЕЛАНА ВРОДЕ. УБЕРАТЬ ПРИ РЕЛИЗЕ ИЛИ ТЕСТЕ
-            
+
             //if (IsUserInGroup(_requredGroup) == true)
             //    InitializeComponent();
 
             InitializeComponent();
-     
+
         }
 
         public void Window_Loaded(object sender, RoutedEventArgs e)
@@ -59,9 +53,9 @@ namespace Wpf_Inventory_
             }
         }
 
-        
 
-        
+
+
 
         /// <summary>
         /// Позволяет менять цвет индикатора активности
