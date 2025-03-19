@@ -25,7 +25,7 @@ namespace Wpf_Inventory_.Model
         public virtual DbSet<DeviceWorkplace> DeviceWorkplace { get; set; }
         public virtual DbSet<Deviceparts> Deviceparts { get; set; }
         public virtual DbSet<DevicepartsDevice> DevicepartsDevice { get; set; }
-        public virtual DbSet<Devicetype> Devicetype { get; set; }
+        public virtual DbSet<DeviceType> Devicetype { get; set; }
         public virtual DbSet<Model> Model { get; set; }
         public virtual DbSet<Office> Office { get; set; }
         public virtual DbSet<OfficeBlock> OfficeBlock { get; set; }
@@ -195,7 +195,7 @@ namespace Wpf_Inventory_.Model
                     .HasConstraintName("fk_devicepartsdevice_deviceparts");
             });
 
-            modelBuilder.Entity<Devicetype>(entity =>
+            modelBuilder.Entity<DeviceType>(entity =>
             {
                 entity.ToTable("devicetype");
 

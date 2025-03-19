@@ -11,7 +11,6 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using Wpf_Inventory_.Classes;
-using Wpf_Inventory_.dbo;
 using Wpf_Inventory_.View;
 
 namespace Wpf_Inventory_
