@@ -1,6 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
 
 // Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
 // If you have enabled NRTs for your project, then un-comment the following line:
@@ -78,21 +76,21 @@ namespace Wpf_Inventory_.Model
                     .HasColumnName("device_id")
                     .ValueGeneratedNever();
 
-                entity.Property(e => e.Dateofcommissioning)
+                entity.Property(e => e.DateOfCommissioning)
                     .HasColumnName("dateofcommissioning")
                     .HasColumnType("date");
 
                 entity.Property(e => e.DepartmentId).HasColumnName("department_id");
 
-                entity.Property(e => e.Devicename)
+                entity.Property(e => e.DeviceName)
                     .HasColumnName("devicename")
                     .HasMaxLength(255);
 
-                entity.Property(e => e.DevicetypeId).HasColumnName("devicetype_id");
+                entity.Property(e => e.DeviceTypeId).HasColumnName("devicetype_id");
 
                 entity.Property(e => e.Exception).HasColumnName("exception");
 
-                entity.Property(e => e.Inventorynumber)
+                entity.Property(e => e.InventoryNumber)
                     .HasColumnName("inventorynumber")
                     .HasMaxLength(16);
 
@@ -106,7 +104,7 @@ namespace Wpf_Inventory_.Model
 
                 entity.Property(e => e.OfficeId).HasColumnName("office_id");
 
-                entity.Property(e => e.Serialnumber)
+                entity.Property(e => e.SerialNumber)
                     .HasColumnName("serialnumber")
                     .HasMaxLength(16);
 
@@ -118,7 +116,7 @@ namespace Wpf_Inventory_.Model
 
                 entity.HasOne(d => d.Devicetype)
                     .WithMany(p => p.Device)
-                    .HasForeignKey(d => d.DevicetypeId)
+                    .HasForeignKey(d => d.DeviceTypeId)
                     .HasConstraintName("fk_device_devicetype");
 
                 entity.HasOne(d => d.Model)

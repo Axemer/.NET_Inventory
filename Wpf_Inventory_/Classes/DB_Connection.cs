@@ -3,7 +3,7 @@
 namespace Wpf_Inventory_.Classes
 {
     public class DB_Connection
-    {       
+    {
         /// <summary>
         /// Догадайся
         /// </summary>

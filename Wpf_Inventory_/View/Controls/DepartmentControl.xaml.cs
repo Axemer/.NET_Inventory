@@ -1,19 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Wpf_Inventory_.Classes;
-using Wpf_Inventory_.dbo;
+using Wpf_Inventory_.Model;
 
 namespace Wpf_Inventory_.View.Controls
 {
@@ -25,7 +14,7 @@ namespace Wpf_Inventory_.View.Controls
         /// <summary>
         /// Переменная с всем перечнем данных в базе данных.
         /// </summary>
-        public InventoryRegistryDataBaseEntities3 _dbo = DB_Connection.GetDataBase();
+        public InventoryDataBaseContext _dbo = DB_Connection.GetDataBase();
 
         /// <summary>
         ///  Добавляет новое устройство с базовыми значениями
@@ -45,7 +34,7 @@ namespace Wpf_Inventory_.View.Controls
         /// Забываем список данным из бд.
         /// </summary>
         /// <param name="InventoryRegDB"> Данные из БД сюда надо </param>
-        public void DataGridInit(InventoryRegistryDataBaseEntities3 InventoryRegDB)
+        public void DataGridInit(InventoryDataBaseContext InventoryRegDB)
         {
             DepartmentDataGrid.ItemsSource = InventoryRegDB.Department.ToList();
         }

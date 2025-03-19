@@ -4,8 +4,6 @@ using System.Reflection;
 using System.Windows;
 using Wpf_Inventory_.Classes;
 using Wpf_Inventory_.Model;
-using Wpf_Inventory_;
-using System.Data.Entity;
 
 namespace Wpf_Inventory_.View
 {
@@ -20,13 +18,13 @@ namespace Wpf_Inventory_.View
         public event Action SaveButtonClicked;
 
         private object _currentDevice = new Device();
-        private InventoryDataBaseContext _invDbo = DB_Connection.GetDataBase();        
+        private InventoryDataBaseContext _invDbo = DB_Connection.GetDataBase();
 
         public DataViewerWindow()
         {
             InitializeComponent();
 
-            
+
         }
 
         /// <summary>
@@ -49,7 +47,7 @@ namespace Wpf_Inventory_.View
             device.DeviceName = DevNameTextBox.Text;
             device.SerialNumber = DevSerialTextBox.Text;
             device.InventoryNumber = DevInvNumTextBox.Text;
-            device.IpAddress = DevIPTextBox.Text; 
+            device.IpAddress = DevIPTextBox.Text;
             device.Note = DevNoteTextBox.Text;
             device.DateOfCommissioning = DevDateDatePicker.SelectedDate ?? DateTime.Now;
 
@@ -99,7 +97,7 @@ namespace Wpf_Inventory_.View
             MessageBox.Show("Данные сохранены!", "Сохранение", MessageBoxButton.OK, MessageBoxImage.Information);
 
             // Вызываем событие после сохранения
-            
+
         }
 
         /// <summary>
@@ -165,7 +163,7 @@ namespace Wpf_Inventory_.View
             DevTypeComboBox.SelectedItem = device.Devicetype?.Type;
             DevBlockComboBox.SelectedItem = device.Office.OfficeBlock;
             DevDepComboBox.SelectedItem = device.Department?.Name;
-            DevOfficeComboBox.SelectedItem = device.Office?.Officenum;            
+            DevOfficeComboBox.SelectedItem = device.Office?.Officenum;
 
         }
 
