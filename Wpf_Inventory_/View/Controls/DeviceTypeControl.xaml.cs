@@ -13,7 +13,7 @@ namespace Wpf_Inventory_.View.Controls
     public partial class DeviceTypeControl : UserControl
     {
         /// <summary>
-        /// 
+        /// переменная для взаимодействия с бд
         /// </summary>
         private InventoryRegistryDataBaseEntities3 _dbo = DB_Connection.GetDataBase();
 
