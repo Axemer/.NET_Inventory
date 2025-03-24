@@ -386,6 +386,14 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\Icons\icons8-database-24.png" />
+    <Resource Include="Resources\Icons\icons8-database-30.png" />
+    <Resource Include="Resources\Icons\icons8-database-40.png" />
+    <Resource Include="Resources\Icons\icons8-database-48.png" />
+    <Resource Include="Resources\Icons\icons8-database-50 %281%29.png" />
+    <Resource Include="Resources\Icons\icons8-database-50.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
