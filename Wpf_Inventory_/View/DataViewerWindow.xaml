@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wpf_Inventory_.View"
         mc:Ignorable="d"
-        Title="Данные устрйоства" Height="412" Width="660">
+        Title="Данные устройства" Height="412" Width="660">
     <Grid>
         <!--<TextBlock HorizontalAlignment="Left" Margin="10,25,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Height="20" Text="ID устройства :" FontSize="14" TextAlignment="Right"/>
         <TextBox x:Name="DevIDTextBox"  HorizontalAlignment="Left" Margin="115,25,0,0" TextWrapping="Wrap" Text="{}" VerticalAlignment="Top" Width="200" Height="20"/>-->

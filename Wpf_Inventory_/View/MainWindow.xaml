@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Wpf_Inventory_"
         xmlns:Classes="clr-namespace:Wpf_Inventory_.Classes" xmlns:Controls="clr-namespace:Wpf_Inventory_.View.Controls" x:Class="Wpf_Inventory_.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Loaded="Window_Loaded"
+        Title="База данных технических устройств" Loaded="Window_Loaded"
         Width="629" Height="521">
 
     <Window.Resources>
