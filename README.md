@@ -1,3 +1,3 @@
 # ПО для ведения учета инветаря организации
 
-Реализованно на основе .NET Framework 4.8.1 , Entity Framework 3.1.22 и базы данных Postgres 
+Реализованно на основе .NET Framework 4.8.1 , Entity Framework 3.1.22 и базе данных Postgres 
