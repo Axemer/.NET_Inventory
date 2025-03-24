@@ -38,7 +38,7 @@ namespace Wpf_Inventory_
 
         public void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            //DeviceDataGridInit(_dbo);
+
         }
 
         /// <summary>
@@ -52,10 +52,6 @@ namespace Wpf_Inventory_
                 Application.Current.Shutdown(); // Если вход не успешен — закрываем приложение
             }
         }
-
-
-
-
 
         /// <summary>
         /// Позволяет менять цвет индикатора активности
@@ -99,14 +95,30 @@ namespace Wpf_Inventory_
                     }
                 }
             }
+            catch (PrincipalOperationException ex)
+            {
+                LogError($"Ошибка операции с учетной записью: {ex.Message}");
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                LogError($"Ошибка доступа: {ex.Message}");
+            }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка проверки группы: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                Application.Current.Shutdown(); // Если вход не успешен — закрываем приложение
+                LogError($"Неизвестная ошибка: {ex.Message}");
             }
+
+            MessageBox.Show("Ошибка проверки группы. Подробности в логах.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            Application.Current.Shutdown(); // Если вход не успешен — закрываем приложение
             return false;
         }
 
+        private static void LogError(string message)
+        {
+            // Реализация логирования ошибки (например, запись в файл или журнал событий)
+            // Пример:
+            System.IO.File.AppendAllText("error_log.txt", $"{DateTime.Now}: {message}{Environment.NewLine}");
+        }
 
         /// <summary>
         /// Пулим с базы данных после чего делаем эксель таблицу. 
