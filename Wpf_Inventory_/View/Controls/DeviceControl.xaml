@@ -67,6 +67,25 @@
 
             <DataGrid x:Name="DeviceDataGrid" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="DeviceDataGrid_SelectionChanged"
  MouseDoubleClick="DeviceDataGrid_MouseDoubleClick" Margin="0,0,0,39">
+
+                <DataGrid.Resources>
+                    <!-- Определение полупрозрачного серо-бур-малинового цвета -->
+                    <SolidColorBrush x:Key="MarkedRowBrush" Color="#80B76E79"/>
+                    <!-- 80 - прозрачность -->
+                </DataGrid.Resources>
+
+                <!-- Стиль для окраски строки -->
+                <DataGrid.RowStyle>
+                    <Style TargetType="DataGridRow">
+                        <Style.Triggers>
+                            <!-- Проверка свойства Exception -->
+                            <DataTrigger Binding="{Binding Exception}" Value="True">
+                                <Setter Property="Background" Value="{StaticResource MarkedRowBrush}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.RowStyle>
+
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Инвентарный номер" Binding="{Binding InventoryNumber}" Width="auto"/>
                     <DataGridTextColumn Header="Тип" Binding="{Binding Devicetype.Type}" Width="auto"/>
