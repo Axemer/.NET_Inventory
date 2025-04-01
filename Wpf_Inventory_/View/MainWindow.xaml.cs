@@ -172,6 +172,15 @@ namespace Wpf_Inventory_
 
         }
 
+        private void AboutButton_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Программа: Система учета данных инвенторя\n" +
+                            "Разработчик: Axemer 2025 год\n" +
+                            "Версия: Альфа 0.3", "О программе", 
+                            MessageBoxButton.OK, MessageBoxImage.Information);
+
+        }
+
         /// <summary>
         /// Закрывает окно
         /// </summary>

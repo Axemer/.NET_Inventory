@@ -46,7 +46,7 @@
                 <MenuItem Foreground="Black" Header="Вставить"/>
             </MenuItem>
             <MenuItem Header="Помощь" DockPanel.Dock="Left">
-                <MenuItem Foreground="Black" Header="О программе"/>
+                <MenuItem Foreground="Black" Header="О программе" Click="AboutButton_Click"/>
             </MenuItem>
 
             <!-- Индикатор активности (в правом верхнем углу) -->
