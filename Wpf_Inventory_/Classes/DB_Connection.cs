@@ -10,7 +10,7 @@ namespace Wpf_Inventory_.Classes
         private static InventoryDataBaseContext pgs_connect;
 
         /// <summary>
-        /// Подключаеся к базе и возвращаем с нее данные
+        /// Подключаемся к базе и возвращаем с нее данные
         /// </summary>
         /// <returns></returns>
         internal static InventoryDataBaseContext GetDataBase()

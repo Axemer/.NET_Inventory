@@ -21,12 +21,12 @@ namespace Wpf_Inventory_.View.Controls
         /// </summary>
         public void AddNewDepartment()
         {
-            Department newDepartment = new Department
+            Office newDepartment = new Office
             {
-                Name = "NewDep"
+                //Name = "NewDep"
             };
             // Добавляем в базу данных
-            _dbo.Department.Add(newDepartment);
+            _dbo.Office.Add(newDepartment);
             _dbo.SaveChanges(); // Сохраняем в базе, чтобы появился ID тк он присвается базой
         }
 
@@ -36,7 +36,7 @@ namespace Wpf_Inventory_.View.Controls
         /// <param name="InventoryRegDB"> Данные из БД сюда надо </param>
         public void DataGridInit(InventoryDataBaseContext InventoryRegDB)
         {
-            DepartmentDataGrid.ItemsSource = InventoryRegDB.Department.ToList();
+            DepartmentDataGrid.ItemsSource = InventoryRegDB.Office.ToList();
         }
 
         public DepartmentControl()

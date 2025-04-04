@@ -16,20 +16,18 @@ namespace Wpf_Inventory_.Model
         }
 
         public int DeviceId { get; set; }
-        public int? DeviceTypeId { get; set; }
+        public int? DevicetypeId { get; set; }
         public string IpAddress { get; set; }
-        public int DepartmentId { get; set; }
-        public string DeviceName { get; set; }
-        public DateTime? DateOfCommissioning { get; set; }
-        public string SerialNumber { get; set; }
-        public string InventoryNumber { get; set; }
+        public string Devicename { get; set; }
+        public DateTime? Dateofcommissioning { get; set; }
+        public string Serialnumber { get; set; }
+        public string Inventorynumber { get; set; }
         public int? ModelId { get; set; }
         public int? OfficeId { get; set; }
         public bool? Exception { get; set; }
         public string Note { get; set; }
 
-        public virtual Department Department { get; set; }
-        public virtual DeviceType Devicetype { get; set; }
+        public virtual Devicetype Devicetype { get; set; }
         public virtual Model Model { get; set; }
         public virtual Office Office { get; set; }
         public virtual ICollection<DeviceWorkplace> DeviceWorkplace { get; set; }
