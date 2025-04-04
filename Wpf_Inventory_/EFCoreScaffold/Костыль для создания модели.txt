@@ -1,0 +1,22 @@
+Используем .NET 6+ консольный проект для Scaffold
+Так как dotnet ef требует SDK-стиль проектов, вам нужно создать отдельный .NET 6+ консольный проект, выполнить Scaffold там, а затем скопировать модели в ваш WPF-проект.
+
+✅ Шаг 1: Создайте временный .NET 6+ проект
+powershell
+dotnet new console -n EFCoreScaffold
+
+✅ Шаг 2: Перейдите в папку
+powershell
+cd EFCoreScaffold
+
+✅ Шаг 3: Установите зависимости
+powershell
+dotnet add package Microsoft.EntityFrameworkCore.Design
+dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL
+
+✅ Шаг 4: Выполните Scaffold
+powershell
+dotnet ef dbcontext scaffold "Host=localhost;Port=5432;Database=Inventory Data Base;Username=postgres;Password=1911;" Npgsql.EntityFrameworkCore.PostgreSQL -o Models
+
+✅ Шаг 5: Скопируйте Models в ваш WPF-проект
+После успешного выполнения, скопируйте папку Models в Wpf_Inventory_.

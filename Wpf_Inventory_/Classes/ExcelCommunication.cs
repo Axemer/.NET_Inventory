@@ -19,7 +19,7 @@ namespace Wpf_Inventory_.Classes
         {
             FileInfo fileInfo = new FileInfo(filePath);
 
-            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            //ExcelPackage.License = License.NonCommercial; // Обновлено для EPPlus 8 и выше
             using (var package = new ExcelPackage(fileInfo))
             {
                 var worksheet = package.Workbook.Worksheets[0];
@@ -31,25 +31,25 @@ namespace Wpf_Inventory_.Classes
                     {
                         var device = new Device
                         {
-                            DeviceName = worksheet.Cells[row, 1].Text,
+                            Devicename = worksheet.Cells[row, 1].Text,
                             IpAddress = worksheet.Cells[row, 2].Text,
-                            SerialNumber = worksheet.Cells[row, 3].Text,
-                            InventoryNumber = worksheet.Cells[row, 4].Text,
+                            Serialnumber = worksheet.Cells[row, 3].Text,
+                            Inventorynumber = worksheet.Cells[row, 4].Text,
                             Note = worksheet.Cells[row, 5].Text,
-                            DateOfCommissioning = DateTime.Parse(worksheet.Cells[row, 6].Text),
+                            Dateofcommissioning = DateTime.Parse(worksheet.Cells[row, 6].Text),
                             Exception = worksheet.Cells[row, 7].Text.ToLower() == "да",
 
                             // Обработка связей
-                            Department = GetOrCreateDepartment(dbContext, worksheet.Cells[row, 8].Text),
-                            Devicetype = GetOrCreateDeviceType(dbContext, worksheet.Cells[row, 9].Text),
-                            Model = GetOrCreateModel(dbContext, worksheet.Cells[row, 10].Text),
-                            Office = GetOrCreateOffice(dbContext, worksheet.Cells[row, 11].Text)
+                            //Department = GetOrCreateDepartment(dbContext, worksheet.Cells[row, 8].Text),
+                            //Devicetype = GetOrCreateDeviceType(dbContext, worksheet.Cells[row, 9].Text),
+                            //Model = GetOrCreateModel(dbContext, worksheet.Cells[row, 10].Text),
+                            //Office = GetOrCreateOffice(dbContext, worksheet.Cells[row, 11].Text)
                         };
 
                         // Проверка на дубликаты
-                        if (!dbContext.Device.Any(d => d.InventoryNumber == device.InventoryNumber))
+                        if (!dbContext.Device.Any(d => d.Inventorynumber == device.Inventorynumber)) // Исправлено имя свойства и коллекции
                         {
-                            dbContext.Device.Add(device);
+                            dbContext.Device.Add(device); // Исправлено имя коллекции
                         }
                     }
                     catch (Exception ex)
@@ -69,7 +69,7 @@ namespace Wpf_Inventory_.Classes
         /// <param name="dbContext"></param>
         public static void ExportToExcel(string filePath, InventoryDataBaseContext dbContext)
         {
-            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            //ExcelPackage.License = License.NonCommercial; // Обновлено для EPPlus 8 и выше
             using (var package = new ExcelPackage())
             {
                 var worksheet = package.Workbook.Worksheets.Add("Devices");
@@ -89,7 +89,6 @@ namespace Wpf_Inventory_.Classes
 
                 // Данные
                 var devices = dbContext.Device
-                    .Include(d => d.Department)
                     .Include(d => d.Devicetype)
                     .Include(d => d.Model)
                     .Include(d => d.Office)
@@ -98,14 +97,14 @@ namespace Wpf_Inventory_.Classes
                 for (int i = 0; i < devices.Count; i++)
                 {
                     var device = devices[i];
-                    worksheet.Cells[i + 2, 1].Value = device.DeviceName;
+                    worksheet.Cells[i + 2, 1].Value = device.Devicename;
                     worksheet.Cells[i + 2, 2].Value = device.IpAddress;
-                    worksheet.Cells[i + 2, 3].Value = device.SerialNumber;
-                    worksheet.Cells[i + 2, 4].Value = device.InventoryNumber;
+                    worksheet.Cells[i + 2, 3].Value = device.Serialnumber;
+                    worksheet.Cells[i + 2, 4].Value = device.Inventorynumber;
                     worksheet.Cells[i + 2, 5].Value = device.Note;
-                    worksheet.Cells[i + 2, 6].Value = device.DateOfCommissioning?.ToString("dd.MM.yyyy");
+                    worksheet.Cells[i + 2, 6].Value = device.Dateofcommissioning?.ToString("dd.MM.yyyy");
                     worksheet.Cells[i + 2, 7].Value = device.Exception.HasValue && device.Exception.Value ? "Да" : "Нет";
-                    worksheet.Cells[i + 2, 8].Value = device.Department?.Name;
+                    //worksheet.Cells[i + 2, 8].Value = device.Department?.Name;
                     worksheet.Cells[i + 2, 9].Value = device.Devicetype?.Type;
                     worksheet.Cells[i + 2, 10].Value = device.Model?.Model1;
                     worksheet.Cells[i + 2, 11].Value = device.Office?.Officenum;
@@ -118,53 +117,53 @@ namespace Wpf_Inventory_.Classes
         }
 
         #region Вспомогательные методы
-        private static Department GetOrCreateDepartment(InventoryDataBaseContext db, string name)
-        {
-            var department = db.Department.FirstOrDefault(d => d.Name == name);
-            if (department == null)
-            {
-                department = new Department { Name = name };
-                db.Department.Add(department);
-                db.SaveChanges();
-            }
-            return department;
-        }
+        //private static department GetOrCreateDepartment(InventoryDataBaseContext db, string name)
+        //{
+        //    var department = db.Department.FirstOrDefault(d => d.Name == name);
+        //    if (department == null)
+        //    {
+        //        department = new Department { Name = name };
+        //        db.Department.Add(department);
+        //        db.SaveChanges();
+        //    }
+        //    return department;
+        //}
 
-        private static DeviceType GetOrCreateDeviceType(InventoryDataBaseContext db, string type)
-        {
-            var deviceType = db.Devicetype.FirstOrDefault(dt => dt.Type == type);
-            if (deviceType == null)
-            {
-                deviceType = new DeviceType { Type = type };
-                db.Devicetype.Add(deviceType);
-                db.SaveChanges();
-            }
-            return deviceType;
-        }
+        //private static Devicetype GetOrCreateDeviceType(InventoryDataBaseContext db, string type)
+        //{
+        //    var deviceType = db.Devicetype.FirstOrDefault(dt => dt.Type == type);
+        //    if (deviceType == null)
+        //    {
+        //        deviceType = new DeviceType { Type = type };
+        //        db.Devicetype.Add(deviceType);
+        //        db.SaveChanges();
+        //    }
+        //    return deviceType;
+        //}
 
-        private static Wpf_Inventory_.Model.Model GetOrCreateModel(InventoryDataBaseContext db, string modelName)
-        {
-            var model = db.Model.FirstOrDefault(m => m.Model1 == modelName);
-            if (model == null)
-            {
-                model = new Wpf_Inventory_.Model.Model { Model1 = modelName };
-                db.Model.Add(model);
-                db.SaveChanges();
-            }
-            return model;
-        }
+        //private static Wpf_Inventory_.Model.Model GetOrCreateModel(InventoryDataBaseContext db, string modelName)
+        //{
+        //    var model = db.Model.FirstOrDefault(m => m.Model1 == modelName);
+        //    if (model == null)
+        //    {
+        //        model = new Wpf_Inventory_.Model.Model { Model1 = modelName };
+        //        db.Model.Add(model);
+        //        db.SaveChanges();
+        //    }
+        //    return model;
+        //}
 
-        private static Office GetOrCreateOffice(InventoryDataBaseContext db, string officeNum)
-        {
-            var office = db.Office.FirstOrDefault(o => o.Officenum == officeNum);
-            if (office == null)
-            {
-                office = new Office { Officenum = officeNum };
-                db.Office.Add(office);
-                db.SaveChanges();
-            }
-            return office;
-        }
+        //private static Office GetOrCreateOffice(InventoryDataBaseContext db, string officeNum)
+        //{
+        //    var office = db.Office.FirstOrDefault(o => o.Officenum == officeNum);
+        //    if (office == null)
+        //    {
+        //        office = new Office { Officenum = officeNum };
+        //        db.Office.Add(office);
+        //        db.SaveChanges();
+        //    }
+        //    return office;
+        //}
     }
 }
 #endregion

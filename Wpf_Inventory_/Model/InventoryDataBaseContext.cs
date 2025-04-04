@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 // Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
 // If you have enabled NRTs for your project, then un-comment the following line:
@@ -17,16 +19,13 @@ namespace Wpf_Inventory_.Model
         {
         }
 
-        public virtual DbSet<Block> Block { get; set; }
-        public virtual DbSet<Department> Department { get; set; }
         public virtual DbSet<Device> Device { get; set; }
         public virtual DbSet<DeviceWorkplace> DeviceWorkplace { get; set; }
         public virtual DbSet<Deviceparts> Deviceparts { get; set; }
         public virtual DbSet<DevicepartsDevice> DevicepartsDevice { get; set; }
-        public virtual DbSet<DeviceType> Devicetype { get; set; }
+        public virtual DbSet<Devicetype> Devicetype { get; set; }
         public virtual DbSet<Model> Model { get; set; }
         public virtual DbSet<Office> Office { get; set; }
-        public virtual DbSet<OfficeBlock> OfficeBlock { get; set; }
         public virtual DbSet<Workplace> Workplace { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -40,34 +39,6 @@ namespace Wpf_Inventory_.Model
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Block>(entity =>
-            {
-                entity.ToTable("block");
-
-                entity.Property(e => e.BlockId)
-                    .HasColumnName("block_id")
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.Block1)
-                    .IsRequired()
-                    .HasColumnName("block")
-                    .HasMaxLength(1);
-            });
-
-            modelBuilder.Entity<Department>(entity =>
-            {
-                entity.ToTable("department");
-
-                entity.Property(e => e.DepartmentId)
-                    .HasColumnName("department_id")
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasColumnName("name")
-                    .HasMaxLength(255);
-            });
-
             modelBuilder.Entity<Device>(entity =>
             {
                 entity.ToTable("device");
@@ -76,21 +47,19 @@ namespace Wpf_Inventory_.Model
                     .HasColumnName("device_id")
                     .ValueGeneratedNever();
 
-                entity.Property(e => e.DateOfCommissioning)
+                entity.Property(e => e.Dateofcommissioning)
                     .HasColumnName("dateofcommissioning")
                     .HasColumnType("date");
 
-                entity.Property(e => e.DepartmentId).HasColumnName("department_id");
-
-                entity.Property(e => e.DeviceName)
+                entity.Property(e => e.Devicename)
                     .HasColumnName("devicename")
                     .HasMaxLength(255);
 
-                entity.Property(e => e.DeviceTypeId).HasColumnName("devicetype_id");
+                entity.Property(e => e.DevicetypeId).HasColumnName("devicetype_id");
 
                 entity.Property(e => e.Exception).HasColumnName("exception");
 
-                entity.Property(e => e.InventoryNumber)
+                entity.Property(e => e.Inventorynumber)
                     .HasColumnName("inventorynumber")
                     .HasMaxLength(16);
 
@@ -104,19 +73,13 @@ namespace Wpf_Inventory_.Model
 
                 entity.Property(e => e.OfficeId).HasColumnName("office_id");
 
-                entity.Property(e => e.SerialNumber)
+                entity.Property(e => e.Serialnumber)
                     .HasColumnName("serialnumber")
                     .HasMaxLength(16);
 
-                entity.HasOne(d => d.Department)
-                    .WithMany(p => p.Device)
-                    .HasForeignKey(d => d.DepartmentId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_device_department");
-
                 entity.HasOne(d => d.Devicetype)
                     .WithMany(p => p.Device)
-                    .HasForeignKey(d => d.DeviceTypeId)
+                    .HasForeignKey(d => d.DevicetypeId)
                     .HasConstraintName("fk_device_devicetype");
 
                 entity.HasOne(d => d.Model)
@@ -193,7 +156,7 @@ namespace Wpf_Inventory_.Model
                     .HasConstraintName("fk_devicepartsdevice_deviceparts");
             });
 
-            modelBuilder.Entity<DeviceType>(entity =>
+            modelBuilder.Entity<Devicetype>(entity =>
             {
                 entity.ToTable("devicetype");
 
@@ -229,6 +192,14 @@ namespace Wpf_Inventory_.Model
                     .HasColumnName("office_id")
                     .ValueGeneratedNever();
 
+                entity.Property(e => e.Block)
+                    .HasColumnName("block")
+                    .HasColumnType("char");
+
+                entity.Property(e => e.Department)
+                    .HasColumnName("department")
+                    .HasMaxLength(255);
+
                 entity.Property(e => e.Officenum)
                     .IsRequired()
                     .HasColumnName("officenum")
@@ -237,30 +208,6 @@ namespace Wpf_Inventory_.Model
                 entity.Property(e => e.Phone)
                     .HasColumnName("phone")
                     .HasMaxLength(20);
-            });
-
-            modelBuilder.Entity<OfficeBlock>(entity =>
-            {
-                entity.HasKey(e => new { e.OfficeId, e.BlockId })
-                    .HasName("office_block_pkey");
-
-                entity.ToTable("office_block");
-
-                entity.Property(e => e.OfficeId).HasColumnName("office_id");
-
-                entity.Property(e => e.BlockId).HasColumnName("block_id");
-
-                entity.HasOne(d => d.Block)
-                    .WithMany(p => p.OfficeBlock)
-                    .HasForeignKey(d => d.BlockId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_officeblock_block");
-
-                entity.HasOne(d => d.Office)
-                    .WithMany(p => p.OfficeBlock)
-                    .HasForeignKey(d => d.OfficeId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_officeblock_office");
             });
 
             modelBuilder.Entity<Workplace>(entity =>

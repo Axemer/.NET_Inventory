@@ -39,20 +39,20 @@ public class ExcelExporter
 
     private void SaveToExcelFile(dynamic data, string filePath)
     {
-        ExcelPackage.LicenseContext = LicenseContext.NonCommercial; // без этого щитпоста не работает. прога вроде в инет не стучится для проверки так что плевать, наверное?
+        ExcelPackage.LicenseContext = LicenseContext.NonCommercial; // Установка контекста лицензии  
 
         using (ExcelPackage package = new ExcelPackage())
         {
             ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("InventoryRegistry");
 
-            // Заголовки
+            // Заголовки  
             var properties = data[0].GetType().GetProperties();
             for (int i = 0; i < properties.Length; i++)
             {
                 worksheet.Cells[1, i + 1].Value = properties[i].Name;
             }
 
-            // Данные
+            // Данные  
             int row = 2;
             foreach (var item in data)
             {

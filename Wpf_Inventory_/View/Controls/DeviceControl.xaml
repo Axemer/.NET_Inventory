@@ -87,11 +87,11 @@
                 </DataGrid.RowStyle>
 
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Инвентарный номер" Binding="{Binding InventoryNumber}" Width="auto"/>
+                    <DataGridTextColumn Header="Инвентарный номер" Binding="{Binding Inventorynumber}" Width="auto"/>
                     <DataGridTextColumn Header="Тип" Binding="{Binding Devicetype.Type}" Width="auto"/>
-                    <DataGridTextColumn Header="Название" Binding="{Binding DeviceName}" Width="auto"/>
+                    <DataGridTextColumn Header="Название" Binding="{Binding Devicename}" Width="auto"/>
                     <DataGridTextColumn Header="IP" Binding="{Binding IpAddress}" Width="auto"/>
-                    <DataGridTextColumn Header="Дата приема" Binding="{Binding DateOfCommissioning}" Width="*"/>
+                    <DataGridTextColumn Header="Дата приема" Binding="{Binding Dateofcommissioning}" Width="*"/>
                     <DataGridCheckBoxColumn Header="Списано" Binding="{Binding Exception, Converter={StaticResource NullableBoolConverter}}" Width="60"/>
                 </DataGrid.Columns>
             </DataGrid>

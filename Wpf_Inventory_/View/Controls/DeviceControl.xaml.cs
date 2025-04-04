@@ -41,15 +41,14 @@ namespace Wpf_Inventory_.View.Controls
             // Создаём новый объект Device
             Device newDevice = new Device
             {
-                DeviceName = "Новое устройство",
-                SerialNumber = "0",
-                InventoryNumber = "0",
+                Devicename = "Новое устройство",
+                Serialnumber = "0",
+                Inventorynumber = "0",
                 Model = null,
                 Note = "",
-                DateOfCommissioning = DateTime.Now,
-                DeviceTypeId = 1, // Установить позже
+                Dateofcommissioning = DateTime.Now,
+                DevicetypeId = 1, // Установить позже
                 OfficeId = 1, // Установить позже
-                DepartmentId = 1 // Установить позже
             };
 
             // Добавляем в базу данных
@@ -133,13 +132,13 @@ namespace Wpf_Inventory_.View.Controls
                     switch (selectedCriteria)
                     {
                         case "Название":
-                            return !string.IsNullOrEmpty(device.DeviceName) && device.DeviceName.ToLower().Contains(filterText);
+                            return !string.IsNullOrEmpty(device.Devicename) && device.Devicename.ToLower().Contains(filterText);
                         case "Инвентарный номер":
-                            return !string.IsNullOrEmpty(device.InventoryNumber) && device.InventoryNumber.ToLower().Contains(filterText);
+                            return !string.IsNullOrEmpty(device.Inventorynumber) && device.Inventorynumber.ToLower().Contains(filterText);
                         case "IP":
                             return !string.IsNullOrEmpty(device.IpAddress) && device.IpAddress.ToLower().Contains(filterText);
                         case "Дата приема":
-                            return device.DateOfCommissioning.ToString().ToLower().Contains(filterText);
+                            return device.Dateofcommissioning.ToString().ToLower().Contains(filterText);
                         default:
                             return true;
                     }
