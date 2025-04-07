@@ -7,6 +7,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using Wpf_Inventory_.Classes;
 using Wpf_Inventory_.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace Wpf_Inventory_.View.Controls
 {
@@ -67,7 +68,8 @@ namespace Wpf_Inventory_.View.Controls
         /// <param name="InventoryRegDB"> Данные из БД сюда надо </param>
         public void DeviceDataGridInit(InventoryDataBaseContext InventoryRegDB)
         {
-            DeviceDataGrid.ItemsSource = InventoryRegDB.Device.ToList();
+            DeviceDataGrid.ItemsSource = InventoryRegDB.Device.Include(d => d.Devicetype)
+                                        .ToList();
         }
 
         /// <summary>

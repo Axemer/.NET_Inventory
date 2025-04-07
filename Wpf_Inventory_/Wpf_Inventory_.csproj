@@ -99,17 +99,17 @@
     <PackageReference Include="System.Text.Json" Version="9.0.3" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Remove="EFCoreScaffold\Model\Device.cs" />
-    <Compile Remove="EFCoreScaffold\Model\Devicepart.cs" />
-    <Compile Remove="EFCoreScaffold\Model\Devicetype.cs" />
-    <Compile Remove="EFCoreScaffold\Model\DeviceWorkplace.cs" />
-    <Compile Remove="EFCoreScaffold\Model\InventoryDataBaseContext.cs" />
-    <Compile Remove="EFCoreScaffold\Model\Model.cs" />
-    <Compile Remove="EFCoreScaffold\Model\Office.cs" />
-    <Compile Remove="EFCoreScaffold\Model\Workplace.cs" />
-    <Compile Remove="EFCoreScaffold\obj\Debug\net9.0\.NETCoreApp,Version=v9.0.AssemblyAttributes.cs" />
-    <Compile Remove="EFCoreScaffold\obj\Debug\net9.0\EFCoreScaffold.AssemblyInfo.cs" />
-    <Compile Remove="EFCoreScaffold\obj\Debug\net9.0\EFCoreScaffold.GlobalUsings.g.cs" />
-    <Compile Remove="EFCoreScaffold\Program.cs" />
+    <Compile Remove="dbg\EFCoreScaffold\Model\Device.cs" />
+    <Compile Remove="dbg\EFCoreScaffold\Model\Devicepart.cs" />
+    <Compile Remove="dbg\EFCoreScaffold\Model\Devicetype.cs" />
+    <Compile Remove="dbg\EFCoreScaffold\Model\DeviceWorkplace.cs" />
+    <Compile Remove="dbg\EFCoreScaffold\Model\InventoryDataBaseContext.cs" />
+    <Compile Remove="dbg\EFCoreScaffold\Model\Model.cs" />
+    <Compile Remove="dbg\EFCoreScaffold\Model\Office.cs" />
+    <Compile Remove="dbg\EFCoreScaffold\Model\Workplace.cs" />
+    <Compile Remove="dbg\EFCoreScaffold\obj\Debug\net9.0\.NETCoreApp,Version=v9.0.AssemblyAttributes.cs" />
+    <Compile Remove="dbg\EFCoreScaffold\obj\Debug\net9.0\EFCoreScaffold.AssemblyInfo.cs" />
+    <Compile Remove="dbg\EFCoreScaffold\obj\Debug\net9.0\EFCoreScaffold.GlobalUsings.g.cs" />
+    <Compile Remove="dbg\EFCoreScaffold\Program.cs" />
   </ItemGroup>
 </Project>
