@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
@@ -19,7 +17,14 @@ namespace Wpf_Inventory_.View
         /// </summary>
         public event Action SaveButtonClicked;
 
+        /// <summary>
+        /// Переменная с текущим устройством, которое редактируется в окне.
+        /// </summary>
         private object _currentDevice = new Device();
+
+        /// <summary>
+        /// Переменная с всем перечнем данных в базе данных.
+        /// </summary>
         readonly private InventoryDataBaseContext _invDbo = DB_Connection.GetDataBase();
 
         public DataViewerWindow()
@@ -64,9 +69,17 @@ namespace Wpf_Inventory_.View
             if (!string.IsNullOrEmpty(selectedDeviceType))
                 device.DevicetypeId = DBO.Devicetype.FirstOrDefault(d => d.Type == selectedDeviceType)?.DevicetypeId;
 
+            // Вот эта штучка немного капризная и иногда давала null с чего естественно прога вылетала
             string selectedDepartment = DevDepComboBox.SelectedItem?.ToString();
             if (!string.IsNullOrEmpty(selectedDepartment))
-                device.Office.Department = DBO.Office.FirstOrDefault(d => d.Department == selectedDepartment).Department;
+            {
+                var officeMatch = DBO.Office.FirstOrDefault(d => d.Department == selectedDepartment);
+                if (officeMatch != null)
+                    device.Office.Department = officeMatch.Department;
+                else
+                    MessageBox.Show("Не удалось найти отделение с таким названием в базе данных.");
+            }
+            // но в любом случае тут лучше заранее указать все данные о офисах в базе данных и тогда этой ошибки никто не увидет 
 
             string selectedOffice = DevOfficeComboBox.SelectedItem?.ToString();
             if (!string.IsNullOrEmpty(selectedOffice))
@@ -77,8 +90,7 @@ namespace Wpf_Inventory_.View
             // Говорили меньше места занимает ме ме ме
             // Было бы у меня столько ебли с людим как с этими блоками
             // Я бы стал Хью Хефнером 2.0 и был бы не менее знаменит.
-            string selectedBlock = DevBlockComboBox.SelectedItem?.ToString();
-            
+            string selectedBlock = DevBlockComboBox.SelectedItem?.ToString();           
 
             // Сохраняем изменения
             DBO.SaveChanges();
@@ -92,8 +104,6 @@ namespace Wpf_Inventory_.View
         /// <param name="DBO"></param>
         public void ShowData(object SelectedDevice, InventoryDataBaseContext DBO)
         {
-            //DBO.Configuration.ProxyCreationEnabled = false;
-
             if (SelectedDevice == null || DBO == null) return;
             _currentDevice = SelectedDevice;
 
@@ -116,28 +126,30 @@ namespace Wpf_Inventory_.View
                 foreach (Devicetype deviceType in DBO.Devicetype.ToList())
                     DevTypeComboBox.Items.Add(deviceType.Type);
             }
-            //if (DevBlockComboBox.Items.Count == 0)
-            //{
-            //    foreach (Office block in DBO.Office.ToList())
-            //        DevBlockComboBox.Items.Add(block.Block);
-            //}
-            //if (DevDepComboBox.Items.Count == 0)
-            //{
-            //    foreach (Office department in DBO.Office.ToList())
-            //        DevDepComboBox.Items.Add(department.Department);
-            //}
-            //if (DevOfficeComboBox.Items.Count == 0)
-            //{
-            //    foreach (Office office in DBO.Office.ToList())
-            //        DevOfficeComboBox.Items.Add(office.Officenum);
-            //}
+            if (DevBlockComboBox.Items.Count == 0)
+            {
+                foreach (Office block in DBO.Office.ToList())
+                    DevBlockComboBox.Items.Add(block.Block);
+            }
+            if (DevDepComboBox.Items.Count == 0)
+            {
+                foreach (Office department in DBO.Office.ToList())
+                    DevDepComboBox.Items.Add(department.Department);
+            }
+            if (DevOfficeComboBox.Items.Count == 0)
+            {
+                foreach (Office office in DBO.Office.ToList())
+                    DevOfficeComboBox.Items.Add(office.Officenum);
+            }
 
             // Заполняем текстовые поля данными устройства
             DevIDTextBox.Text = device.DeviceId.ToString();
             DevNameTextBox.Text = device.Devicename.ToString();
             DevSerialTextBox.Text = device.Serialnumber;
             DevInvNumTextBox.Text = device.Inventorynumber;
-            DevModelTextBox.Text = device?.Model?.Model1 ?? "Неизвестная модель"; // сломано не фурычит
+            DevModelTextBox.Text = device?.Model?.Model1 ?? "Неизвестная модель";
+            // на случай если модель null стоит проверка ибо так уже случалось
+
             DevIPTextBox.Text = device.IpAddress;
             DevNoteTextBox.Text = device.Note;
             DevDateDatePicker.SelectedDate = device.Dateofcommissioning;
@@ -148,7 +160,6 @@ namespace Wpf_Inventory_.View
             DevBlockComboBox.SelectedItem = device.Office?.Block;
             DevDepComboBox.SelectedItem = device.Office?.Department;
             DevOfficeComboBox.SelectedItem = device.Office?.Officenum;
-
         }
 
         private void DevSaveButton_Click(object sender, RoutedEventArgs e)
@@ -159,7 +170,9 @@ namespace Wpf_Inventory_.View
 
         private void ExceptionCheckBox_Checked(object sender, RoutedEventArgs e)
         {
-
+            // Этот метод не обязательный тк в методах выше все и так реализовано
+            // Но если очень хочется можно и сюда часть функционала перенести
+            // Так как технически это будет более правильно
         }
     }
 }
