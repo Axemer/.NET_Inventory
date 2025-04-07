@@ -111,11 +111,11 @@ namespace Wpf_Inventory_.View
                 return;
 
             // Заполняем выпадающие списки (ComboBox) если их не забили ранее
-            //if (DevTypeComboBox.Items.Count == 0)
-            //{
-            //    foreach (Devicetype deviceType in DBO.Devicetype.ToList())
-            //        DevTypeComboBox.Items.Add(deviceType.Type);
-            //}
+            if (DevTypeComboBox.Items.Count == 0)
+            {
+                foreach (Devicetype deviceType in DBO.Devicetype.ToList())
+                    DevTypeComboBox.Items.Add(deviceType.Type);
+            }
             //if (DevBlockComboBox.Items.Count == 0)
             //{
             //    foreach (Office block in DBO.Office.ToList())
