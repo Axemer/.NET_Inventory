@@ -17,7 +17,7 @@ namespace Wpf_Inventory_.Model
         public int OfficeId { get; set; }
         public string Officenum { get; set; }
         public string Phone { get; set; }
-        public string Block { get; set; }
+        public char? Block { get; set; }
         public string Department { get; set; }
 
         public virtual ICollection<Device> Device { get; set; }
