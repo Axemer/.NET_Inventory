@@ -23,7 +23,7 @@ namespace Wpf_Inventory_.View.Controls
         /// <summary>
         /// Представление коллекции для фильтрации данных
         /// </summary>
-        private ICollectionView _deviceCollectionView;
+        private readonly ICollectionView _deviceCollectionView;
 
         public DeviceControl()
         {
@@ -39,7 +39,7 @@ namespace Wpf_Inventory_.View.Controls
         {
 
             // Создаём новый объект Device
-            Device newDevice = new Device
+            Device newDevice = new()
             {
                 Devicename = "Новое устройство",
                 Serialnumber = "0",
@@ -56,7 +56,7 @@ namespace Wpf_Inventory_.View.Controls
             _dbo.SaveChanges(); // Сохраняем в базе, чтобы появился ID тк он присвается базой
 
             // Открываем окно редактирования нового устройства
-            DataViewerWindow dataViewerWindow = new DataViewerWindow();
+            DataViewerWindow dataViewerWindow = new();
             dataViewerWindow.Show();
             dataViewerWindow.ShowData(newDevice, _dbo);
         }
@@ -99,7 +99,7 @@ namespace Wpf_Inventory_.View.Controls
             if (SelctedDevice != null)
             {
 
-                DataViewerWindow dataViewerWindow = new DataViewerWindow();
+                DataViewerWindow dataViewerWindow = new();
                 dataViewerWindow.SaveButtonClicked += OnDeviceSaved;
                 dataViewerWindow.Show();
                 dataViewerWindow.ShowData(SelctedDevice, _dbo);
@@ -125,23 +125,18 @@ namespace Wpf_Inventory_.View.Controls
             {
                 _deviceCollectionView.Filter = item =>
                 {
-                    var device = item as Device;
-                    if (device == null)
+                    if (item is not Device device)
                         return false;
 
-                    switch (selectedCriteria)
+                    // Выглядет больно для чтения но хз стандарт таков теперь
+                    return selectedCriteria switch
                     {
-                        case "Название":
-                            return !string.IsNullOrEmpty(device.Devicename) && device.Devicename.ToLower().Contains(filterText);
-                        case "Инвентарный номер":
-                            return !string.IsNullOrEmpty(device.Inventorynumber) && device.Inventorynumber.ToLower().Contains(filterText);
-                        case "IP":
-                            return !string.IsNullOrEmpty(device.IpAddress) && device.IpAddress.ToLower().Contains(filterText);
-                        case "Дата приема":
-                            return device.Dateofcommissioning.ToString().ToLower().Contains(filterText);
-                        default:
-                            return true;
-                    }
+                        "Название" => !string.IsNullOrEmpty(device.Devicename) && device.Devicename.Contains(filterText, StringComparison.CurrentCultureIgnoreCase),
+                        "Инвентарный номер" => !string.IsNullOrEmpty(device.Inventorynumber) && device.Inventorynumber.Contains(filterText, StringComparison.CurrentCultureIgnoreCase),
+                        "IP" => !string.IsNullOrEmpty(device.IpAddress) && device.IpAddress.Contains(filterText, StringComparison.CurrentCultureIgnoreCase),
+                        "Дата приема" => device.Dateofcommissioning.ToString().Contains(filterText, StringComparison.CurrentCultureIgnoreCase),
+                        _ => true,
+                    };
                 };
                 _deviceCollectionView.Refresh();
             }

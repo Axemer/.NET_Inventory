@@ -3,46 +3,48 @@ using OfficeOpenXml;
 using System.IO;
 using System.Linq;
 using System.Windows;
-using Wpf_Inventory_.Classes;
 
-public class ExcelExporter
+namespace Wpf_Inventory_.Classes
 {
-    public void ExportTableToExcel()
+    public class ExcelExporter
     {
-        var db = DB_Connection.GetDataBase();
-        var inventoryData = db.ToString().ToList();
-
-        if (inventoryData == null || inventoryData.Count == 0)
+        [System.Obsolete]
+        public void ExportTableToExcel()
         {
-            MessageBox.Show("Таблица пуста или не существует.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
-            return;
+            var db = DB_Connection.GetDataBase();
+            var inventoryData = db.ToString().ToList();
+
+            if (inventoryData == null || inventoryData.Count == 0)
+            {
+                MessageBox.Show("Таблица пуста или не существует.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            SaveFileDialog saveFileDialog = new()
+            {
+                Filter = "Excel файлы (*.xlsx)|*.xlsx",
+                Title = "Сохранить Excel-файл",
+                FileName = "InventoryRegistry.xlsx"
+            };
+
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                SaveToExcelFile(inventoryData, saveFileDialog.FileName);
+            }
+
+            if (inventoryData.Count == 0)
+            {
+                MessageBox.Show("Таблица пуста или не существует.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
         }
 
-        SaveFileDialog saveFileDialog = new SaveFileDialog
+        [System.Obsolete]
+        private void SaveToExcelFile(dynamic data, string filePath)
         {
-            Filter = "Excel файлы (*.xlsx)|*.xlsx",
-            Title = "Сохранить Excel-файл",
-            FileName = "InventoryRegistry.xlsx"
-        };
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial; // Установка контекста лицензии  
 
-        if (saveFileDialog.ShowDialog() == true)
-        {
-            SaveToExcelFile(inventoryData, saveFileDialog.FileName);
-        }
-
-        if (!inventoryData.Any())
-        {
-            MessageBox.Show("Таблица пуста или не существует.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
-            return;
-        }
-    }
-
-    private void SaveToExcelFile(dynamic data, string filePath)
-    {
-        ExcelPackage.LicenseContext = LicenseContext.NonCommercial; // Установка контекста лицензии  
-
-        using (ExcelPackage package = new ExcelPackage())
-        {
+            using ExcelPackage package = new();
             ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("InventoryRegistry");
 
             // Заголовки  
@@ -63,7 +65,7 @@ public class ExcelExporter
                 row++;
             }
 
-            FileInfo file = new FileInfo(filePath);
+            FileInfo file = new(filePath);
             package.SaveAs(file);
             MessageBox.Show($"Файл успешно сохранен: {filePath}", "Готово", MessageBoxButton.OK, MessageBoxImage.Information);
         }
