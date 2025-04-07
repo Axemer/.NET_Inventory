@@ -10,7 +10,7 @@ namespace Wpf_Inventory_.Classes
 
         public static void SyncWithRemote()
         {
-            using (var sqlConnection = new SqlConnection(MSSQL_ConnectionString)) ;
+            //using (var sqlConnection = new SqlConnection(MSSQL_ConnectionString)) 
             //using (var sqliteConnection = new SQLiteConnection(SQLite_ConnectionString))
             //{
             //    sqlConnection.Open();

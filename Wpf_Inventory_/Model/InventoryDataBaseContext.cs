@@ -24,7 +24,7 @@ namespace Wpf_Inventory_.Model
         public virtual DbSet<Deviceparts> Deviceparts { get; set; }
         public virtual DbSet<DevicepartsDevice> DevicepartsDevice { get; set; }
         public virtual DbSet<Devicetype> Devicetype { get; set; }
-        public virtual DbSet<Model> Model { get; set; }
+        public new virtual DbSet<Model> Model { get; set; }
         public virtual DbSet<Office> Office { get; set; }
         public virtual DbSet<Workplace> Workplace { get; set; }
 
@@ -32,8 +32,10 @@ namespace Wpf_Inventory_.Model
         {
             if (!optionsBuilder.IsConfigured)
             {
+#pragma warning disable CS1030 // Директива #warning
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
                 optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=Inventory Data Base;Username=postgres;Password=1911;");
+#pragma warning restore CS1030 // Директива #warning
             }
         }
 
