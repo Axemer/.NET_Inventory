@@ -21,6 +21,8 @@ namespace Wpf_Inventory_.View.Controls
         /// </summary>
         public InventoryDataBaseContext _dbo = DB_Connection.GetDataBase();
 
+        //public InventoryDataBaseContext _dbo =  LocalDatabase.Get
+
         /// <summary>
         /// Представление коллекции для фильтрации данных
         /// </summary>
@@ -29,8 +31,28 @@ namespace Wpf_Inventory_.View.Controls
         public DeviceControl()
         {
             InitializeComponent();
-            DeviceDataGridInit(_dbo);
+            //DeviceDataGridInit(_dbo);
+
+            if (_dbo.Database.CanConnect())
+            {
+                DeviceDataGridInit(_dbo);
+                LocalDataBase.SaveDataBase(_dbo);
+            }
+
             _deviceCollectionView = CollectionViewSource.GetDefaultView(DeviceDataGrid.ItemsSource);
+        }
+
+        public void debug()
+        {
+            //_dbo = LocalDataBase.LoadDataBase();
+            var snapshot = LocalDataBase.LoadDataBase();
+            var newContext = DB_Connection.GetDataBase();
+
+
+
+            LocalDataBase.LoadToContext(newContext, snapshot);
+
+            DeviceDataGridInit(_dbo);
         }
 
         /// <summary>
@@ -68,8 +90,7 @@ namespace Wpf_Inventory_.View.Controls
         /// <param name="InventoryRegDB"> Данные из БД сюда надо </param>
         public void DeviceDataGridInit(InventoryDataBaseContext InventoryRegDB)
         {
-            DeviceDataGrid.ItemsSource = InventoryRegDB.Device.Include(d => d.Devicetype)
-                                        .ToList();
+            DeviceDataGrid.ItemsSource = InventoryRegDB.Device.Include(d => d.Devicetype).ToList();
         }
 
         /// <summary>
