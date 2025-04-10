@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Diagnostics;
 using System.DirectoryServices.AccountManagement;
 using System.Security.Principal;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using Wpf_Inventory_.Classes;
+using Wpf_Inventory_.Model;
 using Wpf_Inventory_.View;
+using Wpf_Inventory_.View.Controls;
 
 namespace Wpf_Inventory_
 {
@@ -17,7 +20,7 @@ namespace Wpf_Inventory_
         /// <summary>
         /// Переменная с всем перечнем данных в базе данных.
         /// </summary>
-        //public InventoryRegistryDataBaseEntities3 _dbo = DB_Connection.GetDataBase();
+        public InventoryDataBaseContext _dbo = DB_Connection.GetDataBase();
 
         /// <summary>
         /// Имя группы Active Directory у которой будет доступ к проложению.
@@ -179,6 +182,13 @@ namespace Wpf_Inventory_
                             "Разработчик: Axemer 2025 год\n" +
                             "Версия: Альфа 0.3", "О программе", 
                             MessageBoxButton.OK, MessageBoxImage.Information);
+
+        }
+
+        private void DEBUG_Click(object sender, RoutedEventArgs e)
+        {
+            DeviceControl d = new();
+            d.debug();
 
         }
 

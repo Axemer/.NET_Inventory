@@ -1,9 +1,0 @@
-Scaffold-DbContext Host=localhost;Port=5432;Database=Inventory Data Base;Username=postgres;Password=+=UDjoYW99tR:sT&FfRaU^a;37Dmr#sUj.ZtD-o>V%3DyqwW>p9aWcgFY; Npgsql.EntityFrameworkCore.PostgreSQL -OutputDir dbo
-
-
-Scaffold-DbContext "Host=localhost;Port=5432;Database=Inventory Data Base;Username=postgres;Password=+=UDjoYW99tR:sT&FfRaU^a;37Dmr#sUj.ZtD-o>V%3DyqwW>p9aWcgFY;" Npgsql.EntityFrameworkCore.PostgreSQL -OutputDir dbo
-
-
-Scaffold-DbContext "Host=localhost;Port=5432;Database=Inventory Data Base;Username=postgres;Password='+=UDjoYW99tR:sT&FfRaU^a;37Dmr#sUj.ZtD-o>V%3DyqwW>p9aWcgFY';" Npgsql.EntityFrameworkCore.PostgreSQL -OutputDir dbo
-
-Scaffold-DbContext "Host=localhost;Port=5432;Database=Inventory Data Base;Username=postgres;Password=1911;" Npgsql.EntityFrameworkCore.PostgreSQL -OutputDir dbo
