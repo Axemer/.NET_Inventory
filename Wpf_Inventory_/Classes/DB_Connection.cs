@@ -17,7 +17,7 @@ namespace Wpf_Inventory_.Classes
         /// Подключаемся к базе и возвращаем с нее данные
         /// </summary>
         /// <returns></returns>
-        public static InventoryDataBaseContext GetDataBase()
+        public static InventoryDataBaseContext GetDataBase2()
         {
             if (context == null)
                 context = new InventoryDataBaseContext();
@@ -39,11 +39,11 @@ namespace Wpf_Inventory_.Classes
         /// Или выкачиваем данные из кэша и даем их вместо контекста
         /// </summary>
         /// <returns>Строка для обращения к данным приложения</returns>
-        public static InventoryDataBaseContext GetLocalDataBase()
+        public static InventoryDataBaseContext GetDataBase()
         {
             context = new InventoryDataBaseContext();
 
-            if (UseCacheMode)
+            if (UseCacheMode == true)
             {
                 if (File.Exists(CachePath))
                 {
