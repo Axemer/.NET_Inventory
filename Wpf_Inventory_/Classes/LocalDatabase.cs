@@ -120,7 +120,7 @@ namespace Wpf_Inventory_.Classes
             context.Model.AddRange(snapshot.Models);
             context.Workplace.AddRange(snapshot.Workplaces);
 
-            context.SaveChanges();
+            //context.SaveChanges();
         }
 
     }

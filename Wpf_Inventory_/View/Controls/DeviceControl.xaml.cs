@@ -33,10 +33,14 @@ namespace Wpf_Inventory_.View.Controls
             InitializeComponent();
             //DeviceDataGridInit(_dbo);
 
+
+
             if (_dbo.Database.CanConnect())
             {
-                DeviceDataGridInit(_dbo);
-                LocalDataBase.SaveDataBase(_dbo);
+                //DB_Connection.UseCacheMode = false;
+                //var _dbo = DB_Connection.GetDataBase();
+                //DB_Connection.SaveSnapshotFromContext(_dbo);
+                //DeviceDataGridInit(_dbo);
             }
 
             _deviceCollectionView = CollectionViewSource.GetDefaultView(DeviceDataGrid.ItemsSource);
@@ -44,14 +48,16 @@ namespace Wpf_Inventory_.View.Controls
 
         public void debug()
         {
-            //_dbo = LocalDataBase.LoadDataBase();
-            var snapshot = LocalDataBase.LoadDataBase();
-            var newContext = DB_Connection.GetDataBase();
+            DB_Connection.UseCacheMode = true;
+            var _dbo = DB_Connection.GetDataBase();
+            DeviceDataGrid.ItemsSource = _dbo.Device.Local.ToObservableCollection();
+            //DeviceDataGridInit(_dbo);
+        }
 
-
-
-            LocalDataBase.LoadToContext(newContext, snapshot);
-
+        public void debug2()
+        {
+            DB_Connection.UseCacheMode = false;
+            var _dbo = DB_Connection.GetDataBase();
             DeviceDataGridInit(_dbo);
         }
 

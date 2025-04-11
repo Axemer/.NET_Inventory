@@ -20,7 +20,7 @@ namespace Wpf_Inventory_
         /// <summary>
         /// Переменная с всем перечнем данных в базе данных.
         /// </summary>
-        public InventoryDataBaseContext _dbo = DB_Connection.GetDataBase();
+        //public InventoryDataBaseContext _dbo = DB_Connection.GetDataBase();
 
         /// <summary>
         /// Имя группы Active Directory у которой будет доступ к проложению.
@@ -189,6 +189,13 @@ namespace Wpf_Inventory_
         {
             DeviceControl d = new();
             d.debug();
+
+        }
+
+        private void DEBUG_2_Click(object sender, RoutedEventArgs e)
+        {
+            DeviceControl d = new();
+            d.debug2();
 
         }
 
