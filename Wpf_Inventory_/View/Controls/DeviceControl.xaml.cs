@@ -41,6 +41,8 @@ namespace Wpf_Inventory_.View.Controls
                 //var _dbo = DB_Connection.GetDataBase();
                 //DB_Connection.SaveSnapshotFromContext(_dbo);
                 //DeviceDataGridInit(_dbo);
+                DB_Connection.SaveSnapshotFromContext(_dbo);
+                debug();
             }
 
             _deviceCollectionView = CollectionViewSource.GetDefaultView(DeviceDataGrid.ItemsSource);
@@ -49,15 +51,16 @@ namespace Wpf_Inventory_.View.Controls
         public void debug()
         {
             DB_Connection.UseCacheMode = true;
-            var _dbo = DB_Connection.GetDataBase();
+            _dbo = DB_Connection.GetDataBase();
             DeviceDataGrid.ItemsSource = _dbo.Device.Local.ToObservableCollection();
             //DeviceDataGridInit(_dbo);
+            //_deviceCollectionView = CollectionViewSource.GetDefaultView(DeviceDataGrid.ItemsSource);
         }
 
         public void debug2()
         {
             DB_Connection.UseCacheMode = false;
-            var _dbo = DB_Connection.GetDataBase();
+            //_dbo = DB_Connection.GetDataBase();
             DeviceDataGridInit(_dbo);
         }
 
@@ -90,6 +93,11 @@ namespace Wpf_Inventory_.View.Controls
             dataViewerWindow.ShowData(newDevice, _dbo);
         }
 
+        public ICollectionView Get_deviceCollectionView()
+        {
+            return _deviceCollectionView;
+        }
+
         /// <summary>
         /// Забываем список данным из бд.
         /// </summary>
@@ -97,6 +105,8 @@ namespace Wpf_Inventory_.View.Controls
         public void DeviceDataGridInit(InventoryDataBaseContext InventoryRegDB)
         {
             DeviceDataGrid.ItemsSource = InventoryRegDB.Device.Include(d => d.Devicetype).ToList();
+            
+            //_deviceCollectionView = CollectionViewSource.GetDefaultView(DeviceDataGrid.ItemsSource);
         }
 
         /// <summary>
