@@ -41,8 +41,10 @@ namespace Wpf_Inventory_.View.Controls
                 //var _dbo = DB_Connection.GetDataBase();
                 //DB_Connection.SaveSnapshotFromContext(_dbo);
                 //DeviceDataGridInit(_dbo);
-                DB_Connection.SaveSnapshotFromContext(_dbo);
-                debug();
+                //DB_Connection.SaveSnapshotFromContext(_dbo);
+                //debug();
+                DB_Connection.Mode = DB_Connection.DatabaseMode.OnlineFirst;
+                DeviceDataGridInit(_dbo);
             }
 
             _deviceCollectionView = CollectionViewSource.GetDefaultView(DeviceDataGrid.ItemsSource);
@@ -50,7 +52,7 @@ namespace Wpf_Inventory_.View.Controls
 
         public void debug()
         {
-            DB_Connection.UseCacheMode = true;
+            //DB_Connection.UseCacheMode = true;
             _dbo = DB_Connection.GetDataBase();
             DeviceDataGrid.ItemsSource = _dbo.Device.Local.ToObservableCollection();
             //DeviceDataGridInit(_dbo);
@@ -59,7 +61,7 @@ namespace Wpf_Inventory_.View.Controls
 
         public void debug2()
         {
-            DB_Connection.UseCacheMode = false;
+            //DB_Connection.UseCacheMode = false;
             //_dbo = DB_Connection.GetDataBase();
             DeviceDataGridInit(_dbo);
         }
