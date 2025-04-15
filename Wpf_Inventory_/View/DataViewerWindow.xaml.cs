@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Windows;
 using Wpf_Inventory_.Classes;
 using Wpf_Inventory_.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace Wpf_Inventory_.View
 {
@@ -37,20 +38,25 @@ namespace Wpf_Inventory_.View
         /// </summary>
         /// <param name="SelectedDevice"></param>
         /// <param name="DBO"></param>
-        private void SaveDeviceChanges(object SelectedDevice, InventoryDataBaseContext DBO)
+        private void SaveDeviceChanges(object SelectedDevice)
         {
+            //Доступ к бд оставляю тут ибо инчае при инициализации будут происходить не клевые вещи
+            InventoryDataBaseContext DBO = DB_Connection.GetDataBase();
+
             if (SelectedDevice == null || DBO == null) return;
 
-            PropertyInfo idProperty = SelectedDevice.GetType().GetProperty("DeviceId");
+            var idProperty = SelectedDevice.GetType().GetProperty("DeviceId");
             if (idProperty == null) return;
 
             int? deviceId = idProperty.GetValue(SelectedDevice) as int?;
             if (deviceId == null) return;
 
-            Device device = DBO.Device.FirstOrDefault(d => d.DeviceId == deviceId);
+            var device = DBO.Device
+                .Include(d => d.Office) 
+                .FirstOrDefault(d => d.DeviceId == deviceId);
             if (device == null) return;
 
-            // Обновляем основные поля устройства
+            // Обновление полей
             device.Devicename = DevNameTextBox.Text;
             device.Serialnumber = DevSerialTextBox.Text;
             device.Inventorynumber = DevInvNumTextBox.Text;
@@ -59,42 +65,56 @@ namespace Wpf_Inventory_.View
             device.Dateofcommissioning = DevDateDatePicker.SelectedDate ?? DateTime.Now;
             device.Exception = ExceptionCheckBox.IsChecked;
 
-            // Обновляем ModelId
+            // Модель
             string selectedModel = DevModelTextBox.Text;
             if (!string.IsNullOrEmpty(selectedModel))
-                device.ModelId = DBO.Model.FirstOrDefault(m => m.Model1 == selectedModel)?.ModelId;
-
-            // Обновляем связи с другими таблицами
+                device.ModelId = DBO.Model
+                    .FirstOrDefault(m => m.Model1 == selectedModel)?.ModelId;
+            // Тип устройства
             string selectedDeviceType = DevTypeComboBox.SelectedItem?.ToString();
             if (!string.IsNullOrEmpty(selectedDeviceType))
-                device.DevicetypeId = DBO.Devicetype.FirstOrDefault(d => d.Type == selectedDeviceType)?.DevicetypeId;
-
-            // Вот эта штучка немного капризная и иногда давала null с чего естественно прога вылетала
-            string selectedDepartment = DevDepComboBox.SelectedItem?.ToString();
-            if (!string.IsNullOrEmpty(selectedDepartment))
-            {
-                var officeMatch = DBO.Office.FirstOrDefault(d => d.Department == selectedDepartment);
-                if (officeMatch != null)
-                    device.Office.Department = officeMatch.Department;
-                else
-                    MessageBox.Show("Не удалось найти отделение с таким названием в базе данных.");
-            }
-            // но в любом случае тут лучше заранее указать все данные о офисах в базе данных и тогда этой ошибки никто не увидет 
-
+                device.DevicetypeId = DBO.Devicetype
+                    .FirstOrDefault(d => d.Type == selectedDeviceType)?.DevicetypeId;
+            // Офис
             string selectedOffice = DevOfficeComboBox.SelectedItem?.ToString();
-            if (!string.IsNullOrEmpty(selectedOffice))
-                device.OfficeId = DBO.Office.FirstOrDefault(o => o.Officenum == selectedOffice)?.OfficeId;
+            string selectedDepartment = DevDepComboBox.SelectedItem?.ToString();
+            string selectedBlock = DevBlockComboBox.SelectedItem?.ToString();
+            // Преобразуем в char тк блок это char
+            char? selectedBlockChar = string.IsNullOrWhiteSpace(selectedBlock) ? null : (char?)selectedBlock.FirstOrDefault();
 
-            // Обновляем связь с блоком 
-            // Говорили они так лучше ме ме ме 
-            // Говорили меньше места занимает ме ме ме
-            // Было бы у меня столько ебли с людим как с этими блоками
-            // Я бы стал Хью Хефнером 2.0 и был бы не менее знаменит.
-            string selectedBlock = DevBlockComboBox.SelectedItem?.ToString();           
+            if (!string.IsNullOrEmpty(selectedDepartment) && !string.IsNullOrEmpty(selectedOffice))
+            {
+                var officeMatch = DBO.Office.FirstOrDefault(o =>
+                    o.Department == selectedDepartment &&
+                    o.Officenum == selectedOffice &&
+                    (selectedBlockChar == null || o.Block == selectedBlockChar)
+                );
 
-            // Сохраняем изменения
-            DBO.SaveChanges();
-            //MessageBox.Show("Данные сохранены!", "Сохранение", MessageBoxButton.OK, MessageBoxImage.Information); // Разадажает
+                if (officeMatch != null)
+                {
+                    device.OfficeId = officeMatch.OfficeId;
+                }
+                else
+                {
+                    MessageBox.Show("Не удалось найти офис с заданными параметрами (отделение, номер, корпус).");
+                }
+            }
+            try
+            {
+                DBO.SaveChanges();
+
+                // Перезагружаем обновлённый объект из базы на всякий
+                var updatedDevice = DBO.Device
+                    .Include(d => d.Office)
+                    .FirstOrDefault(d => d.DeviceId == device.DeviceId);
+
+                _currentDevice = updatedDevice;
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при сохранении: {ex.Message}");
+            }
         }
 
         /// <summary>
@@ -164,8 +184,7 @@ namespace Wpf_Inventory_.View
 
         private void DevSaveButton_Click(object sender, RoutedEventArgs e)
         {
-            InventoryDataBaseContext _invDbo = DB_Connection.GetDataBase();
-            SaveDeviceChanges(_currentDevice, _invDbo);
+            SaveDeviceChanges(_currentDevice);
             SaveButtonClicked?.Invoke();
         }
 

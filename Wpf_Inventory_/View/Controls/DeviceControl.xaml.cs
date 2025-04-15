@@ -101,13 +101,18 @@ namespace Wpf_Inventory_.View.Controls
         }
 
         /// <summary>
-        /// Забываем список данным из бд.
+        /// Забиваем список данным из бд.
         /// </summary>
         /// <param name="InventoryRegDB"> Данные из БД сюда надо </param>
         public void DeviceDataGridInit(InventoryDataBaseContext InventoryRegDB)
         {
-            DeviceDataGrid.ItemsSource = InventoryRegDB.Device.Include(d => d.Devicetype).ToList();
-            
+            //DeviceDataGrid.ItemsSource = InventoryRegDB.Device.Include(d => d.Devicetype).ToList();
+
+            DeviceDataGrid.ItemsSource = InventoryRegDB.Device
+                                         .Include(d => d.Devicetype)
+                                         .AsNoTracking()
+                                         .ToList();
+
             //_deviceCollectionView = CollectionViewSource.GetDefaultView(DeviceDataGrid.ItemsSource);
         }
 
