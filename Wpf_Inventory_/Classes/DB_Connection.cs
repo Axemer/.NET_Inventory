@@ -8,26 +8,29 @@ namespace Wpf_Inventory_.Classes
 {
     public class DB_Connection
     {
-        /// <summary>
-        /// Режим синхронизации.
-        /// </summary>
         public enum DatabaseMode
         {
-            OfflineFirst,  // локальная база (SQLite) – главный источник
-            OnlineFirst    // удалённая база (Postgres) – главный источник
+            OfflineFirst,
+            OnlineFirst
         }
 
         public static DatabaseMode Mode { get; set; } = DatabaseMode.OnlineFirst;
         public static string CachePath = "cache.sqlite";
 
+        private static InventoryDataBaseContext? _cachedContext;
+
         public static InventoryDataBaseContext GetDataBase()
         {
+            if (_cachedContext != null)
+                return _cachedContext;
+
             if (Mode == DatabaseMode.OfflineFirst && File.Exists(CachePath))
             {
-                return new InventoryDataBaseContext(
+                _cachedContext = new InventoryDataBaseContext(
                     new DbContextOptionsBuilder<InventoryDataBaseContext>()
                     .UseSqlite($"Data Source={CachePath}")
                     .Options);
+                return _cachedContext;
             }
 
             var postgresContext = new InventoryDataBaseContext();
@@ -36,27 +39,27 @@ namespace Wpf_Inventory_.Classes
             {
                 try
                 {
-                    // Проверка соединения
                     postgresContext.Database.OpenConnection();
                     postgresContext.Database.CloseConnection();
 
-                    // Кэшируем в фоне, используя отдельный экземпляр
                     Task.Run(() =>
                     {
                         using var freshContext = new InventoryDataBaseContext();
                         DataCacheService.SaveSnapshot(freshContext);
                     });
 
-                    return postgresContext;
+                    _cachedContext = postgresContext;
+                    return _cachedContext;
                 }
                 catch
                 {
                     if (File.Exists(CachePath))
                     {
-                        return new InventoryDataBaseContext(
+                        _cachedContext = new InventoryDataBaseContext(
                             new DbContextOptionsBuilder<InventoryDataBaseContext>()
                             .UseSqlite($"Data Source={CachePath}")
                             .Options);
+                        return _cachedContext;
                     }
 
                     throw;
@@ -66,9 +69,9 @@ namespace Wpf_Inventory_.Classes
             if (Mode == DatabaseMode.OfflineFirst)
                 throw new InvalidOperationException("Нет локального кэша SQLite и соединение с Postgres запрещено в OfflineFirst.");
 
-            return postgresContext;
+            _cachedContext = postgresContext;
+            return _cachedContext;
         }
-
-
     }
+
 }
