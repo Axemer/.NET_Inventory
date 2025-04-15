@@ -14,12 +14,12 @@ namespace Wpf_Inventory_.View.Controls
         /// <summary>
         /// переменная для взаимодействия с бд
         /// </summary>
-        private InventoryDataBaseContext _dbo = DB_Connection.GetDataBase();
+        private InventoryDataBaseContext _dbo; //= DB_Connection.GetDataBase();
 
         public DeviceTypeControl()
         {
             InitializeComponent();
-            DataGridInit(_dbo);
+            //DataGridInit(_dbo);
         }
 
         /// <summary>
@@ -45,8 +45,8 @@ namespace Wpf_Inventory_.View.Controls
             };
 
             // Добавляем в базу данных
-            _dbo.Office.Add(newOffice);
-            _dbo.SaveChanges(); // Сохраняем в базе, чтобы появился ID тк он присвается базой
+            //_dbo.Office.Add(newOffice);
+            //_dbo.SaveChanges(); // Сохраняем в базе, чтобы появился ID тк он присвается базой
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)

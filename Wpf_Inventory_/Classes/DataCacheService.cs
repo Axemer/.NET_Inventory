@@ -12,6 +12,8 @@ namespace Wpf_Inventory_.Classes
 
         public static void SaveSnapshot(InventoryDataBaseContext source)
         {
+            Console.WriteLine(" SaveSnapshot() начат."); /// debug sh*t
+
             var options = new DbContextOptionsBuilder<InventoryDataBaseContext>()
                 .UseSqlite($"Data Source={CachePath}")
                 .Options;
@@ -50,20 +52,18 @@ namespace Wpf_Inventory_.Classes
 
             target.SaveChanges(); // Фиксация удаления перед вставкой
 
-            var duplicates = source.Devicetype    .AsNoTracking()
-    .ToList() // Переводим в память
-    .GroupBy(d => d.DevicetypeId)
-    .Where(g => g.Count() > 1)
-    .ToList();
-
+            //// dubug sh*t ///////////////////////////////////////////////////////////////////
+            var duplicates = source.Devicetype.AsNoTracking().ToList() // Переводим в память
+                            .GroupBy(d => d.DevicetypeId).Where(g => g.Count() > 1).ToList();
             if (duplicates.Any())
             {
-                Console.WriteLine("⚠️ Найдены дубликаты DevicetypeId:");
+                Console.WriteLine("Найдены дубликаты DevicetypeId:");
                 foreach (var group in duplicates)
                     Console.WriteLine($"  Id = {group.Key}, Count = {group.Count()}");
 
                 throw new Exception("Найдены дубликаты в Devicetype!");
             }
+            //// dubug sh*t ///////////////////////////////////////////////////////////////////
 
             // Загрузка данных
             target.Devicetype.AddRange(source.Devicetype.AsNoTracking());
@@ -74,6 +74,13 @@ namespace Wpf_Inventory_.Classes
             target.Device.AddRange(source.Device.AsNoTracking());
             target.DevicepartsDevice.AddRange(source.DevicepartsDevice.AsNoTracking());
             target.DeviceWorkplace.AddRange(source.DeviceWorkplace.AsNoTracking());
+
+            var allDevicetypes = source.Devicetype.AsNoTracking().ToList();
+            Console.WriteLine($"🔍 Загружено Devicetype: {allDevicetypes.Count}");
+            foreach (var dev in allDevicetypes)
+                Console.WriteLine($"Devicetype ID: {dev.DevicetypeId}");
+
+
         }
     }
 }

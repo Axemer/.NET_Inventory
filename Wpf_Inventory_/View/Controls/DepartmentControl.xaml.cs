@@ -14,7 +14,7 @@ namespace Wpf_Inventory_.View.Controls
         /// <summary>
         /// Переменная с всем перечнем данных в базе данных.
         /// </summary>
-        public InventoryDataBaseContext _dbo = DB_Connection.GetDataBase();
+        public InventoryDataBaseContext _dbo; //= DB_Connection.GetDataBase();
 
         /// <summary>
         ///  Добавляет новое устройство с базовыми значениями

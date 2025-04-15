@@ -25,7 +25,7 @@ namespace Wpf_Inventory_.View
         /// <summary>
         /// Переменная с всем перечнем данных в базе данных.
         /// </summary>
-        readonly private InventoryDataBaseContext _invDbo = DB_Connection.GetDataBase();
+        //readonly private InventoryDataBaseContext _invDbo = DB_Connection.GetDataBase();
 
         public DataViewerWindow()
         {
@@ -164,6 +164,7 @@ namespace Wpf_Inventory_.View
 
         private void DevSaveButton_Click(object sender, RoutedEventArgs e)
         {
+            InventoryDataBaseContext _invDbo = DB_Connection.GetDataBase();
             SaveDeviceChanges(_currentDevice, _invDbo);
             SaveButtonClicked?.Invoke();
         }

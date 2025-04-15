@@ -12,12 +12,12 @@ namespace Wpf_Inventory_.View.Controls
     /// </summary>
     public partial class OfficeControl : UserControl
     {
-        private InventoryDataBaseContext _dbo = DB_Connection.GetDataBase();
+        private InventoryDataBaseContext _dbo; //= DB_Connection.GetDataBase();
 
         public OfficeControl()
         {
             InitializeComponent();
-            DataGridInit(_dbo);
+            //DataGridInit(_dbo);
 
         }
 
