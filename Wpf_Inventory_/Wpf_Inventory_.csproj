@@ -21,6 +21,14 @@
     <UseWindowsForms>true</UseWindowsForms>
     <UseWPF>true</UseWPF>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
+	  <!-- Параметры для сборки в один EXE файл -->
+	<PublishSingleFile>true</PublishSingleFile>
+	<SelfContained>true</SelfContained>
+	<RuntimeIdentifier>win-x64</RuntimeIdentifier>
+	  <!-- Без тримминга (WPF несовместим с ним) -->
+	<PublishTrimmed>false</PublishTrimmed>
+	  <!-- на всякий если нужно временно распаковывать ресурсы -->
+	<IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract> 
   </PropertyGroup>
   <ItemGroup>
     <Resource Include="dbg\постгри строчки дев.txt" />
@@ -52,6 +60,9 @@
     <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\BackUpCache.sqlite">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Resource Include="Resources\Icons\icons8-database-24.png" />
     <Resource Include="Resources\Icons\icons8-database-30.png" />
     <Resource Include="Resources\Icons\icons8-database-40.png" />
@@ -120,5 +131,8 @@
     <Compile Remove="dbg\EFCoreScaffold\obj\Debug\net9.0\EFCoreScaffold.AssemblyInfo.cs" />
     <Compile Remove="dbg\EFCoreScaffold\obj\Debug\net9.0\EFCoreScaffold.GlobalUsings.g.cs" />
     <Compile Remove="dbg\EFCoreScaffold\Program.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Resources\BackUpCache.sqlite" />
   </ItemGroup>
 </Project>

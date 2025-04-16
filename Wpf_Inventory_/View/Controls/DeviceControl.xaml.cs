@@ -43,7 +43,7 @@ namespace Wpf_Inventory_.View.Controls
                 //DeviceDataGridInit(_dbo);
                 //DB_Connection.SaveSnapshotFromContext(_dbo);
                 //debug();
-                DB_Connection.Mode = DB_Connection.DatabaseMode.OnlineFirst;
+                DB_Connection.Mode = DB_Connection.DatabaseMode.OfflineFirst;
                 DeviceDataGridInit(_dbo);
             }
 
