@@ -199,6 +199,11 @@ namespace Wpf_Inventory_
 
         }
 
+        private void CreateEmpytyCache_Click(object sender, RoutedEventArgs e)
+        {
+            DB_Connection.CreateEmptyCache();
+        }
+
         /// <summary>
         /// Закрывает окно
         /// </summary>

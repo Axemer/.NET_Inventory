@@ -122,6 +122,31 @@ namespace Wpf_Inventory_.Classes
                 throw;
             }
         }
+
+        /// <summary>
+        /// Создает пустую базу данных SQLite.
+        /// На слуйчай, если нужно создать кэш и нет доступа к основной базе.
+        /// </summary>
+        public static void CreateEmptyCache()
+        {
+            if (File.Exists(CachePath))
+                return;
+
+            var options = new DbContextOptionsBuilder<InventoryDataBaseContext>()
+                .UseSqlite($"Data Source={CachePath}")
+                .Options;
+
+            using var emptyContext = new InventoryDataBaseContext(options);
+
+            emptyContext.Database.EnsureCreated();
+
+            // Если можно заранее добавить начальные значения
+            // Например:
+            // emptyContext.Devicetype.Add(new Devicetype { Type = "Общий" });
+            // emptyContext.SaveChanges();
+
+            Debug.WriteLine($"Пустая база данных SQLite создана по пути: {CachePath}");
+        }
     }
 
 }

@@ -42,6 +42,7 @@
                 <MenuItem Foreground="Black" Header="Выход" Click="Exit_Click"/>
                 <MenuItem Foreground="Black" Header="Fill by cache" Click="DEBUG_Click"/>
                 <MenuItem Foreground="Black" Header="Fill by net" Click="DEBUG_2_Click"/>
+                <MenuItem Foreground="Black" Header="Создать пустой кэш" Click="CreateEmpytyCache_Click"/>
             </MenuItem>
             <MenuItem Header="Редактировать" DockPanel.Dock="Left">
                 <MenuItem Foreground="Black" Header="Копировать"/>
