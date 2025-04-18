@@ -203,5 +203,25 @@ namespace Wpf_Inventory_.View.Controls
         {
             DeviceDataGridInit(_dbo);
         }
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedDevice = DeviceDataGrid.SelectedItem as Device;
+            if (selectedDevice != null)
+            {
+                MessageBoxResult result = MessageBox.Show("Вы уверены, что хотите удалить это устройство?", "Подтверждение удаления", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                if (result == MessageBoxResult.Yes)
+                {
+                    var trackedDevice = _dbo.Device.FirstOrDefault(d => d.DeviceId == selectedDevice.DeviceId);
+
+                    if (trackedDevice != null)
+                    {
+                        _dbo.Device.Remove(trackedDevice);
+                        _dbo.SaveChanges();
+                        DeviceDataGridInit(_dbo);
+                    }
+                }
+            }
+        }
     }
 }

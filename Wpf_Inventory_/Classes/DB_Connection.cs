@@ -146,27 +146,27 @@ namespace Wpf_Inventory_.Classes
             //emptyContext.SaveChanges();
 
             //// Установка начальных значений автоинкремента
-            //var sequenceInitSql = new[]
-            //{
-            //    "INSERT INTO sqlite_sequence (name, seq) VALUES ('device', 0);",
-            //    "INSERT INTO sqlite_sequence (name, seq) VALUES ('office', 0);",
-            //    "INSERT INTO sqlite_sequence (name, seq) VALUES ('devicetype', 0);",
-            //    "INSERT INTO sqlite_sequence (name, seq) VALUES ('model', 0);",
-            //    "INSERT INTO sqlite_sequence (name, seq) VALUES ('workplace', 0);",
-            //    "INSERT INTO sqlite_sequence (name, seq) VALUES ('deviceparts', 0);"
-            //    // Добавь другие таблицы по аналогии, если нужно
-            //};
-            //foreach (var sql in sequenceInitSql)
-            //{
-            //    try
-            //    {
-            //        emptyContext.Database.ExecuteSqlRaw(sql);
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        Debug.WriteLine($"Ошибка инициализации sqlite_sequence: {ex.Message}");
-            //    }
-            //}                                                                                 /// задел на забив данными таблицы но при пустом кеше но оно не очень надо
+            var sequenceInitSql = new[]
+            {
+                "INSERT INTO sqlite_sequence (name, seq) VALUES ('device', 0);",
+                "INSERT INTO sqlite_sequence (name, seq) VALUES ('office', 0);",
+                "INSERT INTO sqlite_sequence (name, seq) VALUES ('devicetype', 0);",
+                "INSERT INTO sqlite_sequence (name, seq) VALUES ('model', 0);",
+                "INSERT INTO sqlite_sequence (name, seq) VALUES ('workplace', 0);",
+                "INSERT INTO sqlite_sequence (name, seq) VALUES ('deviceparts', 0);"
+                // Добавь другие таблицы по аналогии, если нужно
+            };
+            foreach (var sql in sequenceInitSql)
+            {
+                try
+                {
+                    emptyContext.Database.ExecuteSqlRaw(sql);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"Ошибка инициализации sqlite_sequence: {ex.Message}");
+                }
+            }                                                                                 /// задел на забив данными таблицы но при пустом кеше но оно не очень надо
 
             Debug.WriteLine($"Пустая база данных SQLite создана по пути: {CachePath}");
         }
