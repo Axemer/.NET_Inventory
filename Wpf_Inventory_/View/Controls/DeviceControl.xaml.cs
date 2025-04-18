@@ -71,8 +71,21 @@ namespace Wpf_Inventory_.View.Controls
         /// </summary>
         public void AddNewDevice()
         {
+            //if (!_dbo.Devicetype.Any(dt => dt.DevicetypeId == 1) || !_dbo.Office.Any(o => o.OfficeId == 1))
+            //{
+            //    MessageBox.Show("❌ Нельзя добавить устройство, потому что нужный тип устройства или офис отсутствует в базе данных.");
+            //    return;
+            //}
 
-            // Создаём новый объект Device
+            if (!_dbo.Devicetype.Any())
+                _dbo.Devicetype.Add(new Devicetype { DevicetypeId = 1, Type = "Общий" });
+
+            if (!_dbo.Office.Any())
+                _dbo.Office.Add(new Office { OfficeId = 1, Officenum = "101", Department = "Отдел A" });
+
+            _dbo.SaveChanges();
+
+            // Создаём новое устройство
             Device newDevice = new()
             {
                 Devicename = "Новое устройство",
@@ -81,15 +94,13 @@ namespace Wpf_Inventory_.View.Controls
                 Model = null,
                 Note = "",
                 Dateofcommissioning = DateTime.Now,
-                DevicetypeId = 1, // Установить позже
-                OfficeId = 1, // Установить позже
+                DevicetypeId = 1,
+                OfficeId = 1,
             };
 
-            // Добавляем в базу данных
             _dbo.Device.Add(newDevice);
-            _dbo.SaveChanges(); // Сохраняем в базе, чтобы появился ID тк он присвается базой
+            _dbo.SaveChanges(); 
 
-            // Открываем окно редактирования нового устройства
             DataViewerWindow dataViewerWindow = new();
             dataViewerWindow.Show();
             dataViewerWindow.ShowData(newDevice, _dbo);
@@ -186,6 +197,11 @@ namespace Wpf_Inventory_.View.Controls
                 };
                 _deviceCollectionView.Refresh();
             }
+        }
+
+        private void ReloadButton_Click(object sender, RoutedEventArgs e)
+        {
+            DeviceDataGridInit(_dbo);
         }
     }
 }

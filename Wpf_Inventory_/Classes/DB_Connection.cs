@@ -34,7 +34,7 @@ namespace Wpf_Inventory_.Classes
         /// <summary>
         /// Экземпляр кэща InventoryDataBaseContext.
         /// </summary>
-        private static InventoryDataBaseContext? _cachedContext;
+        private static InventoryDataBaseContext _cachedContext;
 
         /// <summary>
         /// Получает экземпляр InventoryDataBaseContext и 
@@ -138,12 +138,35 @@ namespace Wpf_Inventory_.Classes
 
             using var emptyContext = new InventoryDataBaseContext(options);
 
+            // Создаём базу
             emptyContext.Database.EnsureCreated();
 
-            // Если можно заранее добавить начальные значения
-            // Например:
-            // emptyContext.Devicetype.Add(new Devicetype { Type = "Общий" });
-            // emptyContext.SaveChanges();
+            // Пример добавления стартовых значений
+            //emptyContext.Devicetype.Add(new Devicetype { Type = "Общий" });
+            //emptyContext.SaveChanges();
+
+            //// Установка начальных значений автоинкремента
+            //var sequenceInitSql = new[]
+            //{
+            //    "INSERT INTO sqlite_sequence (name, seq) VALUES ('device', 0);",
+            //    "INSERT INTO sqlite_sequence (name, seq) VALUES ('office', 0);",
+            //    "INSERT INTO sqlite_sequence (name, seq) VALUES ('devicetype', 0);",
+            //    "INSERT INTO sqlite_sequence (name, seq) VALUES ('model', 0);",
+            //    "INSERT INTO sqlite_sequence (name, seq) VALUES ('workplace', 0);",
+            //    "INSERT INTO sqlite_sequence (name, seq) VALUES ('deviceparts', 0);"
+            //    // Добавь другие таблицы по аналогии, если нужно
+            //};
+            //foreach (var sql in sequenceInitSql)
+            //{
+            //    try
+            //    {
+            //        emptyContext.Database.ExecuteSqlRaw(sql);
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        Debug.WriteLine($"Ошибка инициализации sqlite_sequence: {ex.Message}");
+            //    }
+            //}                                                                                 /// задел на забив данными таблицы но при пустом кеше но оно не очень надо
 
             Debug.WriteLine($"Пустая база данных SQLite создана по пути: {CachePath}");
         }

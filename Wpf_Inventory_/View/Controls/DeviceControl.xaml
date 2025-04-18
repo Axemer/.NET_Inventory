@@ -19,7 +19,7 @@
                 <StackPanel Orientation="Horizontal" Margin="10,0,20,0">
                     <Button Content="Добавить" Click="DeviceAddButton_Click" Padding="1" Margin="5"/>
                     <Button Content="Удалить" Padding="1" Margin="5"/>
-                    <Button Content="Обновить" Padding="1" Margin="5"/>
+                    <Button Content="Обновить" Padding="1" Margin="5" Click="ReloadButton_Click"/>
                 </StackPanel>
 
                 <Separator/>

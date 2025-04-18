@@ -45,9 +45,23 @@ namespace Wpf_Inventory_.Model
             {
                 entity.ToTable("device");
 
-                entity.Property(e => e.DeviceId)
-                    .HasColumnName("device_id")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.DeviceId).HasColumnName("device_id");
+
+                //// Условно настраиваем автоинкремент только для SQLite
+                if (Database.IsSqlite())
+                {
+                    entity.Property(e => e.DeviceId)
+                        .ValueGeneratedOnAdd(); // AUTOINCREMENT в SQLite ибо почему-то не работает через запросы
+                }
+                else
+                {
+                    entity.Property(e => e.DeviceId)
+                        .ValueGeneratedNever(); // PostgreSQL управляет сам ID так что не делаем так
+                }
+
+                //entity.Property(e => e.DeviceId)
+                //    .HasColumnName("device_id")
+                //    .ValueGeneratedNever();     ////  старый сгенерированный код 
 
                 entity.Property(e => e.Dateofcommissioning)
                     .HasColumnName("dateofcommissioning")
