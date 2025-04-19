@@ -36,7 +36,7 @@ namespace Wpf_Inventory_
             //    InitializeComponent();
 
             InitializeComponent();
-
+            UpdateModeMenuHeader(); // устанавливаем заголовок для режима работы
         }
 
         public void Window_Loaded(object sender, RoutedEventArgs e)
@@ -116,12 +116,29 @@ namespace Wpf_Inventory_
         //    return false;
         //}
 
+        /// <summary>
+        /// Реализация логирования ошибки (например, запись в файл или журнал событий)
+        /// Пока чисто для примера
+        /// </summary>
         private static void LogError(string message)
         {
-            // Реализация логирования ошибки (например, запись в файл или журнал событий)
-            // Пример:
             System.IO.File.AppendAllText("error_log.txt", $"{DateTime.Now}: {message}{Environment.NewLine}");
         }
+
+        /// <summary>
+        /// Обновляет заголовок пункта меню в зависимости от текущего режима.
+        /// </summary>
+        private void UpdateModeMenuHeader()
+        {
+            if (ToggleModeMenuItem == null) return;
+
+            string modeText = DB_Connection.Mode == DB_Connection.DatabaseMode.OnlineFirst
+                ? "Режим: Онлайн (переключить)"
+                : "Режим: Оффлайн (переключить)";
+
+            ToggleModeMenuItem.Header = modeText;
+        }
+
 
         /// <summary>
         /// Пулим с базы данных после чего делаем эксель таблицу. 
@@ -159,8 +176,6 @@ namespace Wpf_Inventory_
             dbPinger.PingDatabase();
         }
 
-
-
         private void DeviceSyncButton_Click(object sender, RoutedEventArgs e)
         {
 
@@ -180,28 +195,36 @@ namespace Wpf_Inventory_
         {
             MessageBox.Show("Программа: Система учета данных инвенторя\n" +
                             "Разработчик: Axemer 2025 год\n" +
-                            "Версия: Альфа 0.3", "О программе", 
+                            "Версия: Альфа 0.41", "О программе", 
                             MessageBoxButton.OK, MessageBoxImage.Information);
 
         }
 
-        private void DEBUG_Click(object sender, RoutedEventArgs e)
+        private void LoadFromCache_Click(object sender, RoutedEventArgs e)
         {
             DeviceControl d = new();
-            d.debug();
+            d.LoadFromCache();
 
         }
 
-        private void DEBUG_2_Click(object sender, RoutedEventArgs e)
+        private void LoadFromServer_Click(object sender, RoutedEventArgs e)
         {
             DeviceControl d = new();
-            d.debug2();
+            d.LoadFromServer();
 
         }
 
         private void CreateEmpytyCache_Click(object sender, RoutedEventArgs e)
         {
             DB_Connection.CreateEmptyCache();
+        }
+
+        private void ToggleMode_Click(object sender, RoutedEventArgs e)
+        {
+            DB_Connection.ToggleDatabaseMode(); // переключает режим
+            UpdateModeMenuHeader();             // обновляет текст
+            DeviceControl d = new();
+            d.RefreshContexAndDeviceGrid();     // обновляет контекст и таблицу
         }
 
         /// <summary>

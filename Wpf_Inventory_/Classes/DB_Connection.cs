@@ -145,7 +145,7 @@ namespace Wpf_Inventory_.Classes
             //emptyContext.Devicetype.Add(new Devicetype { Type = "Общий" });
             //emptyContext.SaveChanges();
 
-            //// Установка начальных значений автоинкремента
+            //// Установка начальных значений
             var sequenceInitSql = new[]
             {
                 "INSERT INTO sqlite_sequence (name, seq) VALUES ('device', 0);",
@@ -155,6 +155,7 @@ namespace Wpf_Inventory_.Classes
                 "INSERT INTO sqlite_sequence (name, seq) VALUES ('workplace', 0);",
                 "INSERT INTO sqlite_sequence (name, seq) VALUES ('deviceparts', 0);"
                 // Добавь другие таблицы по аналогии, если нужно
+                // Оно вроде в итоге не помогает                        //НАДО ПЕРЕПРОВЕРИТЬ
             };
             foreach (var sql in sequenceInitSql)
             {
@@ -170,6 +171,33 @@ namespace Wpf_Inventory_.Classes
 
             Debug.WriteLine($"Пустая база данных SQLite создана по пути: {CachePath}");
         }
-    }
 
+        /// <summary>
+        /// Сбрасывает кэшированный контекст базы данных из озу.
+        /// </summary>
+        public static void ResetContext()
+        {
+            if (_cachedContext != null)
+            {
+                _cachedContext.Dispose();
+                _cachedContext = null;
+            }
+        }
+
+        /// <summary>
+        /// Переключает текущий режим работы базы данных между OfflineFirst и OnlineFirst.
+        /// </summary>
+        public static void ToggleDatabaseMode()
+        {
+            if (Mode == DatabaseMode.OnlineFirst)
+                Mode = DatabaseMode.OfflineFirst;
+            else
+                Mode = DatabaseMode.OnlineFirst;
+
+            ResetContext();
+
+            // Выводим текущий режим в консоль на всякий случай
+            Debug.WriteLine($"Режим работы базы данных переключён на: {DB_Connection.Mode}");
+        }
+    }
 }

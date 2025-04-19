@@ -50,7 +50,7 @@ namespace Wpf_Inventory_.View.Controls
             _deviceCollectionView = CollectionViewSource.GetDefaultView(DeviceDataGrid.ItemsSource);
         }
 
-        public void debug()
+        public void LoadFromCache()
         {
             //DB_Connection.UseCacheMode = true;
             _dbo = DB_Connection.GetDataBase();
@@ -59,7 +59,7 @@ namespace Wpf_Inventory_.View.Controls
             //_deviceCollectionView = CollectionViewSource.GetDefaultView(DeviceDataGrid.ItemsSource);
         }
 
-        public void debug2()
+        public void LoadFromServer()
         {
             //DB_Connection.UseCacheMode = false;
             //_dbo = DB_Connection.GetDataBase();
@@ -199,8 +199,15 @@ namespace Wpf_Inventory_.View.Controls
             }
         }
 
+        public void RefreshContexAndDeviceGrid()
+        {
+            _dbo = DB_Connection.GetDataBase(); 
+            DeviceDataGridInit(_dbo);
+        }
+
         private void ReloadButton_Click(object sender, RoutedEventArgs e)
         {
+            //_dbo = DB_Connection.GetDataBase(); // Обновляем контекст базы данных на случай если он изменился
             DeviceDataGridInit(_dbo);
         }
 

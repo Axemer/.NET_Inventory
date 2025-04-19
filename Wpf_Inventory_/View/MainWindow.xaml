@@ -17,10 +17,22 @@
         <!-- Нижняя строка состояния -->
         <StatusBar DockPanel.Dock="Bottom" Background="#2D2D30" Foreground="White">
             <StatusBarItem>
-                <TextBlock Text="Готово" Margin="10,0"/>
+                <TextBlock x:Name="StatusIndicatorText" Text="Готово" Margin="10,0"/>
             </StatusBarItem>
             <StatusBarItem HorizontalAlignment="Right">
-                <Ellipse x:Name="StatusIndicator" Width="10" Height="10" Fill="Green" Margin="10"/>
+                <Ellipse x:Name="StatusIndicator" Width="10" Height="10" Fill="Green" Margin="10">
+                    <Ellipse.ToolTip>
+                        <ToolTip>
+                            <StackPanel>
+                                <TextBlock Text="Значение индикатора:" FontWeight="Bold"/>
+                                <TextBlock Text="Зелёный — Подключение установлено (онлайн режим)" Foreground="Green"/>
+                                <TextBlock Text="Красный — Нет подключения или нет данных" Foreground="Red"/>
+                                <TextBlock Text="Оранженвый — Выполняется фоновый процесс" Foreground="Orange"/>
+                                <TextBlock Text="Фиолетовый — Оффлайн режим" Foreground="Purple"/>
+                            </StackPanel>
+                        </ToolTip>
+                    </Ellipse.ToolTip>
+                </Ellipse>
             </StatusBarItem>
         </StatusBar>
         <Menu DockPanel.Dock="Top" Background="#2D2D30" Foreground="White">
@@ -37,17 +49,20 @@
                 <MenuItem Foreground="Black" Header="Экспорт" Click="DeviceExportButton_Click"/>
                 <MenuItem Foreground="Black" Header="Пинг Сервера" Click="PingServerButton_Click"/>
                 <MenuItem Foreground="Black" Header="Пинг Базы данных" Click="PingDBButton_Click"/>
-                <MenuItem Foreground="Black" Header="Создать пустой кэш" Click="CreateEmpytyCache_Click"/>
-                <MenuItem Foreground="Black" Header="Синхронизировать" Click="DeviceSyncButton_Click"/>
                 <MenuItem Foreground="Black" Header="Сохранить" Click="DeviceSaveButton_Click"/>
                 <MenuItem Foreground="Black" Header="Выход" Click="Exit_Click"/>
-                <!--  <MenuItem Foreground="Black" Header="Fill by cache" Click="DEBUG_Click"/>
-                <MenuItem Foreground="Black" Header="Fill by net" Click="DEBUG_2_Click"/>      -->
-                
+
             </MenuItem>
             <MenuItem Header="Редактировать" DockPanel.Dock="Left">
                 <MenuItem Foreground="Black" Header="Копировать"/>
                 <MenuItem Foreground="Black" Header="Вставить"/>
+            </MenuItem>
+            <MenuItem Header="Данные" DockPanel.Dock="Left">
+                <MenuItem x:Name="ToggleModeMenuItem" Foreground="Black" Header="Загрузка..." Click="ToggleMode_Click"/>
+                <MenuItem Foreground="Black" Header="Создать пустой кэш" Click="CreateEmpytyCache_Click"/>
+                <MenuItem Foreground="Black" Header="Синхронизировать" Click="DeviceSyncButton_Click"/>
+                <MenuItem Foreground="Black" Header="Заполнить таблицу с сервера" Click="LoadFromServer_Click"/>
+                <MenuItem Foreground="Black" Header="Заполнить таблицу с кэша" Click="LoadFromCache_Click"/>
             </MenuItem>
             <MenuItem Header="Помощь" DockPanel.Dock="Left">
                 <MenuItem Foreground="Black" Header="О программе" Click="AboutButton_Click"/>
