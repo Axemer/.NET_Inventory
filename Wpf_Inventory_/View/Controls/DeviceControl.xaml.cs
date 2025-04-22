@@ -37,12 +37,6 @@ namespace Wpf_Inventory_.View.Controls
 
             if (_dbo.Database.CanConnect())
             {
-                //DB_Connection.UseCacheMode = false;
-                //var _dbo = DB_Connection.GetDataBase();
-                //DB_Connection.SaveSnapshotFromContext(_dbo);
-                //DeviceDataGridInit(_dbo);
-                //DB_Connection.SaveSnapshotFromContext(_dbo);
-                //debug();
                 DB_Connection.Mode = DB_Connection.DatabaseMode.OfflineFirst;
                 DeviceDataGridInit(_dbo);
             }
@@ -71,12 +65,6 @@ namespace Wpf_Inventory_.View.Controls
         /// </summary>
         public void AddNewDevice()
         {
-            //if (!_dbo.Devicetype.Any(dt => dt.DevicetypeId == 1) || !_dbo.Office.Any(o => o.OfficeId == 1))
-            //{
-            //    MessageBox.Show("❌ Нельзя добавить устройство, потому что нужный тип устройства или офис отсутствует в базе данных.");
-            //    return;
-            //}
-
             if (!_dbo.Devicetype.Any())
                 _dbo.Devicetype.Add(new Devicetype { DevicetypeId = 1, Type = "Общий" });
 
@@ -102,6 +90,7 @@ namespace Wpf_Inventory_.View.Controls
             _dbo.SaveChanges(); 
 
             DataViewerWindow dataViewerWindow = new();
+            dataViewerWindow.SaveButtonClicked += OnDeviceSaved;
             dataViewerWindow.Show();
             dataViewerWindow.ShowData(newDevice, _dbo);
         }
@@ -134,7 +123,7 @@ namespace Wpf_Inventory_.View.Controls
         /// <param name="e"></param>
         private void OnDeviceSaved()
         {
-            // MessageBox.Show("Событие сохранения сработало!", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information); // Для отладки
+             MessageBox.Show("Событие сохранения сработало!", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information); // Для отладки
 
             DeviceDataGridInit(_dbo);
         }
