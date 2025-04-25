@@ -54,7 +54,7 @@ namespace Wpf_Inventory_.View.Controls
         {
             if (OfficeDataGrid.SelectedItem is Office office)
             {
-                string textToCopy = $"ID: {office.OfficeId}\n" +
+                string textToCopy = //$"ID: {office.OfficeId}\n" +
                                     $"Номер: {office.Officenum}\n" +
                                     $"Телефон: {office.Phone}\n" +
                                     $"Отдел: {office.Department}\n" +
