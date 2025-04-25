@@ -13,6 +13,7 @@
             <Button Content="Добавить" Padding="1" Margin="5" Click="AddButton_Click"/>
             <Button Content="Удалить" Padding="1" Margin="5" Click="DeleteButton_Click"/>
             <Button Content="Обновить" Padding="1" Margin="5" Click="UpdateButton_Click"/>
+            <Button Content="Сохранить" Padding="1" Margin="5" Click="SaveButton_Click"/>
         </ToolBar>
         <DataGrid x:Name="OfficeDataGrid" AutoGenerateColumns="False" IsReadOnly="False" MouseDoubleClick="OfficeDataGrid_MouseDoubleClick" Margin="0,0,0,39">
             <DataGrid.Columns>

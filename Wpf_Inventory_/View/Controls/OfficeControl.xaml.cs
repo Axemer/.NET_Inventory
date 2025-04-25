@@ -19,7 +19,6 @@ namespace Wpf_Inventory_.View.Controls
         {
             InitializeComponent();
             DataGridInit();
-
         }
 
         /// <summary>
@@ -30,12 +29,6 @@ namespace Wpf_Inventory_.View.Controls
         {
             OfficeDataGrid.ItemsSource = _dbo.Office.ToList();
         }
-
-
-        //<DataGridTextColumn Header = "Блок" Binding="{Binding Block}" Width="auto"/>
-        //<DataGridTextColumn Header = "Номер Офиса" Binding="{Binding Officenum}" Width="auto"/>
-        //<DataGridTextColumn Header = "Отдел" Binding="{Binding Department}" Width="auto"/>
-        //<DataGridTextColumn Header = "Телефон" Binding="{Binding Phone}" Width="auto"/>
 
         /// <summary>
         ///  Добавляет новый офис с базовыми значениями
@@ -59,7 +52,17 @@ namespace Wpf_Inventory_.View.Controls
 
         private void OfficeDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            if (OfficeDataGrid.SelectedItem is Office office)
+            {
+                string textToCopy = $"ID: {office.OfficeId}\n" +
+                                    $"Номер: {office.Officenum}\n" +
+                                    $"Телефон: {office.Phone}\n" +
+                                    $"Отдел: {office.Department}\n" +
+                                    $"Блок: {office.Block}";
 
+                Clipboard.SetText(textToCopy);
+                MessageBox.Show("Запись скопирована в буфер обмена.", "Копирование", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
@@ -67,9 +70,44 @@ namespace Wpf_Inventory_.View.Controls
             AddNewOffice();
         }
 
+        /// <summary>
+        /// Обработчик события нажатия кнопки "Удалить".
+        /// С логикой удаления выделенных записей из DataGrid.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
+            var selectedItems = OfficeDataGrid.SelectedItems.Cast<Office>().ToList();
 
+            if (selectedItems.Count == 0)
+            {
+                MessageBox.Show("Выберите хотя бы одну запись для удаления.", "Удаление", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            var result = MessageBox.Show(
+                $"Вы действительно хотите удалить {selectedItems.Count} запись(ей)?",
+                "Подтверждение удаления",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                foreach (var office in selectedItems)
+                {
+                    if (_dbo.Entry(office).State == EntityState.Detached)
+                    {
+                        _dbo.Office.Attach(office);
+                    }
+
+                    _dbo.Office.Remove(office);
+                }
+
+                _dbo.SaveChanges();
+                DataGridInit();
+                MessageBox.Show("Удаление выполнено.", "Удаление", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
 
         private void UpdateButton_Click(object sender, RoutedEventArgs e)
@@ -91,6 +129,12 @@ namespace Wpf_Inventory_.View.Controls
             }
         }
 
+        /// <summary>
+        /// Обработчик события, который срабатывает при завершении редактирования строки в DataGrid.
+        /// Работает нормально но не очевидно и не всегда
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OfficeDataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
             if (e.EditAction == DataGridEditAction.Commit)
@@ -104,6 +148,37 @@ namespace Wpf_Inventory_.View.Controls
 
                 _dbo.SaveChanges();
             }
+        }
+
+        /// <summary>
+        /// Обработчик события нажатия кнопки "Сохранить".
+        /// с логикой сохранения изменений в DataGrid.
+        /// 
+        /// Зачем один метод сохранение если можно целых два.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (var item in OfficeDataGrid.Items)
+            {
+                if (item is Office office)
+                {
+                    var entry = _dbo.Entry(office);
+
+                    if (entry.State == EntityState.Detached)
+                    {
+                        _dbo.Office.Add(office); // Новая запись
+                    }
+                    else if (entry.State == EntityState.Modified)
+                    {
+                        _dbo.Office.Update(office); // Изменённая запись
+                    }
+                }
+            }
+
+            _dbo.SaveChanges();
+            MessageBox.Show("Изменения сохранены.", "Сохранение", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 }
