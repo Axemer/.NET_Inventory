@@ -204,9 +204,18 @@ namespace Wpf_Inventory_.Model
             {
                 entity.ToTable("office");
 
-                entity.Property(e => e.OfficeId)
-                    .HasColumnName("office_id")
-                    .ValueGeneratedNever();
+                if (Database.IsSqlite())
+                {
+                    entity.Property(e => e.OfficeId)
+                        .HasColumnName("office_id")
+                        .ValueGeneratedOnAdd(); // для SQLite — AUTOINCREMENT
+                }
+                else
+                {
+                    entity.Property(e => e.OfficeId)
+                        .HasColumnName("office_id")
+                        .ValueGeneratedNever(); // если ты контролируешь ID сам
+                }
 
                 entity.Property(e => e.Block)
                     .HasColumnName("block")

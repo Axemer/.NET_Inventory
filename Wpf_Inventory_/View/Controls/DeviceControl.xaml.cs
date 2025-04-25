@@ -21,8 +21,6 @@ namespace Wpf_Inventory_.View.Controls
         /// </summary>
         public InventoryDataBaseContext _dbo = DB_Connection.GetDataBase();
 
-        //public InventoryDataBaseContext _dbo =  LocalDatabase.Get
-
         /// <summary>
         /// Представление коллекции для фильтрации данных
         /// </summary>
@@ -31,28 +29,26 @@ namespace Wpf_Inventory_.View.Controls
         public DeviceControl()
         {
             InitializeComponent();
-            //DeviceDataGridInit(_dbo);
-
-
-
             if (_dbo.Database.CanConnect())
             {
                 DB_Connection.Mode = DB_Connection.DatabaseMode.OfflineFirst;
                 DeviceDataGridInit(_dbo);
             }
-
             _deviceCollectionView = CollectionViewSource.GetDefaultView(DeviceDataGrid.ItemsSource);
         }
 
+        /// <summary>
+        /// Загружает данные из кэша
+        /// </summary>
         public void LoadFromCache()
         {
-            //DB_Connection.UseCacheMode = true;
             _dbo = DB_Connection.GetDataBase();
             DeviceDataGrid.ItemsSource = _dbo.Device.Local.ToObservableCollection();
-            //DeviceDataGridInit(_dbo);
-            //_deviceCollectionView = CollectionViewSource.GetDefaultView(DeviceDataGrid.ItemsSource);
         }
 
+        /// <summary>
+        /// Загружает данные из базы данных на сервере
+        /// </summary>
         public void LoadFromServer()
         {
             //DB_Connection.UseCacheMode = false;
@@ -95,10 +91,10 @@ namespace Wpf_Inventory_.View.Controls
             dataViewerWindow.ShowData(newDevice, _dbo);
         }
 
-        public ICollectionView Get_deviceCollectionView()
-        {
-            return _deviceCollectionView;
-        }
+        //public ICollectionView Get_deviceCollectionView()
+        //{
+        //    return _deviceCollectionView;
+        //}
 
         /// <summary>
         /// Забиваем список данным из бд.
@@ -106,14 +102,10 @@ namespace Wpf_Inventory_.View.Controls
         /// <param name="InventoryRegDB"> Данные из БД сюда надо </param>
         public void DeviceDataGridInit(InventoryDataBaseContext InventoryRegDB)
         {
-            //DeviceDataGrid.ItemsSource = InventoryRegDB.Device.Include(d => d.Devicetype).ToList();
-
             DeviceDataGrid.ItemsSource = InventoryRegDB.Device
                                          .Include(d => d.Devicetype)
                                          .AsNoTracking()
                                          .ToList();
-
-            //_deviceCollectionView = CollectionViewSource.GetDefaultView(DeviceDataGrid.ItemsSource);
         }
 
         /// <summary>
@@ -144,7 +136,6 @@ namespace Wpf_Inventory_.View.Controls
 
             if (SelctedDevice != null)
             {
-
                 DataViewerWindow dataViewerWindow = new();
                 dataViewerWindow.SaveButtonClicked += OnDeviceSaved;
                 dataViewerWindow.Show();

@@ -89,12 +89,12 @@
                 <Controls:DeviceControl/>
             </TabItem>
 
-            <TabItem Header="Рабочие места">
+            <!--<TabItem Header="Рабочие места">
                 <Controls:WorkspaceControl Height="401" Margin="-4,0,15,0"/>
-            </TabItem>
+            </TabItem>-->
 
             <TabItem Header="Офисы">
-                <!--<Controls:OfficeControl/>-->
+                <Controls:OfficeControl/>
             </TabItem>
 
             <TabItem Header="Отделы">
