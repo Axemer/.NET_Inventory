@@ -22,19 +22,19 @@ namespace Wpf_Inventory_.View
         public event Action SaveButtonClicked;
 
         /// <summary>
-        /// 
+        /// Ныне выбранное устройство.
         /// </summary>
         private object _currentDevice = new Device();
 
         /// <summary>
-        /// 
+        /// Список всех моделей для фильтрации.
         /// </summary>
-        private List<string> _allModels = new List<string>(); // 🔵 Список всех моделей для фильтрации
+        private List<string> _allModels = new List<string>();
 
         public DataViewerWindow()
         {
             InitializeComponent();
-            InitializeModelComboBox(); // 🔵 Инициализация моделей
+            InitializeModelComboBox();
         }
 
         /// <summary>
@@ -45,9 +45,9 @@ namespace Wpf_Inventory_.View
             InventoryDataBaseContext DBO = DB_Connection.GetDataBase();
             _allModels = DBO.Model.Select(m => m.Model1).Distinct().ToList();
             DevModelComboBox.ItemsSource = _allModels;
-            DevModelComboBox.IsEditable = true;
-            DevModelComboBox.IsTextSearchEnabled = false; // 🔵 Чтобы мы сами обрабатывали поиск
-            DevModelComboBox.StaysOpenOnEdit = true;
+            //DevModelComboBox.IsEditable = true;
+            //DevModelComboBox.IsTextSearchEnabled = false; // Чтобы мы сами обрабатывали поиск
+            //DevModelComboBox.StaysOpenOnEdit = true;
 
             DevModelComboBox.PreviewKeyUp += DevModelComboBox_PreviewKeyUp;
         }

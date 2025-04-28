@@ -110,7 +110,7 @@ namespace Wpf_Inventory_.View.Controls
         /// <param name="e"></param>
         private void OnDeviceSaved()
         {
-             MessageBox.Show("Событие сохранения сработало!", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information); // Для отладки
+             //MessageBox.Show("Событие сохранения сработало!", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information); // Для отладки
 
             DeviceDataGridInit(_dbo);
         }
