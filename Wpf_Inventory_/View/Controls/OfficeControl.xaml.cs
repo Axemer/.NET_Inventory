@@ -24,14 +24,12 @@ namespace Wpf_Inventory_.View.Controls
         /// <summary>
         /// Представление коллекции для фильтрации данных
         /// </summary>
-        private readonly ICollectionView _officeCollectionView;
+        private ICollectionView _officeCollectionView;
 
         public OfficeControl()
         {
             InitializeComponent();
             DataGridInit();
-
-            _officeCollectionView = CollectionViewSource.GetDefaultView(OfficeDataGrid.ItemsSource);
         }
 
         /// <summary>
@@ -41,6 +39,7 @@ namespace Wpf_Inventory_.View.Controls
         private void DataGridInit()
         {
             OfficeDataGrid.ItemsSource = _dbo.Office.ToList();
+            _officeCollectionView = CollectionViewSource.GetDefaultView(OfficeDataGrid.ItemsSource);
         }
 
         /// <summary>

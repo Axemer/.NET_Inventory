@@ -24,14 +24,12 @@ namespace Wpf_Inventory_.View.Controls
         /// <summary>
         /// Представление коллекции для фильтрации данных
         /// </summary>
-        private readonly ICollectionView _modelCollectionView;
+        private ICollectionView _modelCollectionView;
 
         public DeviceModelControl()
         {
             InitializeComponent();
             DataGridInit();
-
-            _modelCollectionView = CollectionViewSource.GetDefaultView(ModelDataGrid.ItemsSource);
         }
 
         /// <summary>
@@ -40,6 +38,7 @@ namespace Wpf_Inventory_.View.Controls
         private void DataGridInit()
         {
             ModelDataGrid.ItemsSource = _dbo.Model.ToList();
+            _modelCollectionView = CollectionViewSource.GetDefaultView(ModelDataGrid.ItemsSource);
         }
 
         /// <summary>

@@ -113,9 +113,22 @@ namespace Wpf_Inventory_.Model
             {
                 entity.ToTable("device_workplace");
 
-                entity.Property(e => e.DeviceWorkplaceId)
-                    .HasColumnName("device_workplace_id")
-                    .ValueGeneratedNever();
+                if (Database.IsSqlite())
+                {
+                    entity.Property(e => e.DeviceWorkplaceId)
+                        .HasColumnName("device_workplace_id")
+                        .ValueGeneratedOnAdd(); // для SQLite — AUTOINCREMENT
+                }
+                else
+                {
+                    entity.Property(e => e.DeviceWorkplaceId)
+                        .HasColumnName("device_workplace_id")
+                        .ValueGeneratedNever(); // если ты контролируешь ID сам
+                }
+
+                //entity.Property(e => e.DeviceWorkplaceId)
+                //    .HasColumnName("device_workplace_id")
+                //    .ValueGeneratedNever();
 
                 entity.Property(e => e.DeviceId).HasColumnName("device_id");
 
@@ -138,9 +151,22 @@ namespace Wpf_Inventory_.Model
             {
                 entity.ToTable("deviceparts");
 
-                entity.Property(e => e.DevicepartsId)
-                    .HasColumnName("deviceparts_id")
-                    .ValueGeneratedNever();
+                if (Database.IsSqlite())
+                {
+                    entity.Property(e => e.DevicepartsId)
+                        .HasColumnName("deviceparts_id")
+                        .ValueGeneratedOnAdd(); // для SQLite — AUTOINCREMENT
+                }
+                else
+                {
+                    entity.Property(e => e.DevicepartsId)
+                        .HasColumnName("deviceparts_id")
+                        .ValueGeneratedNever(); // если ты контролируешь ID сам
+                }
+
+                //entity.Property(e => e.DevicepartsId)
+                //    .HasColumnName("deviceparts_id")
+                //    .ValueGeneratedNever();
 
                 entity.Property(e => e.Name)
                     .IsRequired()
@@ -176,9 +202,22 @@ namespace Wpf_Inventory_.Model
             {
                 entity.ToTable("devicetype");
 
-                entity.Property(e => e.DevicetypeId)
-                    .HasColumnName("devicetype_id")
-                    .ValueGeneratedNever();
+                if (Database.IsSqlite())
+                {
+                    entity.Property(e => e.DevicetypeId)
+                        .HasColumnName("devicetype_id")
+                        .ValueGeneratedOnAdd(); // для SQLite — AUTOINCREMENT
+                }
+                else
+                {
+                    entity.Property(e => e.DevicetypeId)
+                        .HasColumnName("devicetype_id")
+                        .ValueGeneratedNever(); // если ты контролируешь ID сам
+                }
+
+                //entity.Property(e => e.DevicetypeId)
+                //    .HasColumnName("devicetype_id")
+                //    .ValueGeneratedNever();
 
                 entity.Property(e => e.Type)
                     .IsRequired()
@@ -190,9 +229,22 @@ namespace Wpf_Inventory_.Model
             {
                 entity.ToTable("model");
 
-                entity.Property(e => e.ModelId)
-                    .HasColumnName("model_id")
-                    .ValueGeneratedNever();
+                if (Database.IsSqlite())
+                {
+                    entity.Property(e => e.ModelId)
+                        .HasColumnName("model_id")
+                        .ValueGeneratedOnAdd(); // для SQLite — AUTOINCREMENT
+                }
+                else
+                {
+                    entity.Property(e => e.ModelId)
+                        .HasColumnName("model_id")
+                        .ValueGeneratedNever(); // если ты контролируешь ID сам
+                }
+
+                //entity.Property(e => e.ModelId)
+                //    .HasColumnName("model_id")
+                //    .ValueGeneratedNever();
 
                 entity.Property(e => e.Model1)
                     .IsRequired()

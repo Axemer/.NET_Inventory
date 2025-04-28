@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
+using System.Windows.Controls; 
+using System.Windows.Input; 
 using Wpf_Inventory_.Classes;
 using Wpf_Inventory_.Model;
 using Microsoft.EntityFrameworkCore;
@@ -14,35 +17,60 @@ namespace Wpf_Inventory_.View
     public partial class DataViewerWindow : Window
     {
         /// <summary>
-        /// Объявляем событие о нажатии кнопки сохранения
+        /// 
         /// </summary>
         public event Action SaveButtonClicked;
 
         /// <summary>
-        /// Переменная с текущим устройством, которое редактируется в окне.
+        /// 
         /// </summary>
         private object _currentDevice = new Device();
 
         /// <summary>
-        /// Переменная с всем перечнем данных в базе данных.
+        /// 
         /// </summary>
-        //readonly private InventoryDataBaseContext _invDbo = DB_Connection.GetDataBase();
+        private List<string> _allModels = new List<string>(); // 🔵 Список всех моделей для фильтрации
 
         public DataViewerWindow()
         {
             InitializeComponent();
+            InitializeModelComboBox(); // 🔵 Инициализация моделей
+        }
+
+        /// <summary>
+        /// Метод для загрузки всех моделей в ComboBox
+        /// </summary>
+        private void InitializeModelComboBox()
+        {
+            InventoryDataBaseContext DBO = DB_Connection.GetDataBase();
+            _allModels = DBO.Model.Select(m => m.Model1).Distinct().ToList();
+            DevModelComboBox.ItemsSource = _allModels;
+            DevModelComboBox.IsEditable = true;
+            DevModelComboBox.IsTextSearchEnabled = false; // 🔵 Чтобы мы сами обрабатывали поиск
+            DevModelComboBox.StaysOpenOnEdit = true;
+
+            DevModelComboBox.PreviewKeyUp += DevModelComboBox_PreviewKeyUp;
+        }
+
+        /// <summary>
+        /// Метод автофильтрации по вводу
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DevModelComboBox_PreviewKeyUp(object sender, KeyEventArgs e)
+        {
+            string text = DevModelComboBox.Text.ToLower();
+            var filtered = _allModels.Where(m => m.ToLower().Contains(text)).ToList();
+            DevModelComboBox.ItemsSource = filtered;
+            DevModelComboBox.IsDropDownOpen = true;
         }
 
         /// <summary>
         /// Сохраняет все внесенные изменения
         /// </summary>
-        /// <param name="SelectedDevice"></param>
-        /// <param name="DBO"></param>
         private void SaveDeviceChanges(object SelectedDevice)
         {
-            //Доступ к бд оставляю тут ибо инчае при инициализации будут происходить не клевые вещи
             InventoryDataBaseContext DBO = DB_Connection.GetDataBase();
-
             if (SelectedDevice == null || DBO == null) return;
 
             var idProperty = SelectedDevice.GetType().GetProperty("DeviceId");
@@ -52,11 +80,10 @@ namespace Wpf_Inventory_.View
             if (deviceId == null) return;
 
             var device = DBO.Device
-                .Include(d => d.Office) 
+                .Include(d => d.Office)
                 .FirstOrDefault(d => d.DeviceId == deviceId);
             if (device == null) return;
 
-            // Обновление полей
             device.Devicename = DevNameTextBox.Text;
             device.Serialnumber = DevSerialTextBox.Text;
             device.Inventorynumber = DevInvNumTextBox.Text;
@@ -65,21 +92,31 @@ namespace Wpf_Inventory_.View
             device.Dateofcommissioning = DevDateDatePicker.SelectedDate ?? DateTime.Now;
             device.Exception = ExceptionCheckBox.IsChecked;
 
-            // Модель
-            string selectedModel = DevModelTextBox.Text;
+            // Работа с моделью через DevModelComboBox
+            string selectedModel = DevModelComboBox.Text;
             if (!string.IsNullOrEmpty(selectedModel))
-                device.ModelId = DBO.Model
-                    .FirstOrDefault(m => m.Model1 == selectedModel)?.ModelId;
+            {
+                var model = DBO.Model.FirstOrDefault(m => m.Model1 == selectedModel);
+                if (model == null)
+                {
+                    // Если модели нет — создаем новую
+                    model = new Model.Model { Model1 = selectedModel };
+                    DBO.Model.Add(model);
+                    DBO.SaveChanges(); // Сохраняем модель сразу чтобы получить её ID
+                }
+                device.ModelId = model.ModelId;
+            }
+
             // Тип устройства
             string selectedDeviceType = DevTypeComboBox.SelectedItem?.ToString();
             if (!string.IsNullOrEmpty(selectedDeviceType))
                 device.DevicetypeId = DBO.Devicetype
                     .FirstOrDefault(d => d.Type == selectedDeviceType)?.DevicetypeId;
+
             // Офис
             string selectedOffice = DevOfficeComboBox.SelectedItem?.ToString();
             string selectedDepartment = DevDepComboBox.SelectedItem?.ToString();
             string selectedBlock = DevBlockComboBox.SelectedItem?.ToString();
-            // Преобразуем в char тк блок это char
             char? selectedBlockChar = string.IsNullOrWhiteSpace(selectedBlock) ? null : (char?)selectedBlock.FirstOrDefault();
 
             if (!string.IsNullOrEmpty(selectedDepartment) && !string.IsNullOrEmpty(selectedOffice))
@@ -99,17 +136,14 @@ namespace Wpf_Inventory_.View
                     MessageBox.Show("Не удалось найти офис с заданными параметрами (отделение, номер, корпус).");
                 }
             }
+
             try
             {
                 DBO.SaveChanges();
-
-                // Перезагружаем обновлённый объект из базы на всякий
                 var updatedDevice = DBO.Device
                     .Include(d => d.Office)
                     .FirstOrDefault(d => d.DeviceId == device.DeviceId);
-
                 _currentDevice = updatedDevice;
-
             }
             catch (Exception ex)
             {
@@ -120,27 +154,25 @@ namespace Wpf_Inventory_.View
         /// <summary>
         /// Показывает все данне устройства в окне.
         /// </summary>
-        /// <param name="SelectedDevice"></param>
-        /// <param name="DBO"></param>
         public void ShowData(object SelectedDevice, InventoryDataBaseContext DBO)
         {
             if (SelectedDevice == null || DBO == null) return;
             _currentDevice = SelectedDevice;
 
-            // Получаем ID устройства из объекта SelectedDevice (если у него есть свойство Device_ID)
             PropertyInfo idProperty = SelectedDevice.GetType().GetProperty("DeviceId");
             if (idProperty == null)
                 return;
 
-            // Получаем ID устройства для работы с БД
             int deviceId = (int)idProperty.GetValue(SelectedDevice);
 
-            // Находим устройство в базе данных по ID
-            Device device = DBO.Device.FirstOrDefault(d => d.DeviceId == deviceId);
+            Device device = DBO.Device
+                .Include(d => d.Model)
+                .Include(d => d.Office)
+                .Include(d => d.Devicetype)
+                .FirstOrDefault(d => d.DeviceId == deviceId);
             if (device == null)
                 return;
 
-            // Заполняем выпадающие списки (ComboBox) если их не забили ранее
             if (DevTypeComboBox.Items.Count == 0)
             {
                 foreach (Devicetype deviceType in DBO.Devicetype.ToList())
@@ -162,20 +194,19 @@ namespace Wpf_Inventory_.View
                     DevOfficeComboBox.Items.Add(office.Officenum);
             }
 
-            // Заполняем текстовые поля данными устройства
             DevIDTextBox.Text = device.DeviceId.ToString();
-            DevNameTextBox.Text = device.Devicename.ToString();
+            DevNameTextBox.Text = device.Devicename;
             DevSerialTextBox.Text = device.Serialnumber;
             DevInvNumTextBox.Text = device.Inventorynumber;
-            DevModelTextBox.Text = device?.Model?.Model1 ?? "Неизвестная модель";
-            // на случай если модель null стоит проверка ибо так уже случалось
+
+            //  Показ через DevModelComboBox
+            DevModelComboBox.Text = device?.Model?.Model1 ?? "без модели";
 
             DevIPTextBox.Text = device.IpAddress;
             DevNoteTextBox.Text = device.Note;
             DevDateDatePicker.SelectedDate = device.Dateofcommissioning;
             ExceptionCheckBox.IsChecked = device.Exception;
 
-            // Устанавливаем выбранные элементы в ComboBox
             DevTypeComboBox.SelectedItem = device.Devicetype?.Type;
             DevBlockComboBox.SelectedItem = device.Office?.Block;
             DevDepComboBox.SelectedItem = device.Office?.Department;
@@ -190,10 +221,7 @@ namespace Wpf_Inventory_.View
 
         private void ExceptionCheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            // Этот метод не обязательный тк в методах выше все и так реализовано
-            // Но если очень хочется можно и сюда часть функционала перенести
-            // Так как технически это будет более правильно
+            // Пока не используется
         }
     }
 }
-

@@ -31,7 +31,8 @@
         <TextBlock HorizontalAlignment="Left" Margin="10,347,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Height="20" FontSize="14" TextAlignment="Right"><Run Language="ru-ru" Text="Офис"/><Run Text=" :"/></TextBlock>
         <ComboBox x:Name="DevOfficeComboBox" SelectedItem="{}" ItemsSource="{Binding Office.Officenum}" HorizontalAlignment="Left" Margin="115,347,0,0" Text="Нет данных" VerticalAlignment="Top" Width="200" Height="20"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,121,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Height="20" FontSize="14" TextAlignment="Right"><Run Text=" "/><Run Language="ru-ru" Text="Модель :"/></TextBlock>
-        <TextBox x:Name="DevModelTextBox" HorizontalAlignment="Left" Margin="115,121,0,0" TextWrapping="Wrap" Text="{}" VerticalAlignment="Top" Width="200" Height="20"/>
+        <!--<TextBox x:Name="DevModelTextBox" HorizontalAlignment="Left" Margin="115,121,0,0" TextWrapping="Wrap" Text="{}" VerticalAlignment="Top" Width="200" Height="20"/>-->
+        <ComboBox x:Name="DevModelComboBox" IsEditable="True" StaysOpenOnEdit="True" IsTextSearchEnabled="False" HorizontalAlignment="Left" Margin="115,121,0,0" Text="{}" VerticalAlignment="Top" Width="200" Height="20" />
         <CheckBox x:Name="ExceptionCheckBox" Content="Списано" HorizontalAlignment="Left" Margin="358,350,0,0" VerticalAlignment="Top" Checked="ExceptionCheckBox_Checked"/>
 
     </Grid>

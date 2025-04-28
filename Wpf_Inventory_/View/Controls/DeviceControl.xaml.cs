@@ -24,7 +24,7 @@ namespace Wpf_Inventory_.View.Controls
         /// <summary>
         /// Представление коллекции для фильтрации данных
         /// </summary>
-        private readonly ICollectionView _deviceCollectionView;
+        private ICollectionView _deviceCollectionView;
 
         public DeviceControl()
         {
@@ -34,7 +34,6 @@ namespace Wpf_Inventory_.View.Controls
                 DB_Connection.Mode = DB_Connection.DatabaseMode.OfflineFirst;
                 DeviceDataGridInit(_dbo);
             }
-            _deviceCollectionView = CollectionViewSource.GetDefaultView(DeviceDataGrid.ItemsSource);
         }
 
         /// <summary>
@@ -91,11 +90,6 @@ namespace Wpf_Inventory_.View.Controls
             dataViewerWindow.ShowData(newDevice, _dbo);
         }
 
-        //public ICollectionView Get_deviceCollectionView()
-        //{
-        //    return _deviceCollectionView;
-        //}
-
         /// <summary>
         /// Забиваем список данным из бд.
         /// </summary>
@@ -106,6 +100,7 @@ namespace Wpf_Inventory_.View.Controls
                                          .Include(d => d.Devicetype)
                                          .AsNoTracking()
                                          .ToList();
+            _deviceCollectionView = CollectionViewSource.GetDefaultView(DeviceDataGrid.ItemsSource);
         }
 
         /// <summary>
