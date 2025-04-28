@@ -1,7 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using Wpf_Inventory_.Classes;
 using Wpf_Inventory_.Model;
@@ -13,12 +16,22 @@ namespace Wpf_Inventory_.View.Controls
     /// </summary>
     public partial class OfficeControl : UserControl
     {
+        /// <summary>
+        /// Переменная для взаимодействия с бд
+        /// </summary>
         private readonly InventoryDataBaseContext _dbo = DB_Connection.GetDataBase();
+
+        /// <summary>
+        /// Представление коллекции для фильтрации данных
+        /// </summary>
+        private readonly ICollectionView _officeCollectionView;
 
         public OfficeControl()
         {
             InitializeComponent();
             DataGridInit();
+
+            _officeCollectionView = CollectionViewSource.GetDefaultView(OfficeDataGrid.ItemsSource);
         }
 
         /// <summary>
@@ -176,9 +189,40 @@ namespace Wpf_Inventory_.View.Controls
                     }
                 }
             }
-
             _dbo.SaveChanges();
             MessageBox.Show("Изменения сохранены.", "Сохранение", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        /// <summary>
+        /// Обработчик нажатия кнопки "Поиск"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SearchButton_Click(object sender, RoutedEventArgs e)
+        {
+            string filterText = SearchTextBox.Text.ToLower();
+            string selectedCriteria = (SearchCriteriaComboBox.SelectedItem as ComboBoxItem)?.Content.ToString();
+
+            if (_officeCollectionView != null)
+            {
+                _officeCollectionView.Filter = item =>
+                {
+                    if (item is not Office office)
+                        return false;
+
+                    // Выглядет больно для чтения но хз стандарт таков теперь
+                    return selectedCriteria switch
+                    {
+                        "Блок" => office.Block?.ToString().Contains(filterText, StringComparison.CurrentCultureIgnoreCase) == true,
+                        "Отдел" => !string.IsNullOrEmpty(office.Department) && office.Department.Contains(filterText, StringComparison.CurrentCultureIgnoreCase),
+                        "Номер офиса" => !string.IsNullOrEmpty(office.Officenum) && office.Officenum.ToString().Contains(filterText, StringComparison.CurrentCultureIgnoreCase),
+                        "Номер телефона" => !string.IsNullOrEmpty(office.Phone) && office.Phone.ToString().Contains(filterText, StringComparison.CurrentCultureIgnoreCase),
+                        _ => true,
+                        
+                    };
+                };
+                _officeCollectionView.Refresh();
+            }
         }
     }
 }

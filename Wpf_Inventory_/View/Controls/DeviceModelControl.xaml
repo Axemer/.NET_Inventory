@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Wpf_Inventory_.View.Controls.OfficeControl"
+﻿<UserControl x:Class="Wpf_Inventory_.View.Controls.DeviceModelControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -23,14 +23,6 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <!-- ComboBox для выбора критерия поиска -->
-                <ComboBox x:Name="SearchCriteriaComboBox" Width="120" Background="WhiteSmoke" Margin="20,0,2,0" BorderThickness="1" BorderBrush="Black" Grid.Column="0">
-                    <ComboBoxItem Content="Блок"/>
-                    <ComboBoxItem Content="Отдел"/>
-                    <ComboBoxItem Content="Номер офиса"/>
-                    <ComboBoxItem Content="Номер телефона"/>
-                </ComboBox>
-
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1">
                     <!-- TextBox для ввода поискового запроса -->
                     <TextBox x:Name="SearchTextBox" Width="170" Background="WhiteSmoke" BorderThickness="1" BorderBrush="Black" Margin="5,0,5,0"/>
@@ -39,12 +31,9 @@
                 </StackPanel>
             </Grid>
         </ToolBar>
-        <DataGrid x:Name="OfficeDataGrid" AutoGenerateColumns="False" IsReadOnly="False" MouseDoubleClick="OfficeDataGrid_MouseDoubleClick" Margin="0,0,0,39">
+        <DataGrid x:Name="ModelDataGrid" AutoGenerateColumns="False" IsReadOnly="False" MouseDoubleClick="ModelDataGrid_MouseDoubleClick" Margin="0,0,0,39">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Блок" Binding="{Binding Block}" Width="auto"/>
-                <DataGridTextColumn Header="Номер Офиса" Binding="{Binding Officenum}" Width="auto"/>
-                <DataGridTextColumn Header="Отдел" Binding="{Binding Department}" Width="auto"/>
-                <DataGridTextColumn Header="Телефон" Binding="{Binding Phone}" Width="auto"/>
+                <DataGridTextColumn Header="Модель устройства" Binding="{Binding Model1}" Width="auto"/>
             </DataGrid.Columns>
         </DataGrid>
             <!-- Панель инструментов -->

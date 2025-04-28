@@ -97,16 +97,16 @@
                 <Controls:OfficeControl/>
             </TabItem>
 
-            <TabItem Header="Отделы">
-                <!--<Controls:DepartmentControl/>-->
+            <TabItem Header="Типы">
+                <Controls:DeviceTypeControl/>
             </TabItem>
 
-            <TabItem Header="Типы">
-                <!--<Controls:DeviceTypeControl/>-->
+            <TabItem Header="Модели">
+                <Controls:DeviceModelControl/>
             </TabItem>
 
             <TabItem Header="Все данные">
-                <!--<Controls:DeviceControl/>-->
+                
             </TabItem>
 
         </TabControl>

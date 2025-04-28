@@ -12,9 +12,9 @@ using Wpf_Inventory_.Model;
 namespace Wpf_Inventory_.View.Controls
 {
     /// <summary>
-    /// Логика взаимодействия для OfficeControl.xaml
+    /// Логика взаимодействия для DeviceModelControl.xaml
     /// </summary>
-    public partial class DeviceTypeControl : UserControl
+    public partial class DeviceModelControl : UserControl
     {
         /// <summary>
         /// Переменная для взаимодействия с бд
@@ -24,14 +24,14 @@ namespace Wpf_Inventory_.View.Controls
         /// <summary>
         /// Представление коллекции для фильтрации данных
         /// </summary>
-        private readonly ICollectionView _deviceTypeCollectionView;
+        private readonly ICollectionView _modelCollectionView;
 
-        public DeviceTypeControl()
+        public DeviceModelControl()
         {
             InitializeComponent();
             DataGridInit();
 
-            _deviceTypeCollectionView = CollectionViewSource.GetDefaultView(DeviceTypeDataGrid.ItemsSource);
+            _modelCollectionView = CollectionViewSource.GetDefaultView(ModelDataGrid.ItemsSource);
         }
 
         /// <summary>
@@ -39,29 +39,29 @@ namespace Wpf_Inventory_.View.Controls
         /// </summary>
         private void DataGridInit()
         {
-            DeviceTypeDataGrid.ItemsSource = _dbo.Devicetype.ToList();
+            ModelDataGrid.ItemsSource = _dbo.Model.ToList();
         }
 
         /// <summary>
-        /// Добавляет новый тип устройства с базовыми значениями.
+        /// Добавляет новую модель устройства с базовыми значениями.
         /// </summary>
-        public void AddNewDeviceType()
+        public void AddNewModel()
         {
-            Devicetype newDeviceType = new Devicetype
+            Model.Model newModel = new Model.Model
             {
-                Type = "Новый тип устройства"
+                Model1 = "Новая модель"
             };
 
-            _dbo.Devicetype.Add(newDeviceType);
+            _dbo.Model.Add(newModel);
             _dbo.SaveChanges();
             DataGridInit();
         }
 
-        private void DeviceTypeDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void ModelDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (DeviceTypeDataGrid.SelectedItem is Devicetype deviceType)
+            if (ModelDataGrid.SelectedItem is Model.Model model)
             {
-                string textToCopy = $"Тип устройства: {deviceType.Type}";
+                string textToCopy = $"Модель устройства: {model.Model1}";
 
                 Clipboard.SetText(textToCopy);
                 MessageBox.Show("Запись скопирована в буфер обмена.", "Копирование", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -70,12 +70,12 @@ namespace Wpf_Inventory_.View.Controls
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            AddNewDeviceType();
+            AddNewModel();
         }
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-            var selectedItems = DeviceTypeDataGrid.SelectedItems.Cast<Devicetype>().ToList();
+            var selectedItems = ModelDataGrid.SelectedItems.Cast<Model.Model>().ToList();
 
             if (selectedItems.Count == 0)
             {
@@ -91,14 +91,14 @@ namespace Wpf_Inventory_.View.Controls
 
             if (result == MessageBoxResult.Yes)
             {
-                foreach (var deviceType in selectedItems)
+                foreach (var model in selectedItems)
                 {
-                    if (_dbo.Entry(deviceType).State == EntityState.Detached)
+                    if (_dbo.Entry(model).State == EntityState.Detached)
                     {
-                        _dbo.Devicetype.Attach(deviceType);
+                        _dbo.Model.Attach(model);
                     }
 
-                    _dbo.Devicetype.Remove(deviceType);
+                    _dbo.Model.Remove(model);
                 }
 
                 _dbo.SaveChanges();
@@ -113,24 +113,24 @@ namespace Wpf_Inventory_.View.Controls
             DataGridInit();
         }
 
-        private void DeviceTypeDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ModelDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var selectedDeviceType = DeviceTypeDataGrid.SelectedItem as Devicetype;
-            if (selectedDeviceType != null)
+            var selectedModel = ModelDataGrid.SelectedItem as Model.Model;
+            if (selectedModel != null)
             {
-                MessageBox.Show($"Выбран тип устройства: {selectedDeviceType.Type}");
+                MessageBox.Show($"Выбрана модель устройства: {selectedModel.Model1}");
             }
         }
 
-        private void DeviceTypeDataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
+        private void ModelDataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
             if (e.EditAction == DataGridEditAction.Commit)
             {
-                var deviceType = e.Row.Item as Devicetype;
+                var model = e.Row.Item as Model.Model;
 
-                if (deviceType != null && _dbo.Entry(deviceType).State == EntityState.Detached)
+                if (model != null && _dbo.Entry(model).State == EntityState.Detached)
                 {
-                    _dbo.Devicetype.Add(deviceType);
+                    _dbo.Model.Add(model);
                 }
 
                 _dbo.SaveChanges();
@@ -139,19 +139,19 @@ namespace Wpf_Inventory_.View.Controls
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            foreach (var item in DeviceTypeDataGrid.Items)
+            foreach (var item in ModelDataGrid.Items)
             {
-                if (item is Devicetype deviceType)
+                if (item is Model.Model model)
                 {
-                    var entry = _dbo.Entry(deviceType);
+                    var entry = _dbo.Entry(model);
 
                     if (entry.State == EntityState.Detached)
                     {
-                        _dbo.Devicetype.Add(deviceType);
+                        _dbo.Model.Add(model);
                     }
                     else if (entry.State == EntityState.Modified)
                     {
-                        _dbo.Devicetype.Update(deviceType);
+                        _dbo.Model.Update(model);
                     }
                 }
             }
@@ -163,20 +163,20 @@ namespace Wpf_Inventory_.View.Controls
         {
             string filterText = SearchTextBox.Text.ToLower();
 
-            if (_deviceTypeCollectionView != null)
+            if (_modelCollectionView != null)
             {
-                _deviceTypeCollectionView.Filter = item =>
+                _modelCollectionView.Filter = item =>
                 {
-                    if (item is not Devicetype deviceType)
+                    if (item is not Model.Model model)
                         return false;
 
-                    // Ищем просто по тексту во всех полях, которые есть
-                    return (!string.IsNullOrEmpty(deviceType.Type) && deviceType.Type.Contains(filterText, StringComparison.CurrentCultureIgnoreCase));
+                    // Ищем по полю Model1
+                    return (!string.IsNullOrEmpty(model.Model1) && model.Model1.Contains(filterText, StringComparison.CurrentCultureIgnoreCase));
                 };
 
-                _deviceTypeCollectionView.Refresh();
+                _modelCollectionView.Refresh();
             }
         }
-
     }
 }
+
