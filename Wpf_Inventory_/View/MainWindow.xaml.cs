@@ -36,7 +36,7 @@ namespace Wpf_Inventory_
             //    InitializeComponent();
 
             InitializeComponent();
-            UpdateModeMenuHeader(); // устанавливаем заголовок для режима работы
+            UpdateStatusIndicator(); // устанавливаем заголовок для режима работы
         }
 
         public void Window_Loaded(object sender, RoutedEventArgs e)
@@ -126,17 +126,29 @@ namespace Wpf_Inventory_
         }
 
         /// <summary>
-        /// Обновляет заголовок пункта меню в зависимости от текущего режима.
+        /// Обновляет индикатор статуса и текст в зависимости от текущего режима работы.
         /// </summary>
-        private void UpdateModeMenuHeader()
+        private void UpdateStatusIndicator()
         {
-            if (ToggleModeMenuItem == null) return;
+            if (StatusIndicator == null || StatusIndicatorText == null) return;
 
-            string modeText = DB_Connection.Mode == DB_Connection.DatabaseMode.OnlineFirst
-                ? "Режим: Онлайн (переключить)"
-                : "Режим: Оффлайн (переключить)";
+            switch (DB_Connection.Mode)
+            {
+                case DB_Connection.DatabaseMode.OnlineFirst:
+                    StatusIndicator.Fill = new SolidColorBrush(Colors.Green);
+                    StatusIndicatorText.Text = "Онлайн режим — подключение установлено";
+                    break;
 
-            ToggleModeMenuItem.Header = modeText;
+                case DB_Connection.DatabaseMode.OfflineFirst:
+                    StatusIndicator.Fill = new SolidColorBrush(Colors.Purple);
+                    StatusIndicatorText.Text = "Оффлайн режим — работа без подключения";
+                    break;
+
+                default:
+                    StatusIndicator.Fill = new SolidColorBrush(Colors.Red);
+                    StatusIndicatorText.Text = "Нет подключения или нет данных";
+                    break;
+            }
         }
 
 
@@ -221,11 +233,13 @@ namespace Wpf_Inventory_
 
         private void ToggleMode_Click(object sender, RoutedEventArgs e)
         {
-            DB_Connection.ToggleDatabaseMode(); // переключает режим
-            UpdateModeMenuHeader();             // обновляет текст
+            DB_Connection.ToggleDatabaseMode(); // Переключить режим базы данных
+            UpdateStatusIndicator();            // Обновить статусбар (индикатор и текст)
+
             DeviceControl d = new();
-            d.RefreshContexAndDeviceGrid();     // обновляет контекст и таблицу
+            d.RefreshContexAndDeviceGrid();     // Обновить таблицу устройств
         }
+
 
         /// <summary>
         /// Закрывает окно
