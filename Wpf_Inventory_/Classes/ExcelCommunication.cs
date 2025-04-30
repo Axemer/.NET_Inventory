@@ -1,4 +1,4 @@
-﻿using OfficeOpenXml;
+﻿
 using System;
 using System.Collections.Generic;
 //using System.Data.Entity;
@@ -12,109 +12,109 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Wpf_Inventory_.Classes
 {
-    internal class ExcelCommunication
-    {
-        // Метод для импорта данных из Excel
-        public static void ImportFromExcel(string filePath, InventoryDataBaseContext dbContext)
-        {
-            FileInfo fileInfo = new FileInfo(filePath);
+    //internal class ExcelCommunication
+    //{
+    //    // Метод для импорта данных из Excel
+    //    public static void ImportFromExcel(string filePath, InventoryDataBaseContext dbContext)
+    //    {
+    //        FileInfo fileInfo = new FileInfo(filePath);
 
-            //ExcelPackage.License = License.NonCommercial; // Обновлено для EPPlus 8 и выше
-            using (var package = new ExcelPackage(fileInfo))
-            {
-                var worksheet = package.Workbook.Worksheets[0];
-                int rowCount = worksheet.Dimension.Rows;
+    //        //ExcelPackage.License = License.NonCommercial; // Обновлено для EPPlus 8 и выше
+    //        using (var package = new ExcelPackage(fileInfo))
+    //        {
+    //            var worksheet = package.Workbook.Worksheets[0];
+    //            int rowCount = worksheet.Dimension.Rows;
 
-                for (int row = 2; row <= rowCount; row++) // Предполагаем, что первая строка - заголовки
-                {
-                    try
-                    {
-                        var device = new Device
-                        {
-                            Devicename = worksheet.Cells[row, 1].Text,
-                            IpAddress = worksheet.Cells[row, 2].Text,
-                            Serialnumber = worksheet.Cells[row, 3].Text,
-                            Inventorynumber = worksheet.Cells[row, 4].Text,
-                            Note = worksheet.Cells[row, 5].Text,
-                            Dateofcommissioning = DateTime.Parse(worksheet.Cells[row, 6].Text),
-                            Exception = worksheet.Cells[row, 7].Text.ToLower() == "да",
+    //            for (int row = 2; row <= rowCount; row++) // Предполагаем, что первая строка - заголовки
+    //            {
+    //                try
+    //                {
+    //                    var device = new Device
+    //                    {
+    //                        Devicename = worksheet.Cells[row, 1].Text,
+    //                        IpAddress = worksheet.Cells[row, 2].Text,
+    //                        Serialnumber = worksheet.Cells[row, 3].Text,
+    //                        Inventorynumber = worksheet.Cells[row, 4].Text,
+    //                        Note = worksheet.Cells[row, 5].Text,
+    //                        Dateofcommissioning = DateTime.Parse(worksheet.Cells[row, 6].Text),
+    //                        Exception = worksheet.Cells[row, 7].Text.ToLower() == "да",
 
-                            // Обработка связей
-                            //Department = GetOrCreateDepartment(dbContext, worksheet.Cells[row, 8].Text),
-                            //Devicetype = GetOrCreateDeviceType(dbContext, worksheet.Cells[row, 9].Text),
-                            //Model = GetOrCreateModel(dbContext, worksheet.Cells[row, 10].Text),
-                            //Office = GetOrCreateOffice(dbContext, worksheet.Cells[row, 11].Text)
-                        };
+    //                        // Обработка связей
+    //                        //Department = GetOrCreateDepartment(dbContext, worksheet.Cells[row, 8].Text),
+    //                        //Devicetype = GetOrCreateDeviceType(dbContext, worksheet.Cells[row, 9].Text),
+    //                        //Model = GetOrCreateModel(dbContext, worksheet.Cells[row, 10].Text),
+    //                        //Office = GetOrCreateOffice(dbContext, worksheet.Cells[row, 11].Text)
+    //                    };
 
-                        // Проверка на дубликаты
-                        if (!dbContext.Device.Any(d => d.Inventorynumber == device.Inventorynumber)) // Исправлено имя свойства и коллекции
-                        {
-                            dbContext.Device.Add(device); // Исправлено имя коллекции
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"Ошибка в строке {row}: {ex.Message}");
-                    }
-                }
+    //                    // Проверка на дубликаты
+    //                    if (!dbContext.Device.Any(d => d.Inventorynumber == device.Inventorynumber)) // Исправлено имя свойства и коллекции
+    //                    {
+    //                        dbContext.Device.Add(device); // Исправлено имя коллекции
+    //                    }
+    //                }
+    //                catch (Exception ex)
+    //                {
+    //                    MessageBox.Show($"Ошибка в строке {row}: {ex.Message}");
+    //                }
+    //            }
 
-                dbContext.SaveChanges();
-            }
-        }
+    //            dbContext.SaveChanges();
+    //        }
+    //    }
 
-        /// <summary>
-        /// Метод для экспорта данных в Excel
-        /// </summary>
-        /// <param name="filePath"></param>
-        /// <param name="dbContext"></param>
-        public static void ExportToExcel(string filePath, InventoryDataBaseContext dbContext)
-        {
-            //ExcelPackage.License = License.NonCommercial; // Обновлено для EPPlus 8 и выше
-            using (var package = new ExcelPackage())
-            {
-                var worksheet = package.Workbook.Worksheets.Add("Devices");
+    //    /// <summary>
+    //    /// Метод для экспорта данных в Excel
+    //    /// </summary>
+    //    /// <param name="filePath"></param>
+    //    /// <param name="dbContext"></param>
+    //    public static void ExportToExcel(string filePath, InventoryDataBaseContext dbContext)
+    //    {
+    //        //ExcelPackage.License = License.NonCommercial; // Обновлено для EPPlus 8 и выше
+    //        using (var package = new ExcelPackage())
+    //        {
+    //            var worksheet = package.Workbook.Worksheets.Add("Devices");
 
-                // Заголовки
-                worksheet.Cells[1, 1].Value = "Название устройства";
-                worksheet.Cells[1, 2].Value = "IP-адрес";
-                worksheet.Cells[1, 3].Value = "Серийный номер";
-                worksheet.Cells[1, 4].Value = "Инвентарный номер";
-                worksheet.Cells[1, 5].Value = "Примечание";
-                worksheet.Cells[1, 6].Value = "Дата ввода в эксплуатацию";
-                worksheet.Cells[1, 7].Value = "Исключение";
-                worksheet.Cells[1, 8].Value = "Отдел";
-                worksheet.Cells[1, 9].Value = "Тип устройства";
-                worksheet.Cells[1, 10].Value = "Модель";
-                worksheet.Cells[1, 11].Value = "Офис";
+    //            // Заголовки
+    //            worksheet.Cells[1, 1].Value = "Название устройства";
+    //            worksheet.Cells[1, 2].Value = "IP-адрес";
+    //            worksheet.Cells[1, 3].Value = "Серийный номер";
+    //            worksheet.Cells[1, 4].Value = "Инвентарный номер";
+    //            worksheet.Cells[1, 5].Value = "Примечание";
+    //            worksheet.Cells[1, 6].Value = "Дата ввода в эксплуатацию";
+    //            worksheet.Cells[1, 7].Value = "Исключение";
+    //            worksheet.Cells[1, 8].Value = "Отдел";
+    //            worksheet.Cells[1, 9].Value = "Тип устройства";
+    //            worksheet.Cells[1, 10].Value = "Модель";
+    //            worksheet.Cells[1, 11].Value = "Офис";
 
-                // Данные
-                var devices = dbContext.Device
-                    .Include(d => d.Devicetype)
-                    .Include(d => d.Model)
-                    .Include(d => d.Office)
-                    .ToList();
+    //            // Данные
+    //            var devices = dbContext.Device
+    //                .Include(d => d.Devicetype)
+    //                .Include(d => d.Model)
+    //                .Include(d => d.Office)
+    //                .ToList();
 
-                for (int i = 0; i < devices.Count; i++)
-                {
-                    var device = devices[i];
-                    worksheet.Cells[i + 2, 1].Value = device.Devicename;
-                    worksheet.Cells[i + 2, 2].Value = device.IpAddress;
-                    worksheet.Cells[i + 2, 3].Value = device.Serialnumber;
-                    worksheet.Cells[i + 2, 4].Value = device.Inventorynumber;
-                    worksheet.Cells[i + 2, 5].Value = device.Note;
-                    worksheet.Cells[i + 2, 6].Value = device.Dateofcommissioning?.ToString("dd.MM.yyyy");
-                    worksheet.Cells[i + 2, 7].Value = device.Exception.HasValue && device.Exception.Value ? "Да" : "Нет";
-                    //worksheet.Cells[i + 2, 8].Value = device.Department?.Name;
-                    worksheet.Cells[i + 2, 9].Value = device.Devicetype?.Type;
-                    worksheet.Cells[i + 2, 10].Value = device.Model?.Model1;
-                    worksheet.Cells[i + 2, 11].Value = device.Office?.Officenum;
-                }
+    //            for (int i = 0; i < devices.Count; i++)
+    //            {
+    //                var device = devices[i];
+    //                worksheet.Cells[i + 2, 1].Value = device.Devicename;
+    //                worksheet.Cells[i + 2, 2].Value = device.IpAddress;
+    //                worksheet.Cells[i + 2, 3].Value = device.Serialnumber;
+    //                worksheet.Cells[i + 2, 4].Value = device.Inventorynumber;
+    //                worksheet.Cells[i + 2, 5].Value = device.Note;
+    //                worksheet.Cells[i + 2, 6].Value = device.Dateofcommissioning?.ToString("dd.MM.yyyy");
+    //                worksheet.Cells[i + 2, 7].Value = device.Exception.HasValue && device.Exception.Value ? "Да" : "Нет";
+    //                //worksheet.Cells[i + 2, 8].Value = device.Department?.Name;
+    //                worksheet.Cells[i + 2, 9].Value = device.Devicetype?.Type;
+    //                worksheet.Cells[i + 2, 10].Value = device.Model?.Model1;
+    //                worksheet.Cells[i + 2, 11].Value = device.Office?.Officenum;
+    //            }
 
-                // Сохранение файла
-                FileInfo excelFile = new FileInfo(filePath);
-                package.SaveAs(excelFile);
-            }
-        }
+    //            // Сохранение файла
+    //            FileInfo excelFile = new FileInfo(filePath);
+    //            package.SaveAs(excelFile);
+    //        }
+    //    }
 
         #region Вспомогательные методы
         //private static department GetOrCreateDepartment(InventoryDataBaseContext db, string name)
@@ -165,5 +165,5 @@ namespace Wpf_Inventory_.Classes
         //    return office;
         //}
     }
-}
+
 #endregion

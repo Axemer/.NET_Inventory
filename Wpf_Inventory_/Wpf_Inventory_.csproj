@@ -51,8 +51,9 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="ClosedXML" Version="0.104.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.4" />
-    <PackageReference Include="Microsoft.Identity.Client" Version="4.70.2" />
+    <PackageReference Include="Microsoft.Identity.Client" Version="4.71.1" />
     <PackageReference Include="System.ComponentModel.Composition" Version="9.0.4" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
     <PackageReference Include="System.DirectoryServices.AccountManagement" Version="9.0.4" />
@@ -72,9 +73,6 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="EntityFramework" Version="6.5.1" />
-    <PackageReference Include="EPPlus" Version="8.0.1" />
-    <PackageReference Include="EPPlus.Interfaces" Version="8.0.0" />
-    <PackageReference Include="EPPlus.System.Drawing" Version="8.0.0" />
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="9.0.4" />
     <PackageReference Include="Microsoft.Bcl.Cryptography" Version="9.0.4" />
     <PackageReference Include="Microsoft.Bcl.HashCode" Version="6.0.0" />
