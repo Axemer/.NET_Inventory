@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Diagnostics;
 using System.DirectoryServices.AccountManagement;
 using System.Security.Principal;
@@ -9,6 +10,7 @@ using Wpf_Inventory_.Classes;
 using Wpf_Inventory_.Model;
 using Wpf_Inventory_.View;
 using Wpf_Inventory_.View.Controls;
+using System.Runtime.Versioning; // Add this namespace for SupportedOSPlatform attribute
 
 namespace Wpf_Inventory_
 {
@@ -74,55 +76,45 @@ namespace Wpf_Inventory_
             }
         }
 
+
+
         /// <summary>
         /// Проверяет членство в группе Active Directory.
         /// </summary>
         /// <param name="groupName">Имя группы </param>
         /// <returns></returns>
-        //private static bool IsUserInGroup(string groupName)
-        //{
-        //    try
-        //    {
-        //        using (var context = new PrincipalContext(ContextType.Domain))
-        //        {
-        //            using (var user = UserPrincipal.FindByIdentity(context, WindowsIdentity.GetCurrent().Name))
-        //            {
-        //                if (user == null)
-        //                    return false;
-
-        //                foreach (var group in user.GetGroups())
-        //                {
-        //                    if (group.Name.Equals(groupName, StringComparison.OrdinalIgnoreCase))
-        //                        return true;
-        //                }
-        //            }
-        //        }
-        //    }
-        //    catch (PrincipalOperationException ex)
-        //    {
-        //        LogError($"Ошибка операции с учетной записью: {ex.Message}");
-        //    }
-        //    catch (UnauthorizedAccessException ex)
-        //    {
-        //        LogError($"Ошибка доступа: {ex.Message}");
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        LogError($"Неизвестная ошибка: {ex.Message}");
-        //    }
-
-        //    MessageBox.Show("Ошибка проверки группы. Подробности в логах.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-        //    Application.Current.Shutdown(); // Если вход не успешен — закрываем приложение
-        //    return false;
-        //}
-
-        /// <summary>
-        /// Реализация логирования ошибки (например, запись в файл или журнал событий)
-        /// Пока чисто для примера
-        /// </summary>
-        private static void LogError(string message)
+        [SupportedOSPlatform("windows")] // Add this attribute to indicate the method is Windows-specific
+        private static bool IsUserInGroup(string groupName)
         {
-            System.IO.File.AppendAllText("error_log.txt", $"{DateTime.Now}: {message}{Environment.NewLine}");
+            try
+            {
+                using var context = new PrincipalContext(ContextType.Domain); // This is Windows-specific
+                using var user = UserPrincipal.FindByIdentity(context, WindowsIdentity.GetCurrent().Name);
+                if (user == null)
+                    return false;
+
+                foreach (var group in user.GetGroups())
+                {
+                    if (group.Name.Equals(groupName, StringComparison.OrdinalIgnoreCase))
+                        return true;
+                }
+            }
+            catch (PrincipalOperationException ex)
+            {
+                Logger.LogError($"Ошибка операции с учетной записью: {ex.Message}");
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                Logger.LogError($"Ошибка доступа: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError($"Неизвестная ошибка: {ex.Message}");
+            }
+
+            MessageBox.Show("Ошибка проверки группы. Подробности в логах.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            Application.Current.Shutdown(); // Если вход не успешен — закрываем приложение
+            return false;
         }
 
         /// <summary>
@@ -157,7 +149,6 @@ namespace Wpf_Inventory_
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        [Obsolete]
         private void DeviceExportButton_Click(object sender, RoutedEventArgs e)
         {
             ExcelExporter exporter = new();
@@ -200,7 +191,23 @@ namespace Wpf_Inventory_
 
         private void DevicImportButton_Click(object sender, RoutedEventArgs e)
         {
+            OpenFileDialog openFileDialog = new()
+            {
+                Filter = "Excel файлы (*.xlsx)|*.xlsx",
+                Title = "Выберите Excel-файл для импорта"
+            };
 
+            if (openFileDialog.ShowDialog() == true)
+            {
+                try
+                {
+                    ExcelImporter.ImportFromExcelFile(openFileDialog.FileName);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Ошибка при импорте: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
         }
 
         private void AboutButton_Click(object sender, RoutedEventArgs e)
