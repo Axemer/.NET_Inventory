@@ -4,8 +4,9 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Windows;
+using Wpf_Inventory_.Classes;
 
-namespace Wpf_Inventory_.Classes
+namespace Wpf_Inventory_.dbg
 {
     public class ExcelExporter
     {

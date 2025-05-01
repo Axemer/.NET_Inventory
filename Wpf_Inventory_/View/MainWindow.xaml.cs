@@ -10,7 +10,8 @@ using Wpf_Inventory_.Classes;
 using Wpf_Inventory_.Model;
 using Wpf_Inventory_.View;
 using Wpf_Inventory_.View.Controls;
-using System.Runtime.Versioning; // Add this namespace for SupportedOSPlatform attribute
+using System.Runtime.Versioning;
+using Wpf_Inventory_.dbg; // Add this namespace for SupportedOSPlatform attribute
 
 namespace Wpf_Inventory_
 {
@@ -19,10 +20,6 @@ namespace Wpf_Inventory_
     /// </summary>
     public partial class MainWindow : Window
     {
-        /// <summary>
-        /// Переменная с всем перечнем данных в базе данных.
-        /// </summary>
-        //public InventoryDataBaseContext _dbo = DB_Connection.GetDataBase();
 
         /// <summary>
         /// Имя группы Active Directory у которой будет доступ к проложению.
@@ -189,26 +186,27 @@ namespace Wpf_Inventory_
 
         }
 
-        private void DevicImportButton_Click(object sender, RoutedEventArgs e)
-        {
-            OpenFileDialog openFileDialog = new()
-            {
-                Filter = "Excel файлы (*.xlsx)|*.xlsx",
-                Title = "Выберите Excel-файл для импорта"
-            };
+        //private void DevicImportButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    OpenFileDialog openFileDialog = new()
+        //    {
+        //        Filter = "Excel файлы (*.xlsx)|*.xlsx",
+        //        Title = "Выберите Excel-файл для импорта"
+        //    };
 
-            if (openFileDialog.ShowDialog() == true)
-            {
-                try
-                {
-                    ExcelImporter.ImportFromExcelFile(openFileDialog.FileName);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Ошибка при импорте: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-            }
-        }
+        //    if (openFileDialog.ShowDialog() == true)
+        //    {
+        //        try
+        //        {
+        //            ExcelImporter.ImportFromExcelFile(openFileDialog.FileName);
+                    
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            MessageBox.Show($"Ошибка при импорте: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+        //        }
+        //    }
+        //}
 
         private void AboutButton_Click(object sender, RoutedEventArgs e)
         {

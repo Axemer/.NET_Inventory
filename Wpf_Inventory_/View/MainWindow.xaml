@@ -45,7 +45,7 @@
 
             <!-- Левые элементы меню -->
             <MenuItem Header="Файл" DockPanel.Dock="Left">
-                <MenuItem Foreground="Black" Header="Импорт" Click="DevicImportButton_Click"/>
+                <!--<MenuItem Foreground="Black" Header="Импорт" Click="DevicImportButton_Click"/>-->
                 <MenuItem Foreground="Black" Header="Экспорт" Click="DeviceExportButton_Click"/>
                 <MenuItem Foreground="Black" Header="Пинг Сервера" Click="PingServerButton_Click"/>
                 <MenuItem Foreground="Black" Header="Пинг Базы данных" Click="PingDBButton_Click"/>

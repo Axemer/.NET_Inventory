@@ -13,7 +13,7 @@ namespace Wpf_Inventory_.Classes
         /// <param name="message">Все ошибки в одной строке</param>
         public static void LogError(string message)
         {
-            System.IO.File.AppendAllText("error_log.txt", $"{DateTime.Now}: {message}{Environment.NewLine}");
+            System.IO.File.AppendAllText("error_log.txt", $"\n{DateTime.Now}:\n {message}{Environment.NewLine}");
         }
     }
 }
