@@ -1,13 +1,12 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
-using System.Windows.Controls; 
-using System.Windows.Input; 
+using System.Windows.Input;
 using Wpf_Inventory_.Classes;
 using Wpf_Inventory_.Model;
-using Microsoft.EntityFrameworkCore;
 
 namespace Wpf_Inventory_.View
 {

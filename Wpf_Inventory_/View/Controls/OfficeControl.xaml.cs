@@ -217,7 +217,7 @@ namespace Wpf_Inventory_.View.Controls
                         "Номер офиса" => !string.IsNullOrEmpty(office.Officenum) && office.Officenum.ToString().Contains(filterText, StringComparison.CurrentCultureIgnoreCase),
                         "Номер телефона" => !string.IsNullOrEmpty(office.Phone) && office.Phone.ToString().Contains(filterText, StringComparison.CurrentCultureIgnoreCase),
                         _ => true,
-                        
+
                     };
                 };
                 _officeCollectionView.Refresh();

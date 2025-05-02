@@ -1,9 +1,9 @@
-﻿using Wpf_Inventory_.Model;
-using System.IO;
-using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Diagnostics;
+using System.IO;
+using System.Threading.Tasks;
+using Wpf_Inventory_.Model;
 
 namespace Wpf_Inventory_.Classes
 {

@@ -1,16 +1,13 @@
-﻿using Microsoft.Win32;
-using System;
-using System.Diagnostics;
+﻿using System;
 using System.DirectoryServices.AccountManagement;
+using System.Runtime.Versioning;
 using System.Security.Principal;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using Wpf_Inventory_.Classes;
-using Wpf_Inventory_.Model;
 using Wpf_Inventory_.View;
 using Wpf_Inventory_.View.Controls;
-using System.Runtime.Versioning;
 
 namespace Wpf_Inventory_
 {
@@ -64,7 +61,7 @@ namespace Wpf_Inventory_
             {
                 StatusIndicator.Fill = Brushes.Green;
                 StatusTooltip.Text = "Система в сети";
-                
+
             }
             else
             {
@@ -241,7 +238,7 @@ namespace Wpf_Inventory_
         {
             MessageBox.Show("Программа: Система учета данных инвенторя\n" +
                             "Разработчик: Axemer 2025 год\n" +
-                            "Версия: 0.9", "О программе", 
+                            "Версия: 0.9", "О программе",
                             MessageBoxButton.OK, MessageBoxImage.Information);
 
         }

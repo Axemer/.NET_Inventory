@@ -28,7 +28,8 @@
 	  <!-- Без тримминга (WPF несовместим с ним) -->
 	<PublishTrimmed>false</PublishTrimmed>
 	  <!-- на всякий если нужно временно распаковывать ресурсы -->
-	<IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract> 
+	<IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
+	<ApplicationIcon>Resources\icons\icons8-database-50.ico</ApplicationIcon> 
   </PropertyGroup>
   <ItemGroup>
     <Resource Include="dbg\постгри строчки дев.txt" />
@@ -64,6 +65,7 @@
     <Content Include="Resources\BackUpCache.sqlite">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\icons\icons8-database-50.ico" />
     <Resource Include="Resources\Icons\icons8-database-24.png" />
     <Resource Include="Resources\Icons\icons8-database-30.png" />
     <Resource Include="Resources\Icons\icons8-database-40.png" />

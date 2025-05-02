@@ -1,8 +1,7 @@
-﻿using Wpf_Inventory_.Model;
-using System.IO;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
+﻿using Microsoft.EntityFrameworkCore;
 using System;
+using System.IO;
+using Wpf_Inventory_.Model;
 
 namespace Wpf_Inventory_.Classes
 {

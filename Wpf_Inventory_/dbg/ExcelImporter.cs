@@ -1,14 +1,14 @@
 ﻿using ClosedXML.Excel;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Windows;
-using Wpf_Inventory_.Model;
-using Microsoft.EntityFrameworkCore;
 using Wpf_Inventory_.Classes;
+using Wpf_Inventory_.Model;
 
 namespace Wpf_Inventory_.dbg
 {
@@ -230,7 +230,7 @@ namespace Wpf_Inventory_.dbg
                         "Ошибка импорта",
                         MessageBoxButton.OK,
                         MessageBoxImage.Error);
-                    
+
                     Logger.LogError($"Ошибка в строке:\n{string.Join(" | ", row.Cells().Select(c => c.GetString()))}\n\nИсключение:\n{ex}");
                 }
             }

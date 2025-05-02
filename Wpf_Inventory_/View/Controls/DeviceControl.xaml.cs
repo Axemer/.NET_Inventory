@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
@@ -7,7 +8,6 @@ using System.Windows.Data;
 using System.Windows.Input;
 using Wpf_Inventory_.Classes;
 using Wpf_Inventory_.Model;
-using Microsoft.EntityFrameworkCore;
 
 namespace Wpf_Inventory_.View.Controls
 {
@@ -82,7 +82,7 @@ namespace Wpf_Inventory_.View.Controls
             };
 
             _dbo.Device.Add(newDevice);
-            _dbo.SaveChanges(); 
+            _dbo.SaveChanges();
 
             DataViewerWindow dataViewerWindow = new();
             dataViewerWindow.SaveButtonClicked += OnDeviceSaved;
@@ -110,7 +110,7 @@ namespace Wpf_Inventory_.View.Controls
         /// <param name="e"></param>
         private void OnDeviceSaved()
         {
-             //MessageBox.Show("Событие сохранения сработало!", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information); // Для отладки
+            //MessageBox.Show("Событие сохранения сработало!", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information); // Для отладки
 
             DeviceDataGridInit(_dbo);
         }
@@ -176,7 +176,7 @@ namespace Wpf_Inventory_.View.Controls
 
         public void RefreshContexAndDeviceGrid()
         {
-            _dbo = DB_Connection.GetDataBase(); 
+            _dbo = DB_Connection.GetDataBase();
             DeviceDataGridInit(_dbo);
         }
 
