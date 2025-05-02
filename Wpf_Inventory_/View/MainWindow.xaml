@@ -49,7 +49,8 @@
                 <MenuItem Foreground="Black" Header="Экспорт" Click="DeviceExportButton_Click"/>
                 <MenuItem Foreground="Black" Header="Пинг Сервера" Click="PingServerButton_Click"/>
                 <MenuItem Foreground="Black" Header="Пинг Базы данных" Click="PingDBButton_Click"/>
-                <MenuItem Foreground="Black" Header="Сохранить" Click="DeviceSaveButton_Click"/>
+                <!--<MenuItem Foreground="Black" Header="Сохранить" Click="DeviceSaveButton_Click"/>-->
+                <MenuItem Foreground="Black" Header="Перезагрузка" Click="RebootButton_Click"/>
                 <MenuItem Foreground="Black" Header="Выход" Click="Exit_Click"/>
 
             </MenuItem>
@@ -105,9 +106,9 @@
                 <Controls:DeviceModelControl/>
             </TabItem>
 
-            <TabItem Header="Все данные">
+            <!--<TabItem Header="Все данные">
                 
-            </TabItem>
+            </TabItem>-->
 
         </TabControl>
 

@@ -11,7 +11,6 @@ using Wpf_Inventory_.Model;
 using Wpf_Inventory_.View;
 using Wpf_Inventory_.View.Controls;
 using System.Runtime.Versioning;
-using Wpf_Inventory_.dbg; // Add this namespace for SupportedOSPlatform attribute
 
 namespace Wpf_Inventory_
 {
@@ -65,11 +64,13 @@ namespace Wpf_Inventory_
             {
                 StatusIndicator.Fill = Brushes.Green;
                 StatusTooltip.Text = "Система в сети";
+                
             }
             else
             {
                 StatusIndicator.Fill = Brushes.Red;
                 StatusTooltip.Text = "Система вне сети";
+
             }
         }
 
@@ -126,16 +127,18 @@ namespace Wpf_Inventory_
                 case DB_Connection.DatabaseMode.OnlineFirst:
                     StatusIndicator.Fill = new SolidColorBrush(Colors.Green);
                     StatusIndicatorText.Text = "Онлайн режим — подключение установлено";
+                    ToggleModeMenuItem.Header = "Переключить режим работы в Оффлайн";
                     break;
 
                 case DB_Connection.DatabaseMode.OfflineFirst:
                     StatusIndicator.Fill = new SolidColorBrush(Colors.Purple);
                     StatusIndicatorText.Text = "Оффлайн режим — работа без подключения";
+                    ToggleModeMenuItem.Header = "Переключить режим работы в Онлайн";
                     break;
 
                 default:
                     StatusIndicator.Fill = new SolidColorBrush(Colors.Red);
-                    StatusIndicatorText.Text = "Нет подключения или нет данных";
+                    StatusIndicatorText.Text = "ОШИБКА: Нет подключения или нет данных";
                     break;
             }
         }
@@ -178,12 +181,38 @@ namespace Wpf_Inventory_
 
         private void DeviceSyncButton_Click(object sender, RoutedEventArgs e)
         {
+            switch (DB_Connection.Mode)
+            {
+                case DB_Connection.DatabaseMode.OnlineFirst:
+                    SyncController.ImportFromExternalDatabase();
+                    SoftRestart();
+                    break;
 
+                case DB_Connection.DatabaseMode.OfflineFirst:
+                    MessageBox.Show("Ошибка синхронизации: В режиме оффлайн не возможно сихронизирвоать данные.", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                    //SyncController.ExportToExternalDatabase();
+                    //SoftRestart();  
+                    // тк при порытке синхронизации база очищается локально а данные с внешней не сихронизируются.
+                    // Итог программа пуста, база не изменена.
+                    break;
+
+                default:
+                    MessageBox.Show("Ошибка синхронизации: Не выбран режим работы!", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
+                    break;
+            }
         }
 
-        private void DeviceSaveButton_Click(object sender, RoutedEventArgs e)
+        public void SoftRestart()
         {
+            var mainForm = new MainWindow(); // Создать новую форму
+            mainForm.Show();
+            this.Close(); // Закрыть текущую форму
+        }
 
+        private void RebootButton_Click(object sender, RoutedEventArgs e)
+        {
+            SoftRestart();
         }
 
         //private void DevicImportButton_Click(object sender, RoutedEventArgs e)
@@ -199,7 +228,7 @@ namespace Wpf_Inventory_
         //        try
         //        {
         //            ExcelImporter.ImportFromExcelFile(openFileDialog.FileName);
-                    
+
         //        }
         //        catch (Exception ex)
         //        {
@@ -212,7 +241,7 @@ namespace Wpf_Inventory_
         {
             MessageBox.Show("Программа: Система учета данных инвенторя\n" +
                             "Разработчик: Axemer 2025 год\n" +
-                            "Версия: Альфа 0.41", "О программе", 
+                            "Версия: 0.9", "О программе", 
                             MessageBoxButton.OK, MessageBoxImage.Information);
 
         }
