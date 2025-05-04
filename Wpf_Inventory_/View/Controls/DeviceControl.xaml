@@ -76,7 +76,7 @@
                     <DataGridTextColumn Header="Тип" Binding="{Binding Devicetype.Type}" Width="auto"/>
                     <DataGridTextColumn Header="Название" Binding="{Binding Devicename}" Width="auto"/>
                     <DataGridTextColumn Header="IP" Binding="{Binding IpAddress}" Width="auto"/>
-                    <DataGridTextColumn Header="Дата приема" Binding="{Binding Dateofcommissioning}" Width="*"/>
+                    <DataGridTextColumn Header="Дата приема" Binding="{Binding Dateofcommissioning, StringFormat={}{0:dd.MM.yyyy}}" Width="*"/>
                     <DataGridCheckBoxColumn Header="Списано" Binding="{Binding Exception, Converter={StaticResource NullableBoolConverter}}" Width="60"/>
                 </DataGrid.Columns>
             </DataGrid>

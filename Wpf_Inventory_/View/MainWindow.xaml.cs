@@ -31,7 +31,8 @@ namespace Wpf_Inventory_
             //    InitializeComponent();
 
             InitializeComponent();
-            UpdateStatusIndicator(); // устанавливаем заголовок для режима работы
+            //UpdateStatusIndicator(); // устанавливаем заголовок для режима работы
+            UpdateStatus(true);
         }
 
         public void Window_Loaded(object sender, RoutedEventArgs e)
@@ -60,14 +61,15 @@ namespace Wpf_Inventory_
             if (isActive)
             {
                 StatusIndicator.Fill = Brushes.Green;
-                StatusTooltip.Text = "Система в сети";
+                //StatusTooltip.Text = "Система в сети";
+                StatusIndicatorText.Text = "Система в сети";
 
             }
             else
             {
                 StatusIndicator.Fill = Brushes.Red;
-                StatusTooltip.Text = "Система вне сети";
-
+                //'StatusTooltip.Text = "Система вне сети";
+                StatusIndicatorText.Text = "Система вне сети";
             }
         }
 
@@ -124,13 +126,13 @@ namespace Wpf_Inventory_
                 case DB_Connection.DatabaseMode.OnlineFirst:
                     StatusIndicator.Fill = new SolidColorBrush(Colors.Green);
                     StatusIndicatorText.Text = "Онлайн режим — подключение установлено";
-                    ToggleModeMenuItem.Header = "Переключить режим работы в Оффлайн";
+                    //ToggleModeMenuItem.Header = "Переключить режим работы в Оффлайн";
                     break;
 
                 case DB_Connection.DatabaseMode.OfflineFirst:
                     StatusIndicator.Fill = new SolidColorBrush(Colors.Purple);
                     StatusIndicatorText.Text = "Оффлайн режим — работа без подключения";
-                    ToggleModeMenuItem.Header = "Переключить режим работы в Онлайн";
+                    //ToggleModeMenuItem.Header = "Переключить режим работы в Онлайн";
                     break;
 
                 default:
