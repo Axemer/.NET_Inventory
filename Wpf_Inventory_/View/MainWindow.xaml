@@ -41,36 +41,33 @@
                     <DockPanel LastChildFill="False"/>
                 </ItemsPanelTemplate>
             </Menu.ItemsPanel>
-           
 
-            <!-- Левые элементы меню -->
+            <!-- Элементы меню -->
             <MenuItem Header="Файл" DockPanel.Dock="Left">
                 <!--<MenuItem Foreground="Black" Header="Импорт" Click="DevicImportButton_Click"/>-->
                 <MenuItem Foreground="Black" Header="Экспорт" Click="DeviceExportButton_Click"/>
-                <MenuItem Foreground="Black" Header="Пинг сервера">
-                    <MenuItem Foreground="Black" Header="Пинг Сервера" Click="PingServerButton_Click"/>
-                    <MenuItem Foreground="Black" Header="Пинг Базы данных" Click="PingDBButton_Click"/>
-                </MenuItem>
                 <!--<MenuItem Foreground="Black" Header="Сохранить" Click="DeviceSaveButton_Click"/>-->
                 <MenuItem Foreground="Black" Header="Перезагрузка" Click="RebootButton_Click"/>
                 <MenuItem Foreground="Black" Header="Выход" Click="Exit_Click"/>
-
             </MenuItem>
             <!--<MenuItem Header="Редактировать" DockPanel.Dock="Left">
                 <MenuItem Foreground="Black" Header="Копировать"/>
                 <MenuItem Foreground="Black" Header="Вставить"/>
             </MenuItem>-->
             <MenuItem Header="Данные" DockPanel.Dock="Left">
-                <!--<MenuItem x:Name="ToggleModeMenuItem" Foreground="Black" Header="Загрузка..." Click="ToggleMode_Click"/>-->
+                <MenuItem x:Name="ToggleModeMenuItem" Foreground="Black" Header="Загрузка..." Click="ToggleMode_Click"/>
+                <MenuItem Foreground="Black" Header="Пинг сервера">
+                    <MenuItem Foreground="Black" Header="Пинг Сервера" Click="PingServerButton_Click"/>
+                    <MenuItem Foreground="Black" Header="Пинг Базы данных" Click="PingDBButton_Click"/>
+                </MenuItem>
                 <MenuItem Foreground="Black" Header="Создать пустой кэш" Click="CreateEmpytyCache_Click"/>
                 <MenuItem Foreground="Black" Header="Синхронизировать" Click="DeviceSyncButton_Click"/>
                 <MenuItem Foreground="Black" Header="Заполнить таблицу с сервера" Click="LoadFromServer_Click"/>
                 <MenuItem Foreground="Black" Header="Заполнить таблицу с кэша" Click="LoadFromCache_Click"/>
             </MenuItem>
-            <MenuItem Header="Помощь" DockPanel.Dock="Left">
+            <MenuItem Header="Справка" DockPanel.Dock="Left">
                 <MenuItem Foreground="Black" Header="О программе" Click="AboutButton_Click"/>
             </MenuItem>
-
             <!-- Индикатор активности (в правом верхнем углу) -->
             <Grid HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,10,0">
                 <Grid.ColumnDefinitions>

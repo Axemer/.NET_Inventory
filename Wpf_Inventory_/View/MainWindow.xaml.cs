@@ -238,9 +238,9 @@ namespace Wpf_Inventory_
 
         private void AboutButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Программа: Система учета данных инвенторя\n" +
-                            "Разработчик: Axemer 2025 год\n" +
-                            "Версия: 0.9", "О программе",
+            MessageBox.Show("Программа: Система учета данных инвентаря\n" +
+                            "Разработчик: Алексей Гринев Ярослоаваич 2025 год\n" +
+                            "Версия: 1.0", "О программе",
                             MessageBoxButton.OK, MessageBoxImage.Information);
 
         }

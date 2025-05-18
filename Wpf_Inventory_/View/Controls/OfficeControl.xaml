@@ -24,7 +24,7 @@
                 </Grid.ColumnDefinitions>
 
                 <!-- ComboBox для выбора критерия поиска -->
-                <ComboBox x:Name="SearchCriteriaComboBox" Width="120" Background="WhiteSmoke" Margin="20,0,2,0" BorderThickness="1" BorderBrush="Black" Grid.Column="0">
+                <ComboBox x:Name="SearchCriteriaComboBox" Width="120" Background="WhiteSmoke" Margin="20,0,2,0" BorderThickness="1" BorderBrush="Black" Grid.Column="0" SelectedIndex="1">
                     <ComboBoxItem Content="Блок"/>
                     <ComboBoxItem Content="Отдел"/>
                     <ComboBoxItem Content="Номер офиса"/>
@@ -33,9 +33,18 @@
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1">
                     <!-- TextBox для ввода поискового запроса -->
-                    <TextBox x:Name="SearchTextBox" Width="170" Background="WhiteSmoke" BorderThickness="1" BorderBrush="Black" Margin="5,0,5,0"/>
+                    <TextBox x:Name="SearchTextBox" Width="159" Background="WhiteSmoke" BorderThickness="1" BorderBrush="Black" Margin="5,0,5,0"/>
+                    <Button Click="SearchButton_Click" Padding="1" Background="Transparent" BorderThickness="0" Cursor="Hand" Height="25" Width="28">
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="border" Background="Transparent" CornerRadius="4" SnapsToDevicePixels="True">
+                                    <Image x:Name="iconImage" Source="/Resources/Icons/icons8-поиск-250.png"
+                                            Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
                     <!-- Кнопка для запуска поиска -->
-                    <Button Content="Поиск" Click="SearchButton_Click" Padding="1" Margin="5" Background="WhiteSmoke" BorderThickness="1" BorderBrush="Black"/>
                 </StackPanel>
             </Grid>
         </ToolBar>

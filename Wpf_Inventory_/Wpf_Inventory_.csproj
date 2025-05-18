@@ -72,6 +72,7 @@
     <Resource Include="Resources\Icons\icons8-database-48.png" />
     <Resource Include="Resources\Icons\icons8-database-50 %281%29.png" />
     <Resource Include="Resources\Icons\icons8-database-50.png" />
+    <Resource Include="Resources\icons\icons8-поиск-250.png" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="EntityFramework" Version="6.5.1" />
@@ -134,5 +135,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Resources\BackUpCache.sqlite" />
+    <None Remove="Resources\icons\icons8-поиск-250.png" />
   </ItemGroup>
 </Project>
