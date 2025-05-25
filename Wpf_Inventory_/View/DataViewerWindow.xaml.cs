@@ -83,7 +83,7 @@ namespace Wpf_Inventory_.View
                 .FirstOrDefault(d => d.DeviceId == deviceId);
             if (device == null) return;
 
-            device.Devicename = DevNameTextBox.Text;
+            device.Devicename = DevNameComboBox.Text;
             device.Serialnumber = DevSerialTextBox.Text;
             device.Inventorynumber = DevInvNumTextBox.Text;
             device.IpAddress = DevIPTextBox.Text;
@@ -194,7 +194,7 @@ namespace Wpf_Inventory_.View
             }
 
             DevIDTextBox.Text = device.DeviceId.ToString();
-            DevNameTextBox.Text = device.Devicename;
+            DevNameComboBox.Text = device.Devicename;
             DevSerialTextBox.Text = device.Serialnumber;
             DevInvNumTextBox.Text = device.Inventorynumber;
 
