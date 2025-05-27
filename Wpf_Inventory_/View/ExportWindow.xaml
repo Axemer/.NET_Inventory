@@ -1,0 +1,39 @@
+﻿<Window x:Class="Wpf_Inventory_.View.ExportWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Wpf_Inventory_.View"
+        mc:Ignorable="d"
+        Title="Экспорт" Height="450" Width="800">
+    <Grid>
+        <!--<StackPanel Margin="20">
+            <TextBlock Text="Что экспортировать?" Margin="0,0,0,10"/>
+            <Button Content="Только видимые в таблице устройств" Click="ExportVisible_Click" Margin="0,0,0,5"/>
+            <Button Content="Всё устройства из базы данных" Click="ExportAll_Click"/>
+        </StackPanel>-->
+        <StackPanel Margin="10" VerticalAlignment="Center">
+
+            <TextBlock Text="Что экспортировать:" FontWeight="Bold" Margin="0,0,0,5"/>
+
+            <RadioButton Name="ExportAllRadio" Content="Всё" IsChecked="True" Margin="0,0,0,5"/>
+            <RadioButton Name="ExportVisibleRadio" Content="Только видимые" Margin="0,0,0,15"/>
+
+            <TextBlock Text="Фильтр по дате ввода (опционально):" FontWeight="Bold" Margin="0,0,0,5"/>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                <TextBlock Text="От:" Width="30" VerticalAlignment="Center"/>
+                <DatePicker Name="DateFromPicker" Width="120"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
+                <TextBlock Text="До:" Width="30" VerticalAlignment="Center"/>
+                <DatePicker Name="DateToPicker" Width="120"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="Выполнить экспорт" Width="120" Margin="0,0,10,0" Click="ExecuteExport_Click"/>
+                <Button Content="Отмена" Width="80" Click="Cancel_Click"/>
+            </StackPanel>
+
+        </StackPanel>
+    </Grid>
+</Window>

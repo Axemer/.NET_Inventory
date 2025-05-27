@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
@@ -34,6 +35,15 @@ namespace Wpf_Inventory_.View.Controls
                 DB_Connection.Mode = DB_Connection.DatabaseMode.OfflineFirst;
                 DeviceDataGridInit(_dbo);
             }
+        }
+
+        /// <summary>
+        /// Дает список видимых устройств в данный момент.
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<Device> GetVisibleDevices()
+        {
+            return _deviceCollectionView?.Cast<Device>() ?? Enumerable.Empty<Device>();
         }
 
         /// <summary>

@@ -216,6 +216,7 @@ namespace Wpf_Inventory_.View
         {
             SaveDeviceChanges(_currentDevice);
             SaveButtonClicked?.Invoke();
+            this.Close();
         }
 
         private void ExceptionCheckBox_Checked(object sender, RoutedEventArgs e)

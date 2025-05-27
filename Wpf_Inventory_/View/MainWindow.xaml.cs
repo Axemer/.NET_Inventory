@@ -6,8 +6,10 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using Wpf_Inventory_.Classes;
+using Wpf_Inventory_.Model;
 using Wpf_Inventory_.View;
 using Wpf_Inventory_.View.Controls;
+using System.Linq;
 
 namespace Wpf_Inventory_
 {
@@ -150,8 +152,11 @@ namespace Wpf_Inventory_
         /// <param name="e"></param>
         private void DeviceExportButton_Click(object sender, RoutedEventArgs e)
         {
-            ExcelExporter exporter = new();
-            exporter.ExportTableToExcel();
+            //ExcelExporter exporter = new();
+            //exporter.ExportTableToExcel();
+            var visibleDevices = DeviceControl.GetVisibleDevices();
+            var exportWindow = new ExportWindow(visibleDevices.Cast<Device>());
+            exportWindow.ShowDialog();
         }
 
         /// <summary>

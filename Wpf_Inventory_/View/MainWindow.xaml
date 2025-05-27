@@ -4,7 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wpf_Inventory_"
-        xmlns:Classes="clr-namespace:Wpf_Inventory_.Classes" xmlns:Controls="clr-namespace:Wpf_Inventory_.View.Controls" x:Class="Wpf_Inventory_.MainWindow"
+        xmlns:Classes="clr-namespace:Wpf_Inventory_.Classes" 
+        xmlns:Controls="clr-namespace:Wpf_Inventory_.View.Controls" 
+        x:Class="Wpf_Inventory_.MainWindow"
         mc:Ignorable="d"
         Title="База данных технических устройств" Loaded="Window_Loaded"
         Width="900" Height="521">
@@ -86,7 +88,7 @@
         <TabControl DockPanel.Dock="Top">
 
             <TabItem Header="Устройства">
-                <Controls:DeviceControl/>
+                <Controls:DeviceControl x:Name="DeviceControl"/>
             </TabItem>
 
             <!--<TabItem Header="Рабочие места">
