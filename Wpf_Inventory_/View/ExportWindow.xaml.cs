@@ -1,16 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Input;
 using Wpf_Inventory_.Classes;
 using Wpf_Inventory_.Model;
-
 
 namespace Wpf_Inventory_.View
 {
@@ -107,7 +101,6 @@ namespace Wpf_Inventory_.View
 
         private void RunExport(List<Device> devices)
         {
-            // 💾 Твоя логика экспорта (например, в Excel, CSV, JSON)
             // Здесь просто пример:
             foreach (var device in devices)
             {

@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:Wpf_Inventory_"
         xmlns:Classes="clr-namespace:Wpf_Inventory_.Classes" 
         xmlns:Controls="clr-namespace:Wpf_Inventory_.View.Controls" 
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         x:Class="Wpf_Inventory_.MainWindow"
         mc:Ignorable="d"
         Title="База данных технических устройств" Loaded="Window_Loaded"
@@ -13,6 +14,7 @@
 
     <Window.Resources>
         <Classes:NullableBoolToBoolConverter x:Key="NullableBoolConverter"/>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibility"/>
     </Window.Resources>
 
     <DockPanel>
@@ -88,7 +90,17 @@
         <TabControl DockPanel.Dock="Top">
 
             <TabItem Header="Устройства">
+                <TabItem.Resources>
+                    <sys:Boolean x:Key="ShowIpColumn">False</sys:Boolean>
+                </TabItem.Resources>
                 <Controls:DeviceControl x:Name="DeviceControl"/>
+            </TabItem>
+
+            <TabItem Header="Сетевые">
+                <TabItem.Resources>
+                    <sys:Boolean x:Key="ShowIpColumn">True</sys:Boolean>
+                </TabItem.Resources>
+                <Controls:DeviceControl/>
             </TabItem>
 
             <!--<TabItem Header="Рабочие места">
