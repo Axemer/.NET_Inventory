@@ -89,23 +89,15 @@
         <!-- Основное содержимое -->
         <TabControl DockPanel.Dock="Top">
 
-            <TabItem Header="Устройства">
-                <TabItem.Resources>
-                    <sys:Boolean x:Key="ShowIpColumn">False</sys:Boolean>
-                </TabItem.Resources>
-                <Controls:DeviceControl x:Name="DeviceControl"/>
+            <TabItem Header="Устройства" Tag="False">
+
+                <Controls:DeviceControl x:Name="DeviceControl" Tag="False"/>
             </TabItem>
 
-            <TabItem Header="Сетевые">
-                <TabItem.Resources>
-                    <sys:Boolean x:Key="ShowIpColumn">True</sys:Boolean>
-                </TabItem.Resources>
-                <Controls:DeviceControl/>
-            </TabItem>
+            <TabItem Header="Сетевые" Tag="True">
 
-            <!--<TabItem Header="Рабочие места">
-                <Controls:WorkspaceControl Height="401" Margin="-4,0,15,0"/>
-            </TabItem>-->
+                <Controls:DeviceControl Tag="True" />
+            </TabItem>
 
             <TabItem Header="Офисы">
                 <Controls:OfficeControl/>

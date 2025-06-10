@@ -144,7 +144,6 @@ namespace Wpf_Inventory_
             }
         }
 
-
         /// <summary>
         /// Пулим с базы данных после чего делаем эксель таблицу. 
         /// </summary>

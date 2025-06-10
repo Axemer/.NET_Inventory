@@ -89,10 +89,9 @@
                     <DataGridTextColumn Header="Название" Binding="{Binding Devicename}" Width="auto"/>
                     <DataGridTextColumn Header="IP" Binding="{Binding IpAddress}" Width="auto">
                         <DataGridTextColumn.Visibility>
-                            <Binding 
-                                Path="(TabItem.Resources)[ShowIpColumn]" 
-                                RelativeSource="{RelativeSource AncestorType=TabItem}"
-                                Converter="{StaticResource BoolToVisibility}"/>
+                            <Binding Path="Tag" 
+                                     RelativeSource="{RelativeSource AncestorType=TabItem}"
+                                     Converter="{StaticResource BoolToVisibility}"/>
                         </DataGridTextColumn.Visibility>
                     </DataGridTextColumn>
 
