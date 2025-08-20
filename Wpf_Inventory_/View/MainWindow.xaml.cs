@@ -34,7 +34,7 @@ namespace Wpf_Inventory_
 
             InitializeComponent();
             //UpdateStatusIndicator(); // устанавливаем заголовок для режима работы
-            UpdateStatus(true);
+            //UpdateStatus(true);
         }
 
         public void Window_Loaded(object sender, RoutedEventArgs e)
@@ -58,23 +58,23 @@ namespace Wpf_Inventory_
         /// Позволяет менять цвет индикатора активности
         /// </summary>
         /// <param name="isActive"> true green, false Red </param>
-        public void UpdateStatus(bool isActive)
-        {
-            if (isActive)
-            {
-                StatusIndicator.Fill = Brushes.Green;
-                //StatusTooltip.Text = "Система в сети";
-                StatusIndicatorText.Text = "Система в сети";
+        //public void UpdateStatus(bool isActive)
+        //{
+        //    if (isActive)
+        //    {
+        //        StatusIndicator.Fill = Brushes.Green;
+        //        //StatusTooltip.Text = "Система в сети";
+        //        StatusIndicatorText.Text = "Система в сети";
 
-            }
-            else
-            {
-                StatusIndicator.Fill = Brushes.Red;
-                //'StatusTooltip.Text = "Система вне сети";
-                StatusIndicatorText.Text = "Система вне сети";
+        //    }
+        //    else
+        //    {
+        //        StatusIndicator.Fill = Brushes.Red;
+        //        //'StatusTooltip.Text = "Система вне сети";
+        //        StatusIndicatorText.Text = "Система вне сети";
                 
-            }
-        }
+        //    }
+        //}
 
 
 
@@ -121,30 +121,30 @@ namespace Wpf_Inventory_
         /// <summary>
         /// Обновляет индикатор статуса и текст в зависимости от текущего режима работы.
         /// </summary>
-        private void UpdateStatusIndicator()
-        {
-            if (StatusIndicator == null || StatusIndicatorText == null) return;
+        //private void UpdateStatusIndicator()
+        //{
+        //    if (StatusIndicator == null || StatusIndicatorText == null) return;
 
-            switch (DB_Connection.Mode)
-            {
-                case DB_Connection.DatabaseMode.OnlineFirst:
-                    StatusIndicator.Fill = new SolidColorBrush(Colors.Green);
-                    StatusIndicatorText.Text = "Онлайн режим — подключение установлено";
-                    //ToggleModeMenuItem.Header = "Переключить режим работы в Оффлайн";
-                    break;
+        //    switch (DB_Connection.Mode)
+        //    {
+        //        case DB_Connection.DatabaseMode.OnlineFirst:
+        //            StatusIndicator.Fill = new SolidColorBrush(Colors.Green);
+        //            StatusIndicatorText.Text = "Онлайн режим — подключение установлено";
+        //            //ToggleModeMenuItem.Header = "Переключить режим работы в Оффлайн";
+        //            break;
 
-                case DB_Connection.DatabaseMode.OfflineFirst:
-                    StatusIndicator.Fill = new SolidColorBrush(Colors.Purple);
-                    StatusIndicatorText.Text = "Оффлайн режим — работа без подключения";
-                    //ToggleModeMenuItem.Header = "Переключить режим работы в Онлайн";
-                    break;
+        //        case DB_Connection.DatabaseMode.OfflineFirst:
+        //            StatusIndicator.Fill = new SolidColorBrush(Colors.Purple);
+        //            StatusIndicatorText.Text = "Оффлайн режим — работа без подключения";
+        //            //ToggleModeMenuItem.Header = "Переключить режим работы в Онлайн";
+        //            break;
 
-                default:
-                    StatusIndicator.Fill = new SolidColorBrush(Colors.Red);
-                    StatusIndicatorText.Text = "ОШИБКА: Нет подключения или нет данных";
-                    break;
-            }
-        }
+        //        default:
+        //            StatusIndicator.Fill = new SolidColorBrush(Colors.Red);
+        //            StatusIndicatorText.Text = "ОШИБКА: Нет подключения или нет данных";
+        //            break;
+        //    }
+        //}
 
         /// <summary>
         /// Пулим с базы данных после чего делаем эксель таблицу. 
@@ -270,14 +270,14 @@ namespace Wpf_Inventory_
             DB_Connection.CreateEmptyCache();
         }
 
-        private void ToggleMode_Click(object sender, RoutedEventArgs e)
-        {
-            DB_Connection.ToggleDatabaseMode(); // Переключить режим базы данных
-            UpdateStatusIndicator();            // Обновить статусбар (индикатор и текст)
+        //private void ToggleMode_Click(object sender, RoutedEventArgs e)
+        //{
+        //    DB_Connection.ToggleDatabaseMode(); // Переключить режим базы данных
+        //    UpdateStatusIndicator();            // Обновить статусбар (индикатор и текст)
 
-            DeviceControl d = new();
-            d.RefreshContexAndDeviceGrid();     // Обновить таблицу устройств
-        }
+        //    DeviceControl d = new();
+        //    d.RefreshContexAndDeviceGrid();     // Обновить таблицу устройств
+        //}
 
 
         /// <summary>
