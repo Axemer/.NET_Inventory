@@ -29,7 +29,12 @@
 	<PublishTrimmed>false</PublishTrimmed>
 	  <!-- на всякий если нужно временно распаковывать ресурсы -->
 	<IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
-	<ApplicationIcon>Resources\icons\icons8-database-50.ico</ApplicationIcon> 
+	<ApplicationIcon>Resources\icons\icons8-database-50.ico</ApplicationIcon>
+	<Version>0.8</Version>
+	<RepositoryUrl>https://github.com/Axemer/NET_Inventory</RepositoryUrl>
+	<RepositoryType>git</RepositoryType>
+	<PlatformTarget>AnyCPU</PlatformTarget>
+	<SignAssembly>False</SignAssembly> 
   </PropertyGroup>
   <ItemGroup>
     <Resource Include="dbg\постгри строчки дев.txt" />
