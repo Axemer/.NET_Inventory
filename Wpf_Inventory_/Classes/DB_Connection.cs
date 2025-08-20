@@ -18,7 +18,7 @@ namespace Wpf_Inventory_.Classes
         /// <summary>
         /// Переключатель режима работы с базой данных.
         /// </summary>
-        public static DatabaseMode Mode { get; set; } = DatabaseMode.OnlineFirst;
+        public static DatabaseMode Mode { get; set; } = DatabaseMode.OfflineFirst;
 
         /// <summary>
         /// Путь к локальному кэшу SQLite.

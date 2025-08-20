@@ -29,7 +29,7 @@ namespace Wpf_Inventory_
         {
             // LoginCheck(); // ФИЧА ДОДЕЛАНА ВРОДЕ. УБЕРАТЬ ПРИ РЕЛИЗЕ ИЛИ ТЕСТЕ
 
-            //if (IsUserInGroup(_requredGroup) == true)
+            //if (IsUserInGroup("sex") == true)
             //    InitializeComponent();
 
             InitializeComponent();
@@ -72,6 +72,7 @@ namespace Wpf_Inventory_
                 StatusIndicator.Fill = Brushes.Red;
                 //'StatusTooltip.Text = "Система вне сети";
                 StatusIndicatorText.Text = "Система вне сети";
+                
             }
         }
 
@@ -82,12 +83,12 @@ namespace Wpf_Inventory_
         /// </summary>
         /// <param name="groupName">Имя группы </param>
         /// <returns></returns>
-        [SupportedOSPlatform("windows")] // Add this attribute to indicate the method is Windows-specific
+        [SupportedOSPlatform("windows")]
         private static bool IsUserInGroup(string groupName)
         {
             try
             {
-                using var context = new PrincipalContext(ContextType.Domain); // This is Windows-specific
+                using var context = new PrincipalContext(ContextType.Domain);
                 using var user = UserPrincipal.FindByIdentity(context, WindowsIdentity.GetCurrent().Name);
                 if (user == null)
                     return false;
@@ -111,8 +112,9 @@ namespace Wpf_Inventory_
                 Logger.LogError($"Неизвестная ошибка: {ex.Message}");
             }
 
-            MessageBox.Show("Ошибка проверки группы. Подробности в логах.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-            Application.Current.Shutdown(); // Если вход не успешен — закрываем приложение
+            MessageBox.Show("Ошибка проверки группы.", "Ошибка", 
+                                           MessageBoxButton.OK, MessageBoxImage.Error);
+            Application.Current.Shutdown();
             return false;
         }
 

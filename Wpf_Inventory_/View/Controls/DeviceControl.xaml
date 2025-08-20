@@ -11,7 +11,7 @@
 
     <Control.Resources>
         <Classes:NullableBoolToBoolConverter x:Key="NullableBoolConverter"/>
-        <BooleanToVisibilityConverter x:Key="BoolToVisibility"/>
+        <!--<BooleanToVisibilityConverter x:Key="BoolToVisibility"/>-->
     </Control.Resources>
 
     <Grid>
@@ -88,11 +88,12 @@
                     <DataGridTextColumn Header="Тип" Binding="{Binding Devicetype.Type}" Width="auto"/>
                     <DataGridTextColumn Header="Название" Binding="{Binding Devicename}" Width="auto"/>
                     <DataGridTextColumn Header="IP" Binding="{Binding IpAddress}" Width="auto">
-                        <DataGridTextColumn.Visibility>
-                            <Binding Path="Tag" 
-                                     RelativeSource="{RelativeSource AncestorType=TabItem}"
-                                     Converter="{StaticResource BoolToVisibility}"/>
-                        </DataGridTextColumn.Visibility>
+                        <!--<DataGridTextColumn.Visibility>
+                            <Binding 
+                                Path="(TabItem.Resources)[ShowIpColumn]" 
+                                RelativeSource="{RelativeSource AncestorType=TabItem}"
+                                Converter="{StaticResource BoolToVisibility}"/>
+                        </DataGridTextColumn.Visibility>-->
                     </DataGridTextColumn>
 
                     <DataGridTextColumn Header="Дата приема" Binding="{Binding Dateofcommissioning, StringFormat={}{0:dd.MM.yyyy}}" Width="*"/>

@@ -19,9 +19,9 @@
 
     <DockPanel>
         <!-- Нижняя строка состояния -->
-        <StatusBar DockPanel.Dock="Bottom" Background="#2D2D30" Foreground="White">
+        <!--<StatusBar DockPanel.Dock="Bottom" Background="#2D2D30" Foreground="White">
             <StatusBarItem>
-                <TextBlock x:Name="StatusIndicatorText" Text="Готово" Margin="10,0"/>
+                <TextBlock x:Name="StatusIndicatorText" Text="Подключено" Margin="10,0"/>
             </StatusBarItem>
             <StatusBarItem HorizontalAlignment="Right">
                 <Ellipse x:Name="StatusIndicator" Width="10" Height="10" Fill="Green" Margin="10">
@@ -38,7 +38,7 @@
                     </Ellipse.ToolTip>
                 </Ellipse>
             </StatusBarItem>
-        </StatusBar>
+        </StatusBar>-->
         <Menu DockPanel.Dock="Top" Background="#2D2D30" Foreground="White">
             <Menu.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -58,8 +58,8 @@
                 <MenuItem Foreground="Black" Header="Копировать"/>
                 <MenuItem Foreground="Black" Header="Вставить"/>
             </MenuItem>-->
-            <MenuItem Header="Данные" DockPanel.Dock="Left">
-                <MenuItem x:Name="ToggleModeMenuItem" Foreground="Black" Header="Загрузка..." Click="ToggleMode_Click"/>
+            <!--<MenuItem Header="Данные" DockPanel.Dock="Left">
+                --><!--<MenuItem x:Name="ToggleModeMenuItem" Foreground="Black" Header="Переключить режим" Click="ToggleMode_Click"/>--><!--
                 <MenuItem Foreground="Black" Header="Пинг сервера">
                     <MenuItem Foreground="Black" Header="Пинг Сервера" Click="PingServerButton_Click"/>
                     <MenuItem Foreground="Black" Header="Пинг Базы данных" Click="PingDBButton_Click"/>
@@ -68,7 +68,7 @@
                 <MenuItem Foreground="Black" Header="Синхронизировать" Click="DeviceSyncButton_Click"/>
                 <MenuItem Foreground="Black" Header="Заполнить таблицу с сервера" Click="LoadFromServer_Click"/>
                 <MenuItem Foreground="Black" Header="Заполнить таблицу с кэша" Click="LoadFromCache_Click"/>
-            </MenuItem>
+            </MenuItem>-->
             <MenuItem Header="Справка" DockPanel.Dock="Left">
                 <MenuItem Foreground="Black" Header="О программе" Click="AboutButton_Click"/>
             </MenuItem>
@@ -89,15 +89,21 @@
         <!-- Основное содержимое -->
         <TabControl DockPanel.Dock="Top">
 
-            <TabItem Header="Устройства" Tag="False">
-
-                <Controls:DeviceControl x:Name="DeviceControl" Tag="False"/>
+            <TabItem Header="Устройства">
+                <TabItem.Resources>
+                    <!--<sys:Boolean x:Key="ShowIpColumn">Hidden</sys:Boolean>-->
+                </TabItem.Resources>
+                <Controls:DeviceControl x:Name="DeviceControl"/>
             </TabItem>
 
-            <TabItem Header="Сетевые" Tag="True">
-
-                <Controls:DeviceControl Tag="True" />
-            </TabItem>
+            <!--<TabItem Header="Сетевые">
+                <TabItem.Resources>
+                    -->
+            <!--<sys:Boolean x:Key="ShowIpColumn">Visible</sys:Boolean>-->
+            <!--
+                </TabItem.Resources>
+                <Controls:DeviceControl/>
+            </TabItem>-->
 
             <TabItem Header="Офисы">
                 <Controls:OfficeControl/>
