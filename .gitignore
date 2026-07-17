@@ -361,3 +361,7 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Cache files
+Cache.json
+Wpf_Inventory_/Cache.json
