@@ -21,6 +21,7 @@ namespace Wpf_Inventory_.View.Controls
         public WorkspaceControl()
         {
             InitializeComponent();
+            DataGridInit(_dbo);
         }
 
         /// <summary>
@@ -29,25 +30,22 @@ namespace Wpf_Inventory_.View.Controls
         /// <param name="InventoryRegDB"> Данные из БД сюда надо </param>
         private void DataGridInit(InventoryDataBaseContext InventoryRegDB)
         {
-            WorkspaceDataGrid.ItemsSource = InventoryRegDB.Device.ToList();
+            WorkspaceDataGrid.ItemsSource = InventoryRegDB.Workplace.ToList();
         }
 
         /// <summary>
-        ///  Добавляет новый офис с базовыми значениями
+        ///  Добавляет новое рабочее место
         /// </summary>
         public void AddNew()
         {
-            // Создаём новый объект Device
-            Office newOffice = new Office
+            Workplace newWorkplace = new()
             {
-                //Block = null, // ???? хз сюда ничего кроме блока и не вставиь 
-                Officenum = "1",
-                Phone = "+123"
+                WorkplaceNote = "Новое рабочее место"
             };
 
-            // Добавляем в базу данных
-            _dbo.Office.Add(newOffice);
-            _dbo.SaveChanges(); // Сохраняем в базе, чтобы появился ID тк он присвается базой
+            _dbo.Workplace.Add(newWorkplace);
+            _dbo.SaveChanges();
+            DataGridInit(_dbo);
         }
 
         private void WorkspaceDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -71,7 +69,17 @@ namespace Wpf_Inventory_.View.Controls
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-
+            if (WorkspaceDataGrid.SelectedItem is Workplace workplace)
+            {
+                var result = MessageBox.Show($"Удалить рабочее место?", "Подтверждение",
+                    MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    _dbo.Workplace.Remove(workplace);
+                    _dbo.SaveChanges();
+                    DataGridInit(_dbo);
+                }
+            }
         }
 
         private void UpdateButton_Click(object sender, RoutedEventArgs e)

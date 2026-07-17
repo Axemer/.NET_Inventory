@@ -1,10 +1,7 @@
 ﻿using System;
+using System.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-
-// Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
-// If you have enabled NRTs for your project, then un-comment the following line:
-// #nullable disable
 
 namespace Wpf_Inventory_.Model
 {
@@ -32,10 +29,10 @@ namespace Wpf_Inventory_.Model
         {
             if (!optionsBuilder.IsConfigured)
             {
-#pragma warning disable CS1030 // Директива #warning
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=Inventory Data Base;Username=postgres;Password=1911;");
-#pragma warning restore CS1030 // Директива #warning
+                var connectionString = ConfigurationManager.ConnectionStrings["InventoryDatabase"]?.ConnectionString;
+                if (string.IsNullOrEmpty(connectionString))
+                    connectionString = "Host=localhost;Port=5432;Database=Inventory Data Base;Username=postgres;Password=1911;";
+                optionsBuilder.UseNpgsql(connectionString);
             }
         }
 

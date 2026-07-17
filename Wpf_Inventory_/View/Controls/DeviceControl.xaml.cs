@@ -31,18 +31,11 @@ namespace Wpf_Inventory_.View.Controls
         public DeviceControl()
         {
             InitializeComponent();
-            //DeviceDataGridInit(_dbo);
-
-
 
             if (_dbo.Database.CanConnect())
             {
-                //DB_Connection.UseCacheMode = false;
-                //var _dbo = DB_Connection.GetDataBase();
-                //DB_Connection.SaveSnapshotFromContext(_dbo);
-                //DeviceDataGridInit(_dbo);
                 DB_Connection.SaveSnapshotFromContext(_dbo);
-                debug();
+                DeviceDataGridInit(_dbo);
             }
 
             _deviceCollectionView = CollectionViewSource.GetDefaultView(DeviceDataGrid.ItemsSource);

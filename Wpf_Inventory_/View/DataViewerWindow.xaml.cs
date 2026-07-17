@@ -69,28 +69,28 @@ namespace Wpf_Inventory_.View
             if (!string.IsNullOrEmpty(selectedDeviceType))
                 device.DevicetypeId = DBO.Devicetype.FirstOrDefault(d => d.Type == selectedDeviceType)?.DevicetypeId;
 
-            // Вот эта штучка немного капризная и иногда давала null с чего естественно прога вылетала
             string selectedDepartment = DevDepComboBox.SelectedItem?.ToString();
             if (!string.IsNullOrEmpty(selectedDepartment))
             {
                 var officeMatch = DBO.Office.FirstOrDefault(d => d.Department == selectedDepartment);
                 if (officeMatch != null)
-                    device.Office.Department = officeMatch.Department;
+                {
+                    if (device.Office == null)
+                    {
+                        device.Office = DBO.Office.FirstOrDefault(o => o.OfficeId == device.OfficeId);
+                    }
+                    if (device.Office != null)
+                        device.Office.Department = officeMatch.Department;
+                }
                 else
                     MessageBox.Show("Не удалось найти отделение с таким названием в базе данных.");
             }
-            // но в любом случае тут лучше заранее указать все данные о офисах в базе данных и тогда этой ошибки никто не увидет 
 
             string selectedOffice = DevOfficeComboBox.SelectedItem?.ToString();
             if (!string.IsNullOrEmpty(selectedOffice))
                 device.OfficeId = DBO.Office.FirstOrDefault(o => o.Officenum == selectedOffice)?.OfficeId;
 
-            // Обновляем связь с блоком 
-            // Говорили они так лучше ме ме ме 
-            // Говорили меньше места занимает ме ме ме
-            // Было бы у меня столько ебли с людим как с этими блоками
-            // Я бы стал Хью Хефнером 2.0 и был бы не менее знаменит.
-            string selectedBlock = DevBlockComboBox.SelectedItem?.ToString();           
+
 
             // Сохраняем изменения
             DBO.SaveChanges();

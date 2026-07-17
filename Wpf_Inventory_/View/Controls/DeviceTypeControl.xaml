@@ -15,7 +15,7 @@
         </ToolBar>
         <DataGrid x:Name="TypeDataGrid" AutoGenerateColumns="False" IsReadOnly="True" MouseDoubleClick="TypeDataGrid_MouseDoubleClick" Margin="0,0,0,39">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Тип устройства" Binding="{Binding DeviceType.Type}" Width="auto"/>
+                <DataGridTextColumn Header="Тип устройства" Binding="{Binding Type}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
         <!-- Панель инструментов -->

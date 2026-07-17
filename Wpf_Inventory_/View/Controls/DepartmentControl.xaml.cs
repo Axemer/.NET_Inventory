@@ -17,17 +17,18 @@ namespace Wpf_Inventory_.View.Controls
         public InventoryDataBaseContext _dbo = DB_Connection.GetDataBase();
 
         /// <summary>
-        ///  Добавляет новое устройство с базовыми значениями
+        ///  Добавляет новый отдел с базовыми значениями
         /// </summary>
         public void AddNewDepartment()
         {
             Office newDepartment = new Office
             {
-                //Name = "NewDep"
+                Officenum = "Новый",
+                Department = "Новый отдел"
             };
-            // Добавляем в базу данных
             _dbo.Office.Add(newDepartment);
-            _dbo.SaveChanges(); // Сохраняем в базе, чтобы появился ID тк он присвается базой
+            _dbo.SaveChanges();
+            DataGridInit(_dbo);
         }
 
         /// <summary>
@@ -47,12 +48,33 @@ namespace Wpf_Inventory_.View.Controls
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-
+            AddNewDepartment();
         }
 
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void UpdateButton_Click(object sender, RoutedEventArgs e)
+        {
+            _dbo.SaveChanges();
+            DataGridInit(_dbo);
+        }
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (DepartmentDataGrid.SelectedItem is Office department)
+            {
+                var result = MessageBox.Show($"Удалить отдел \"{department.Department}\"?", "Подтверждение",
+                    MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    _dbo.Office.Remove(department);
+                    _dbo.SaveChanges();
+                    DataGridInit(_dbo);
+                }
+            }
         }
     }
 }

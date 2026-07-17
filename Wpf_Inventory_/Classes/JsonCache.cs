@@ -47,11 +47,13 @@ namespace Wpf_Inventory_.Classes
         /// <exception cref="InvalidOperationException"></exception>
         public T Retrieve<T>(Guid id)
         {
-            var pair = _storage.Values.FirstOrDefault(x => x.Type == typeof(T));
-            if (pair.Value == null)
-                throw new InvalidOperationException("Тип не совпадает или данные не найдены");
-
-            return (T)pair.Value;
+            if (_storage.TryGetValue(id, out var pair))
+            {
+                if (pair.Type != typeof(T))
+                    throw new InvalidOperationException($"Тип не совпадает: ожидается {typeof(T)}, получен {pair.Type}");
+                return (T)pair.Value;
+            }
+            throw new InvalidOperationException($"Данные с ID {id} не найдены");
         }
 
         /// <summary>

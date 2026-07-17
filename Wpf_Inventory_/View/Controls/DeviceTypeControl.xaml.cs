@@ -32,21 +32,18 @@ namespace Wpf_Inventory_.View.Controls
         }
 
         /// <summary>
-        ///  Добавляет новый офис с базовыми значениями
+        ///  Добавляет новый тип устройства
         /// </summary>
         public void AddNew()
         {
-            // Создаём новый объект Device
-            Office newOffice = new Office
+            Devicetype newType = new()
             {
-                //Block = null, // ???? хз сюда ничего кроме блока и не вставиь 
-                //OfficeNum = "1",
-                Phone = "+123"
+                Type = "Новый тип"
             };
 
-            // Добавляем в базу данных
-            _dbo.Office.Add(newOffice);
-            _dbo.SaveChanges(); // Сохраняем в базе, чтобы появился ID тк он присвается базой
+            _dbo.Devicetype.Add(newType);
+            _dbo.SaveChanges();
+            DataGridInit(_dbo);
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
@@ -56,7 +53,17 @@ namespace Wpf_Inventory_.View.Controls
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-
+            if (TypeDataGrid.SelectedItem is Devicetype devType)
+            {
+                var result = MessageBox.Show($"Удалить тип \"{devType.Type}\"?", "Подтверждение",
+                    MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    _dbo.Devicetype.Remove(devType);
+                    _dbo.SaveChanges();
+                    DataGridInit(_dbo);
+                }
+            }
         }
 
         private void UpdateButton_Click(object sender, RoutedEventArgs e)

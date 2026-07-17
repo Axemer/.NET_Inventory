@@ -27,7 +27,7 @@ namespace Wpf_Inventory_.View.Controls
         /// <param name="InventoryRegDB"> Данные из БД сюда надо </param>
         private void DataGridInit(InventoryDataBaseContext InventoryRegDB)
         {
-            OfficeDataGrid.ItemsSource = InventoryRegDB.Device.ToList();
+            OfficeDataGrid.ItemsSource = InventoryRegDB.Office.ToList();
         }
 
         /// <summary>
@@ -35,17 +35,15 @@ namespace Wpf_Inventory_.View.Controls
         /// </summary>
         public void AddNewOffice()
         {
-            // Создаём новый объект Device
             Office newOffice = new Office
             {
-                //Block = null, // ???? хз сюда ничего кроме блока и не вставиь 
-                Officenum = "1",
-                Phone = "+123"
+                Officenum = "Новый",
+                Phone = ""
             };
 
-            // Добавляем в базу данных
             _dbo.Office.Add(newOffice);
-            _dbo.SaveChanges(); // Сохраняем в базе, чтобы появился ID тк он присвается базой
+            _dbo.SaveChanges();
+            DataGridInit(_dbo);
         }
 
         private void OfficeDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -60,7 +58,17 @@ namespace Wpf_Inventory_.View.Controls
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-
+            if (OfficeDataGrid.SelectedItem is Office office)
+            {
+                var result = MessageBox.Show($"Удалить офис {office.Officenum}?", "Подтверждение",
+                    MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    _dbo.Office.Remove(office);
+                    _dbo.SaveChanges();
+                    DataGridInit(_dbo);
+                }
+            }
         }
 
         private void UpdateButton_Click(object sender, RoutedEventArgs e)

@@ -1,18 +1,27 @@
 ﻿using System;
-using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Net.NetworkInformation;
+using System.Text.RegularExpressions;
 using System.Windows;
+using Npgsql;
 
 namespace Wpf_Inventory_.Classes
 {
     internal class DatabasePinger
     {
         private readonly string _connectionString;
+        private readonly string _host;
 
         public DatabasePinger(string connectionString)
         {
             _connectionString = connectionString;
+            _host = ExtractHost(connectionString);
+        }
+
+        private static string ExtractHost(string connectionString)
+        {
+            var match = Regex.Match(connectionString, @"(?:Server|Data Source|Host)\s*=\s*([^;]+)", RegexOptions.IgnoreCase);
+            return match.Success ? match.Groups[1].Value.Trim() : "localhost";
         }
 
         /// <summary>
@@ -23,10 +32,10 @@ namespace Wpf_Inventory_.Classes
             Stopwatch stopwatch = new Stopwatch();
             try
             {
-                using (SqlConnection connection = new SqlConnection(_connectionString))
+                using (NpgsqlConnection connection = new NpgsqlConnection(_connectionString))
                 {
                     stopwatch.Start();
-                    connection.Open(); // Пытаемся открыть соединение
+                    connection.Open();
                     stopwatch.Stop();
 
                     MessageBox.Show($"База данных доступна.\nВремя отклика: {stopwatch.ElapsedMilliseconds} мс",
@@ -53,18 +62,18 @@ namespace Wpf_Inventory_.Classes
                     Stopwatch stopwatch = new Stopwatch();
                     stopwatch.Start();
 
-                    PingReply reply = ping.Send(_connectionString);
+                    PingReply reply = ping.Send(_host);
 
                     stopwatch.Stop();
 
                     if (reply.Status == IPStatus.Success)
                     {
-                        MessageBox.Show($"Сервер доступен.\nВремя отклика: {reply.RoundtripTime} мс",
+                        MessageBox.Show($"Сервер {_host} доступен.\nВремя отклика: {reply.RoundtripTime} мс",
                             "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
                     else
                     {
-                        MessageBox.Show($"Ошибка пинга.\nСтатус: {reply.Status}",
+                        MessageBox.Show($"Ошибка пинга {_host}.\nСтатус: {reply.Status}",
                             "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }

@@ -16,9 +16,10 @@
         </ToolBar>
         <DataGrid x:Name="OfficeDataGrid" AutoGenerateColumns="False" IsReadOnly="True" MouseDoubleClick="OfficeDataGrid_MouseDoubleClick" Margin="0,0,0,39">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Блок" Binding="{Binding Block.Block1}" Width="auto"/>
-                <DataGridTextColumn Header="Номер Офиса" Binding="{Binding Office.OfficeNum}" Width="auto"/>
-                <DataGridTextColumn Header="Телефон" Binding="{Binding Office.Phone}" Width="auto"/>
+                <DataGridTextColumn Header="Блок" Binding="{Binding Block}" Width="auto"/>
+                <DataGridTextColumn Header="Номер Офиса" Binding="{Binding Officenum}" Width="auto"/>
+                <DataGridTextColumn Header="Телефон" Binding="{Binding Phone}" Width="auto"/>
+                <DataGridTextColumn Header="Отдел" Binding="{Binding Department}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
             <!-- Панель инструментов -->

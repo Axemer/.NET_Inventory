@@ -77,19 +77,19 @@
             </TabItem>
 
             <TabItem Header="Офисы">
-                <!--<Controls:OfficeControl/>-->
+                <Controls:OfficeControl/>
             </TabItem>
 
             <TabItem Header="Отделы">
-                <!--<Controls:DepartmentControl/>-->
+                <Controls:DepartmentControl/>
             </TabItem>
 
             <TabItem Header="Типы">
-                <!--<Controls:DeviceTypeControl/>-->
+                <Controls:DeviceTypeControl/>
             </TabItem>
 
             <TabItem Header="Все данные">
-                <!--<Controls:DeviceControl/>-->
+                <Controls:DeviceControl/>
             </TabItem>
 
         </TabControl>

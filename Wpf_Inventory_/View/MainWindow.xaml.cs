@@ -128,7 +128,6 @@ namespace Wpf_Inventory_
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        [Obsolete]
         private void DeviceExportButton_Click(object sender, RoutedEventArgs e)
         {
             ExcelExporter exporter = new();

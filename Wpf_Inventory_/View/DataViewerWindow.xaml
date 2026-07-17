@@ -12,7 +12,7 @@
         <TextBlock HorizontalAlignment="Left" Margin="10,57,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Height="20"><Run Text="Инвентарный"/><Run Language="ru-ru" Text=" №"/></TextBlock>
         <TextBox x:Name="DevInvNumTextBox" HorizontalAlignment="Left" Margin="115,57,0,0" TextWrapping="Wrap" Text="{}" VerticalAlignment="Top" Width="200" Height="20"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,89,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Height="20" FontSize="14" TextAlignment="Right"><Run Text="Тип"/><Run Language="ru-ru" Text=" :"/><Run Text=" устройства :"/></TextBlock>
-        <ComboBox x:Name="DevTypeComboBox" SelectedItem="{}" ItemsSource="{Binding Devicetype.Type}" HorizontalAlignment="Left" Margin="115,89,0,0" Text="{}" VerticalAlignment="Top" Width="200" Height="20"/>
+        <ComboBox x:Name="DevTypeComboBox" SelectedItem="{}" HorizontalAlignment="Left" Margin="115,89,0,0" Text="{}" VerticalAlignment="Top" Width="200" Height="20"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,154,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Height="20" FontSize="14" TextAlignment="Right"><Run Text="Имя"/><Run Language="ru-ru" Text=" :"/></TextBlock>
         <TextBox x:Name="DevNameTextBox" HorizontalAlignment="Left" Margin="115,154,0,0" TextWrapping="Wrap" Text="{}" VerticalAlignment="Top" Width="200" Height="20"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,186,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Height="20" FontSize="14" TextAlignment="Right"><Run Text="IP "/><Run Language="ru-ru" Text="Адресс :"/></TextBlock>
@@ -21,7 +21,7 @@
         <TextBlock HorizontalAlignment="Left" Margin="10,250,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Height="20" FontSize="14" TextAlignment="Right"><Run Language="ru-ru" Text="Серийный №"/></TextBlock>
         <TextBox x:Name="DevSerialTextBox" HorizontalAlignment="Left" Margin="115,250,0,0" TextWrapping="Wrap" Text="{}" VerticalAlignment="Top" Width="200" Height="20"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,282,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Height="20" FontSize="14" TextAlignment="Right"><Run Language="ru-ru" Text="Отдел :"/></TextBlock>
-        <ComboBox x:Name="DevDepComboBox" SelectedItem="{}" ItemsSource="{Binding Department.Name}" HorizontalAlignment="Left" Margin="115,282,0,0"  Text="Нет данных" VerticalAlignment="Top" Width="200" Height="20"/>
+        <ComboBox x:Name="DevDepComboBox" SelectedItem="{}" HorizontalAlignment="Left" Margin="115,282,0,0"  Text="Нет данных" VerticalAlignment="Top" Width="200" Height="20"/>
         <Button x:Name="DevSaveButton" Content="Сохранить" HorizontalAlignment="Left" Margin="494,348,0,0" VerticalAlignment="Top" Width="129" Click="DevSaveButton_Click"/>
         <TextBox x:Name="DevNoteTextBox" HorizontalAlignment="Left" Margin="358,47,0,0" TextWrapping="Wrap" Text="{}" VerticalAlignment="Top" Width="265" Height="277"/>
         <TextBlock x:Name="DevNoteTextBlock" HorizontalAlignment="Left" Margin="358,25,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="72" Height="20" Text="Заметка :" FontSize="14" TextAlignment="Right"/>
@@ -29,7 +29,7 @@
         <TextBlock HorizontalAlignment="Left" Margin="10,314,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Height="20" FontSize="14" TextAlignment="Right"><Run Language="ru-ru" Text="Блок :"/></TextBlock>
         <ComboBox x:Name="DevBlockComboBox"  HorizontalAlignment="Left" Margin="115,314,0,0" VerticalAlignment="Top" Width="200" Height="20" />
         <TextBlock HorizontalAlignment="Left" Margin="10,347,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Height="20" FontSize="14" TextAlignment="Right"><Run Language="ru-ru" Text="Офис"/><Run Text=" :"/></TextBlock>
-        <ComboBox x:Name="DevOfficeComboBox" SelectedItem="{}" ItemsSource="{Binding Office.Officenum}" HorizontalAlignment="Left" Margin="115,347,0,0" Text="Нет данных" VerticalAlignment="Top" Width="200" Height="20"/>
+        <ComboBox x:Name="DevOfficeComboBox" SelectedItem="{}" HorizontalAlignment="Left" Margin="115,347,0,0" Text="Нет данных" VerticalAlignment="Top" Width="200" Height="20"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,121,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Height="20" FontSize="14" TextAlignment="Right"><Run Text=" "/><Run Language="ru-ru" Text="Модель :"/></TextBlock>
         <TextBox x:Name="DevModelTextBox" HorizontalAlignment="Left" Margin="115,121,0,0" TextWrapping="Wrap" Text="{}" VerticalAlignment="Top" Width="200" Height="20"/>
         <CheckBox x:Name="ExceptionCheckBox" Content="Списано" HorizontalAlignment="Left" Margin="358,350,0,0" VerticalAlignment="Top" Checked="ExceptionCheckBox_Checked"/>
